@@ -6,7 +6,6 @@
     <title>Monos Pros Monon - Color Grading Tools</title>
     <meta name="description" content="Professional color grading plugins for DaVinci Resolve. Phi for shot-level balance, Helix for texture and look development.">
 
-    <!-- Open Graph for social sharing -->
     <meta property="og:title" content="Monos Pros Monon - Color Grading Tools">
     <meta property="og:description" content="Professional color grading plugins for DaVinci Resolve.">
     <meta property="og:image" content="images/og-image.webp">
@@ -35,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* ASCII/Dither Background */
+        /* ASCII Background */
         .ascii-bg {
             position: fixed;
             top: 0;
@@ -54,41 +53,92 @@
             height: 100%;
         }
 
-        /* Content above background */
-        .hero, .products-section, .comparison-section, .interface-section, .pricing-section, .site-footer {
+        /* All content above background */
+        .hero, .section {
             position: relative;
             z-index: 1;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 3rem 2rem 2rem;
+            padding: 4rem 2rem 2rem;
         }
 
         .hero-logo {
-            width: 280px;
+            width: 200px;
             margin-bottom: 1rem;
             opacity: 0.95;
         }
 
         .hero-tagline {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-style: italic;
+            color: #777777;
+        }
+
+        /* Divider */
+        .divider {
+            width: 100%;
+            max-width: 500px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 2.5rem auto;
+            border: none;
+        }
+
+        /* Section */
+        .section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
             color: #888888;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Overview Block */
+        .overview-text {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #999999;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Buy Button */
+        .buy-wrapper {
+            text-align: center;
+            margin: 2rem 0;
         }
 
         .btn {
-            padding: 10px 28px;
+            display: inline-block;
+            padding: 12px 36px;
             font-family: 'Times New Roman', Times, serif;
             font-size: 0.8rem;
             font-weight: 400;
@@ -99,127 +149,94 @@
             transition: all 0.2s ease;
             cursor: pointer;
             border: none;
-        }
-
-        .btn-primary {
             background: #ffffff;
             color: #0a0a0a;
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             background: #e0e0e0;
         }
 
-        /* Divider */
-        .divider {
-            width: 100%;
-            max-width: 600px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.12);
-            margin: 3rem auto;
-            border: none;
+        /* Plugin Block */
+        .plugin-block {
+            padding: 3rem 0;
         }
 
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title {
-            font-size: 0.8rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #999999;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-subtitle {
-            font-size: 0.85rem;
-            font-style: italic;
-            color: #666666;
-        }
-
-        /* Product Section */
-        .products-section {
-            padding: 2rem 0;
-        }
-
-        .product-intro {
-            max-width: 650px;
-            margin: 0 auto 4rem;
-            text-align: center;
-        }
-
-        .product-intro p {
-            font-size: 0.9rem;
-            font-style: italic;
-            color: #999999;
-            line-height: 1.8;
-        }
-
-        /* Plugin Cards Grid */
-        .plugins-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .plugin-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
+        .plugin-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
         .plugin-icon {
             width: 48px;
             height: 48px;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .plugin-name {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 400;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: #e0e0e0;
-            margin-bottom: 1rem;
-        }
-
-        .plugin-desc {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #888888;
-            line-height: 1.7;
-            text-align: left;
+            margin-bottom: 0.5rem;
         }
 
         .plugin-tagline {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-style: italic;
             color: #666666;
-            margin-top: 1rem;
+        }
+
+        .plugin-description {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #999999;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .plugin-ethos {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #777777;
             text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .plugin-interface {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .interface-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #555555;
+            margin-bottom: 1rem;
+        }
+
+        .interface-img {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 8px;
         }
 
         /* Before/After Section */
-        .comparison-section {
-            padding: 2rem 0;
-        }
-
         .comparison-grid {
             display: flex;
             flex-direction: column;
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
         /* Before/After Slider */
-        .ba,
-        .ba * {
+        .ba, .ba * {
             -webkit-user-select: none;
             user-select: none;
         }
@@ -227,15 +244,11 @@
         .ba {
             position: relative;
             width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
             aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 8px;
             --pos: 50%;
             touch-action: none;
-            -webkit-touch-callout: none;
-            -webkit-user-drag: none;
         }
 
         .ba__img {
@@ -245,7 +258,6 @@
             height: 100%;
             object-fit: cover;
             pointer-events: none;
-            -webkit-user-drag: none;
         }
 
         .ba__after {
@@ -261,9 +273,7 @@
             left: var(--pos);
             width: 2px;
             transform: translateX(-1px);
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.5);
             pointer-events: none;
         }
 
@@ -280,156 +290,36 @@
             display: inline-grid;
             grid-auto-flow: column;
             place-items: center;
-            column-gap: 10px;
-            height: 26px;
+            column-gap: 8px;
+            height: 24px;
             padding: 0 10px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
         }
 
         .ba__chev {
-            display: block;
-            font-size: 16px;
-            line-height: 1;
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.9);
-            transform: translateY(-1px);
-        }
-
-        /* Interface Section */
-        .interface-section {
-            padding: 2rem 0;
-        }
-
-        .interface-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .interface-item {
-            text-align: center;
-        }
-
-        .interface-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #666666;
-            margin-bottom: 1rem;
-        }
-
-        .interface-img {
-            width: 100%;
-            max-width: 350px;
-            border-radius: 8px;
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .price-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 3rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        .price-bundle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .price-bundle img {
-            width: 36px;
-            height: 36px;
-        }
-
-        .price-bundle-plus {
-            color: #666666;
-            font-size: 1.2rem;
-        }
-
-        .price-name {
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-tagline {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #666666;
-            margin-bottom: 2rem;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-type {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #666666;
-            margin-bottom: 2rem;
-        }
-
-        .price-features {
-            list-style: none;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .price-features li {
-            font-size: 0.8rem;
-            color: #999999;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .price-features li:last-child {
-            border-bottom: none;
         }
 
         /* Footer */
-        .site-footer {
-            padding: 4rem 2rem 2rem;
+        .footer {
+            padding: 3rem 2rem 2rem;
             text-align: center;
-        }
-
-        .footer-logo {
-            width: 60px;
-            margin-bottom: 1.5rem;
-            opacity: 0.5;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .footer-links a {
             font-size: 0.7rem;
-            color: #666666;
+            color: #555555;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -437,7 +327,7 @@
         }
 
         .footer-links a:hover {
-            color: #999999;
+            color: #888888;
         }
 
         .copyright {
@@ -450,42 +340,23 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 3rem 1.5rem;
+                padding: 3rem 1.5rem 1.5rem;
             }
 
             .hero-logo {
-                width: 140px;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                width: 100%;
-                max-width: 250px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .plugins-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .interface-grid {
-                grid-template-columns: 1fr;
+                width: 150px;
             }
 
             .container {
                 padding: 0 1.5rem;
             }
 
-            .ba__pill {
-                height: 24px;
-                padding: 0 8px;
+            .plugin-description {
+                font-size: 0.8rem;
             }
 
-            .ba__chev {
-                font-size: 14px;
+            .interface-img {
+                max-width: 300px;
             }
         }
     </style>
@@ -503,179 +374,168 @@
         <p class="hero-tagline">a company</p>
     </section>
 
-    <!-- Products -->
-    <section class="products-section">
+    <!-- Overview -->
+    <section class="section">
         <div class="container">
             <hr class="divider">
-            <div class="section-header">
-                <h2 class="section-title">Color Grading Plugins</h2>
-                <p class="section-subtitle">Shot-level balance. Look development. One integrated system.</p>
+            <h2 class="section-title">Color Grading Plugins</h2>
+            <p class="section-subtitle">For DaVinci Resolve</p>
+            <p class="overview-text">
+                Two plugins. One system. Phi handles shot-level balance with speed and precision.
+                Helix shapes texture and surface character for final look development.
+                Together, they form a complete color grading toolkit built by colorists, for colorists.
+            </p>
+            <div class="buy-wrapper">
+                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $XX</a>
             </div>
-
-            <div class="plugins-grid">
-                <div class="plugin-card">
-                    <img src="images/phi-icon.webp" alt="Phi" class="plugin-icon">
-                    <h3 class="plugin-name">Phi</h3>
-                    <p class="plugin-desc">
-                        A shot-level solution designed for colorists who want speed without compromise. Consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically.
-                    </p>
-                    <p class="plugin-tagline">For colorists who value control and speed at the shot level.</p>
-                </div>
-
-                <div class="plugin-card">
-                    <img src="images/helix-icon.webp" alt="Helix" class="plugin-icon">
-                    <h3 class="plugin-name">Helix</h3>
-                    <p class="plugin-desc">
-                        A look-development solution focused on texture, structure, and surface character. Shapes micro-contrast and perceived detail in a controlled manner. Helix treats texture as an integrated system. The result is depth and tactility that reads naturally across formats.
-                    </p>
-                    <p class="plugin-tagline">For colorists shaping the final surface of an image.</p>
-                </div>
-            </div>
+            <hr class="divider">
         </div>
     </section>
 
-    <!-- Before/After Comparisons -->
-    <section class="comparison-section" id="comparison">
+    <!-- PHI Block -->
+    <section class="section plugin-block">
         <div class="container">
-            <hr class="divider">
-            <div class="section-header">
-                <h2 class="section-title">Before & After</h2>
-                <p class="section-subtitle">Drag to compare</p>
+            <div class="plugin-header">
+                <img src="images/phi-icon.webp" alt="Phi" class="plugin-icon">
+                <h3 class="plugin-name">Phi</h3>
+                <p class="plugin-tagline">Shot-level balance</p>
             </div>
+
+            <p class="plugin-description">
+                Phi is a shot-level solution designed for colorists who want speed without compromise.
+                It consolidates exposure, contrast shaping, color separation, density, and perceptual
+                balance into a single, coherent toolset.
+            </p>
+
+            <p class="plugin-description">
+                Instead of stacking nodes and fighting interactions, Phi lets you shape an image
+                holistically—one pass, one intent, one result. Controls are interdependent by design,
+                preserving tonal integrity while allowing decisive moves.
+            </p>
+
+            <p class="plugin-description">
+                Phi excels at first-pass balance, difficult mixed-lighting shots, and fast turnarounds
+                where consistency matters.
+            </p>
+
+            <p class="plugin-ethos">
+                For colorists who value control and speed at the shot level.
+            </p>
+
+            <div class="plugin-interface">
+                <p class="interface-label">Interface</p>
+                <img src="images/before-after/Phi UI Interface.webp" alt="Phi Interface" class="interface-img">
+            </div>
+
+            <hr class="divider">
+        </div>
+    </section>
+
+    <!-- HELIX Block -->
+    <section class="section plugin-block">
+        <div class="container">
+            <div class="plugin-header">
+                <img src="images/helix-icon.webp" alt="Helix" class="plugin-icon">
+                <h3 class="plugin-name">Helix</h3>
+                <p class="plugin-tagline">Texture & surface character</p>
+            </div>
+
+            <p class="plugin-description">
+                Helix is a look-development solution focused on texture, structure, and surface character.
+                It is designed to refine how an image feels.
+            </p>
+
+            <p class="plugin-description">
+                Helix shapes micro-contrast and perceived detail in a controlled manner. It treats texture
+                as an integrated system. The result is depth and tactility that reads naturally across
+                formats and delivery specs.
+            </p>
+
+            <p class="plugin-description">
+                Helix is built for intentional look development. It excels after balance is set, when the
+                image needs character without noise, and refinement without distraction. Subtle at low
+                settings, expressive when pushed, it remains stable shot to shot.
+            </p>
+
+            <p class="plugin-ethos">
+                For colorists shaping the final surface of an image.
+            </p>
+
+            <div class="plugin-interface">
+                <p class="interface-label">Interface</p>
+                <img src="images/before-after/Helix UI Interface.webp" alt="Helix Interface" class="interface-img">
+            </div>
+
+            <hr class="divider">
+        </div>
+    </section>
+
+    <!-- Before/After -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Before & After</h2>
+            <p class="section-subtitle">Drag to compare</p>
 
             <div class="comparison-grid">
                 <div class="ba" data-start="50">
-                    <img class="ba__img ba__img--before" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false" loading="lazy">
+                    <img class="ba__img" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false">
                     <div class="ba__after">
-                        <img class="ba__img ba__img--after" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false" loading="lazy">
+                        <img class="ba__img" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false">
                     </div>
-                    <div class="ba__divider" aria-hidden="true"></div>
-                    <div class="ba__handle" role="slider" aria-label="Image comparison handle" tabindex="0">
-                        <span class="ba__pill" aria-hidden="true">
-                            <span class="ba__chev">‹</span>
-                            <span class="ba__chev">›</span>
-                        </span>
-                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                 </div>
 
                 <div class="ba" data-start="50">
-                    <img class="ba__img ba__img--before" src="images/before-after/helix-7-before.webp" alt="Before" draggable="false" loading="lazy">
+                    <img class="ba__img" src="images/before-after/helix-7-before.webp" alt="Before" draggable="false">
                     <div class="ba__after">
-                        <img class="ba__img ba__img--after" src="images/before-after/helix-7-1-after.webp" alt="After" draggable="false" loading="lazy">
+                        <img class="ba__img" src="images/before-after/helix-7-1-after.webp" alt="After" draggable="false">
                     </div>
-                    <div class="ba__divider" aria-hidden="true"></div>
-                    <div class="ba__handle" role="slider" aria-label="Image comparison handle" tabindex="0">
-                        <span class="ba__pill" aria-hidden="true">
-                            <span class="ba__chev">‹</span>
-                            <span class="ba__chev">›</span>
-                        </span>
-                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                 </div>
 
                 <div class="ba" data-start="50">
-                    <img class="ba__img ba__img--before" src="images/before-after/helix-3-before.webp" alt="Before" draggable="false" loading="lazy">
+                    <img class="ba__img" src="images/before-after/helix-3-before.webp" alt="Before" draggable="false">
                     <div class="ba__after">
-                        <img class="ba__img ba__img--after" src="images/before-after/helix-3-1-after.webp" alt="After" draggable="false" loading="lazy">
+                        <img class="ba__img" src="images/before-after/helix-3-1-after.webp" alt="After" draggable="false">
                     </div>
-                    <div class="ba__divider" aria-hidden="true"></div>
-                    <div class="ba__handle" role="slider" aria-label="Image comparison handle" tabindex="0">
-                        <span class="ba__pill" aria-hidden="true">
-                            <span class="ba__chev">‹</span>
-                            <span class="ba__chev">›</span>
-                        </span>
-                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                 </div>
 
                 <div class="ba" data-start="50">
-                    <img class="ba__img ba__img--before" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false" loading="lazy">
+                    <img class="ba__img" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false">
                     <div class="ba__after">
-                        <img class="ba__img ba__img--after" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false" loading="lazy">
+                        <img class="ba__img" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false">
                     </div>
-                    <div class="ba__divider" aria-hidden="true"></div>
-                    <div class="ba__handle" role="slider" aria-label="Image comparison handle" tabindex="0">
-                        <span class="ba__pill" aria-hidden="true">
-                            <span class="ba__chev">‹</span>
-                            <span class="ba__chev">›</span>
-                        </span>
-                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                 </div>
 
                 <div class="ba" data-start="50">
-                    <img class="ba__img ba__img--before" src="images/before-after/helix-2-before.webp" alt="Before" draggable="false" loading="lazy">
+                    <img class="ba__img" src="images/before-after/helix-2-before.webp" alt="Before" draggable="false">
                     <div class="ba__after">
-                        <img class="ba__img ba__img--after" src="images/before-after/helix-2-1-after.webp" alt="After" draggable="false" loading="lazy">
+                        <img class="ba__img" src="images/before-after/helix-2-1-after.webp" alt="After" draggable="false">
                     </div>
-                    <div class="ba__divider" aria-hidden="true"></div>
-                    <div class="ba__handle" role="slider" aria-label="Image comparison handle" tabindex="0">
-                        <span class="ba__pill" aria-hidden="true">
-                            <span class="ba__chev">‹</span>
-                            <span class="ba__chev">›</span>
-                        </span>
-                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Interface -->
-    <section class="interface-section">
-        <div class="container">
+            <div class="buy-wrapper" style="margin-top: 3rem;">
+                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $XX</a>
+            </div>
+
             <hr class="divider">
-            <div class="section-header">
-                <h2 class="section-title">Interface</h2>
-                <p class="section-subtitle">Clean. Intentional. No clutter.</p>
-            </div>
-
-            <div class="interface-grid">
-                <div class="interface-item">
-                    <p class="interface-label">Phi</p>
-                    <img src="images/before-after/Phi UI Interface.webp" alt="Phi Interface" class="interface-img">
-                </div>
-                <div class="interface-item">
-                    <p class="interface-label">Helix</p>
-                    <img src="images/before-after/Helix UI Interface.webp" alt="Helix Interface" class="interface-img">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section class="pricing-section" id="pricing">
-        <div class="container">
-            <hr class="divider">
-            <div class="section-header">
-                <h2 class="section-title">Pricing</h2>
-                <p class="section-subtitle">One bundle. Both plugins. Perpetual license.</p>
-            </div>
-
-            <div class="price-card">
-                <div class="price-bundle">
-                    <img src="images/phi-icon.webp" alt="Phi">
-                    <span class="price-bundle-plus">+</span>
-                    <img src="images/helix-icon.webp" alt="Helix">
-                </div>
-                <h3 class="price-name">Phi + Helix</h3>
-                <p class="price-tagline">The complete color grading toolkit</p>
-                <p class="price-amount">$XX</p>
-                <p class="price-type">Perpetual License</p>
-                <ul class="price-features">
-                    <li>Both Phi and Helix plugins</li>
-                    <li>DaVinci Resolve 18+ compatible</li>
-                    <li>Lifetime updates included</li>
-                    <li>Instant download after purchase</li>
-                </ul>
-                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn btn-primary">Buy Now</a>
-            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="site-footer">
-        <hr class="divider">
-        <img src="images/monos-logo.png" alt="Monos Pros Monon" class="footer-logo">
+    <footer class="footer">
         <div class="footer-links">
             <a href="https://alecwisdom.com">Portfolio</a>
-            <a href="mailto:contact@monosprosmonon.com">Contact</a>
+            <a href="mailto:support@monosprosmonon.com">Support</a>
         </div>
         <p class="copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
@@ -687,44 +547,28 @@
             ba.__ba_init = true;
 
             const start = Number(ba.getAttribute("data-start") || 50);
-
             const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
             const setPos = (pct) => ba.style.setProperty("--pos", clamp(pct, 0, 100) + "%");
-
             const xToPct = (clientX) => {
                 const r = ba.getBoundingClientRect();
-                const x = clamp(clientX - r.left, 0, r.width);
-                return (x / r.width) * 100;
+                return (clamp(clientX - r.left, 0, r.width) / r.width) * 100;
             };
 
             setPos(start);
-
             let dragging = false;
 
-            const down = (clientX) => {
-                dragging = true;
-                setPos(xToPct(clientX));
-            };
+            const down = (clientX) => { dragging = true; setPos(xToPct(clientX)); };
+            const move = (clientX) => { if (dragging) setPos(xToPct(clientX)); };
+            const up = () => { dragging = false; };
 
-            const move = (clientX) => {
-                if (!dragging) return;
-                setPos(xToPct(clientX));
-            };
-
-            const up = () => {
-                dragging = false;
-            };
-
-            // Pointer Events
             ba.addEventListener("pointerdown", (e) => {
-                if (e.target.closest("a, button, input, textarea, select")) return;
                 if (e.cancelable) e.preventDefault();
                 ba.setPointerCapture?.(e.pointerId);
                 down(e.clientX);
             }, { passive: false });
 
             ba.addEventListener("pointermove", (e) => {
-                if (!ba.hasPointerCapture?.(e.pointerId) && !dragging) return;
+                if (!dragging) return;
                 if (e.cancelable) e.preventDefault();
                 move(e.clientX);
             }, { passive: false });
@@ -734,14 +578,9 @@
                 up();
             });
 
-            ba.addEventListener("pointercancel", (e) => {
-                try { ba.releasePointerCapture?.(e.pointerId); } catch {}
-                up();
-            });
+            ba.addEventListener("pointercancel", up);
 
-            // Touch fallback
             ba.addEventListener("touchstart", (e) => {
-                if (e.target.closest("a, button, input, textarea, select")) return;
                 if (e.cancelable) e.preventDefault();
                 const t = e.touches?.[0];
                 if (t) down(t.clientX);
@@ -756,37 +595,21 @@
 
             ba.addEventListener("touchend", up);
             ba.addEventListener("touchcancel", up);
-
-            // Keyboard support
-            const handle = ba.querySelector('.ba__handle');
-            if (handle) {
-                handle.addEventListener('keydown', (e) => {
-                    const current = parseFloat(getComputedStyle(ba).getPropertyValue('--pos')) || start;
-                    if (e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        setPos(current - 2);
-                    }
-                    if (e.key === 'ArrowRight') {
-                        e.preventDefault();
-                        setPos(current + 2);
-                    }
-                });
-            }
         }
 
-        // Initialize all sliders
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
 
-        // ASCII/Dither Background Animation
+        // ASCII Background - edges only
         (function() {
             const canvas = document.getElementById('ascii-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
 
-            const chars = ' .·:;+*#@';
+            const chars = ' .·:;+*#';
             let width, height, cols, rows;
             const cellSize = 16;
             let time = 0;
+            const edgeDepth = 180; // how far from edge the effect reaches
 
             function resize() {
                 width = window.innerWidth;
@@ -798,10 +621,9 @@
             }
 
             function noise(x, y, t) {
-                const n = Math.sin(x * 0.03 + t * 1.2) * Math.cos(y * 0.03 + t * 0.8) +
-                          Math.sin(x * 0.02 - t * 0.6) * Math.cos(y * 0.025 + t * 0.4) +
-                          Math.sin((x + y) * 0.015 + t * 0.3);
-                return (n + 3) / 6;
+                const n = Math.sin(x * 0.03 + t * 1.0) * Math.cos(y * 0.03 + t * 0.7) +
+                          Math.sin(x * 0.02 - t * 0.5) * Math.cos(y * 0.025 + t * 0.4);
+                return (n + 2) / 4;
             }
 
             function draw() {
@@ -817,12 +639,19 @@
                         const px = x * cellSize + cellSize / 2;
                         const py = y * cellSize + cellSize / 2;
 
-                        const n = noise(x, y, time);
-                        const charIndex = Math.floor(n * (chars.length - 1));
-                        const char = chars[Math.max(0, charIndex)];
+                        // Distance from nearest edge
+                        const distFromEdge = Math.min(px, width - px, py, height - py);
 
-                        // Faint wash - low opacity
-                        const opacity = n * 0.08;
+                        // Skip if too far from edge
+                        if (distFromEdge > edgeDepth) continue;
+
+                        // Fade based on distance from edge (stronger near edge)
+                        const edgeFade = 1 - (distFromEdge / edgeDepth);
+
+                        const n = noise(x, y, time);
+                        const charIndex = Math.floor(n * edgeFade * (chars.length - 1));
+                        const char = chars[Math.max(0, charIndex)];
+                        const opacity = n * edgeFade * 0.12;
 
                         if (opacity > 0.01) {
                             ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
@@ -831,7 +660,7 @@
                     }
                 }
 
-                time += 0.025; // More active animation
+                time += 0.025;
                 requestAnimationFrame(draw);
             }
 
