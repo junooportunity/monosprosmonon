@@ -772,7 +772,8 @@
             let width, height, cols, rows;
             const cellSize = 16;
             let time = 0;
-            const edgeDepth = 640; // how far from edge the effect reaches
+            let edgeDepth = 640; // how far from edge the effect reaches
+            let maxOpacity = 0.12;
 
             function resize() {
                 width = window.innerWidth;
@@ -781,6 +782,15 @@
                 canvas.height = height;
                 cols = Math.ceil(width / cellSize);
                 rows = Math.ceil(height / cellSize);
+
+                // Mobile: narrower edge depth and fainter
+                if (width <= 768) {
+                    edgeDepth = 80;
+                    maxOpacity = 0.06;
+                } else {
+                    edgeDepth = 640;
+                    maxOpacity = 0.12;
+                }
             }
 
             const PHI = 1.618033988749; // golden ratio
@@ -820,7 +830,7 @@
                         const n = noise(x, y, time);
                         const charIndex = Math.floor(n * edgeFade * (chars.length - 1));
                         const char = chars[Math.max(0, charIndex)];
-                        const opacity = n * edgeFade * 0.12;
+                        const opacity = n * edgeFade * maxOpacity;
 
                         if (opacity > 0.01) {
                             ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
