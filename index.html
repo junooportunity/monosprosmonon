@@ -365,6 +365,41 @@
             color: #888888;
         }
 
+        .footer-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .footer-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #666666;
+            transition: fill 0.2s ease;
+        }
+
+        .footer-icon:hover svg {
+            fill: #999999;
+        }
+
         .copyright {
             font-size: 0.65rem;
             color: #444444;
@@ -599,9 +634,17 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-icons">
+            <a href="https://x.com/monosprosmonon" target="_blank" class="footer-icon" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+        </div>
         <div class="footer-links">
             <a href="https://alecwisdom.com">Portfolio</a>
             <a href="mailto:support@monosprosmonon.com">Support</a>
+            <a href="/privacy.html">Privacy</a>
         </div>
         <p class="copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
