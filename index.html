@@ -81,36 +81,7 @@
             pointer-events: none;
         }
 
-        /* Edge glow pulse - hollow in middle */
         .edge-pulse {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            animation: edge-breathe 5s ease-in-out infinite;
-        }
-
-        @keyframes edge-breathe {
-            0%, 100% {
-                box-shadow:
-                    inset 0 0 80px 20px rgba(255, 255, 255, 0.03),
-                    inset 0 0 150px 50px rgba(255, 255, 255, 0.02);
-            }
-            50% {
-                box-shadow:
-                    inset 0 0 150px 60px rgba(255, 255, 255, 0.06),
-                    inset 0 0 250px 100px rgba(255, 255, 255, 0.03);
-            }
-        }
-
-        .ripple {
-            display: none;
-        }
-
-        .border-pulse {
             display: none;
         }
 
@@ -580,7 +551,7 @@
         </div>
     </footer>
     <script>
-        // ASCII Dither Background Animation
+        // ASCII Edge Animation - characters pulse at edges
         const canvas = document.getElementById('ascii-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -602,11 +573,10 @@
         }
 
         function noise(x, y, t) {
-            // Simple noise function
             const n = Math.sin(x * 0.05 + t) * Math.cos(y * 0.05 + t * 0.7) +
                       Math.sin(x * 0.02 - t * 0.5) * Math.cos(y * 0.03 + t * 0.3) +
                       Math.sin((x + y) * 0.01 + t * 0.2);
-            return (n + 3) / 6; // Normalize to 0-1
+            return (n + 3) / 6;
         }
 
         function draw() {
@@ -617,27 +587,36 @@
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
+            // Edge thickness that pulses
+            const pulseAmount = (Math.sin(time * 0.5) + 1) / 2; // 0 to 1
+            const edgeThickness = 150 + pulseAmount * 100; // 150-250px from edge
+
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const px = x * cellSize + cellSize / 2;
                     const py = y * cellSize + cellSize / 2;
 
-                    // Distance from center for radial fade
-                    const dx = px - width / 2;
-                    const dy = py - height / 2;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = Math.sqrt(width * width + height * height) / 2;
-                    const fade = 1 - Math.min(dist / (maxDist * 0.7), 1);
+                    // Distance from nearest edge
+                    const distFromLeft = px;
+                    const distFromRight = width - px;
+                    const distFromTop = py;
+                    const distFromBottom = height - py;
+                    const distFromEdge = Math.min(distFromLeft, distFromRight, distFromTop, distFromBottom);
+
+                    // Only draw near edges - fade in from edge
+                    if (distFromEdge > edgeThickness) continue;
+
+                    const edgeFade = 1 - (distFromEdge / edgeThickness);
 
                     // Get noise value
                     const n = noise(x, y, time);
 
                     // Map to character
-                    const charIndex = Math.floor(n * fade * (chars.length - 1));
+                    const charIndex = Math.floor(n * edgeFade * (chars.length - 1));
                     const char = chars[Math.max(0, charIndex)];
 
-                    // Opacity based on noise and distance
-                    const opacity = n * fade * 0.4;
+                    // Opacity based on noise and edge proximity
+                    const opacity = n * edgeFade * 0.5 * (0.7 + pulseAmount * 0.3);
 
                     if (opacity > 0.02) {
                         ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
@@ -646,7 +625,7 @@
                 }
             }
 
-            time += 0.008;
+            time += 0.015;
             requestAnimationFrame(draw);
         }
 
