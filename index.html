@@ -620,9 +620,15 @@
                 rows = Math.ceil(height / cellSize);
             }
 
+            const PHI = 1.618033988749; // golden ratio
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~137.5 degrees
+
             function noise(x, y, t) {
-                const n = Math.sin(x * 0.03 + t * 1.0) * Math.cos(y * 0.03 + t * 0.7) +
-                          Math.sin(x * 0.02 - t * 0.5) * Math.cos(y * 0.025 + t * 0.4);
+                // Golden ratio based spiral movement
+                const spiral = Math.sin(x * 0.02 * PHI + t * PHI) * Math.cos(y * 0.02 / PHI + t);
+                const wave = Math.sin((x + y) * goldenAngle * 0.01 + t * PHI * 0.5);
+                const drift = Math.cos(x * 0.015 - t / PHI) * Math.sin(y * 0.015 * PHI + t * 0.618);
+                const n = spiral + wave * 0.5 + drift * 0.5;
                 return (n + 2) / 4;
             }
 
