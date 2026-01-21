@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monos Pros Monon - Color Grading Tools</title>
+    <meta name="description" content="Professional color grading plugins for DaVinci Resolve. Phi for shot-level balance, Helix for texture and look development.">
+
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Monos Pros Monon - Color Grading Tools">
+    <meta property="og:description" content="Professional color grading plugins for DaVinci Resolve.">
+    <meta property="og:image" content="images/og-image.webp">
+    <meta property="og:url" content="https://monosprosmonon.com">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            /* Glass morphism variables */
+            --lg-frost-blur: 12px;
+            --lg-shadow-blur: 8px;
+            --lg-shadow-spread: 1px;
+            --lg-shadow-color: rgba(255, 255, 255, 0.08);
+            --lg-tint-color: 255, 255, 255;
+            --lg-tint-opacity: 0.05;
+            --lg-border-width: 1px;
+            --lg-border-color: rgba(255, 255, 255, 0.15);
+            --lg-outer-shadow-blur: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #050505;
+            color: #cccccc;
+            min-height: 100vh;
+            line-height: 1.6;
+            animation: fadeIn 2s ease-out;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ASCII/Halftone Background */
+        .halftone-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        #ascii-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Gradient mask to fade edges */
+        .halftone-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 20%, #050505 70%);
+            pointer-events: none;
+        }
+
+        /* Radial pulse that hits edges */
+        .halftone-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150vmax;
+            height: 150vmax;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 70%);
+            filter: blur(40px);
+            animation: glow-pulse 6s ease-in-out infinite;
+        }
+
+        /* Border flash when pulse hits */
+        .border-pulse {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0);
+            animation: border-flash 6s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes border-flash {
+            0%, 40% {
+                border-color: rgba(255, 255, 255, 0);
+                box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 0.15);
+                box-shadow: inset 0 0 60px 0 rgba(255, 255, 255, 0.03);
+            }
+            60%, 100% {
+                border-color: rgba(255, 255, 255, 0);
+                box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Content needs to be above background */
+        .site-nav, .hero, .products, .site-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .nav-logo img {
+            height: 40px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-logo:hover img {
+            opacity: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-pill {
+            padding: 5px 16px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #cccccc;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            border-radius: 20px;
+            background: transparent;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 20px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        .nav-pill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 20px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+        }
+
+        .nav-pill:hover {
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .hero-logo {
+            width: 120px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        .hero-tagline {
+            font-size: 1rem;
+            font-style: italic;
+            color: #999999;
+            margin-bottom: 3rem;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 0.95rem;
+            color: #999999;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Divider */
+        .divider {
+            width: 100%;
+            max-width: 600px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 2rem auto;
+            border: none;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #999999;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 0.7rem;
+            font-style: italic;
+            color: #666666;
+            margin-bottom: 3rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .card-divider {
+            width: 60%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 1.25rem auto;
+            border: none;
+        }
+
+        .product-description {
+            font-size: 0.8rem;
+            color: #999999;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .product-description.emphasis {
+            font-style: italic;
+            color: #b0b0b0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-button {
+            display: inline-block;
+            padding: 10px 32px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #cccccc;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            border-radius: 20px;
+            background: transparent;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 20px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        .buy-button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 20px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+        }
+
+        .buy-button:hover {
+            color: #ffffff;
+            box-shadow: 0px 6px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
+        }
+
+        .learn-more {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #666666;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: color 0.2s ease;
+        }
+
+        .learn-more:hover {
+            color: #999999;
+        }
+
+        /* Footer */
+        .site-footer {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.7rem;
+            color: #666666;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #999999;
+        }
+
+        .copyright {
+            font-size: 0.7rem;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-logo img {
+                height: 30px;
+            }
+
+            .nav-pill {
+                font-size: 0.6rem;
+                padding: 4px 12px;
+            }
+
+            .hero-title {
+                font-size: 1.3rem;
+                letter-spacing: 0.2em;
+            }
+
+            .hero-logo {
+                width: 80px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ASCII/Halftone Background -->
+    <div class="halftone-container">
+        <div class="halftone-glow"></div>
+        <canvas id="ascii-canvas"></canvas>
+        <div class="halftone-mask"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="site-nav">
+        <a href="/" class="nav-logo">
+            <img src="images/monos-logo.png" alt="Monos Pros Monon">
+        </a>
+        <div class="nav-links">
+            <a href="phi.html" class="nav-pill">Phi</a>
+            <a href="helix.html" class="nav-pill">Helix</a>
+            <a href="resources.html" class="nav-pill">Resources</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <img src="images/monos-logo.png" alt="Monos Pros Monon" class="hero-logo">
+        <h1 class="hero-title">Monos Pros Monon</h1>
+        <p class="hero-tagline">a company</p>
+        <hr class="divider">
+        <p class="hero-description">
+            Color grading tools for professionals who value intention over iteration.
+            Built for DaVinci Resolve by colorists, for colorists.
+        </p>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+        <h2 class="section-title">Color Grading Plugins</h2>
+        <p class="section-subtitle">For DaVinci Resolve</p>
+
+        <div class="product-grid">
+            <!-- Phi -->
+            <div class="product-card">
+                <img src="images/phi-icon.webp" alt="Phi" class="product-icon">
+                <h3 class="product-name">Phi</h3>
+                <hr class="card-divider">
+                <p class="product-description">
+                    A shot-level solution designed for colorists who want speed without compromise.
+                </p>
+                <p class="product-description">
+                    Consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically—one pass, one intent, one result.
+                </p>
+                <p class="product-description emphasis">
+                    For colorists who value control and speed at the shot level.
+                </p>
+                <hr class="card-divider">
+                <p class="product-price">$XX</p>
+                <a href="https://buy.stripe.com/YOUR_PHI_LINK" class="buy-button">Buy Now</a>
+            </div>
+
+            <!-- Helix -->
+            <div class="product-card">
+                <img src="images/helix-icon.webp" alt="Helix" class="product-icon">
+                <h3 class="product-name">Helix</h3>
+                <hr class="card-divider">
+                <p class="product-description">
+                    A look-development solution focused on texture, structure, and surface character.
+                </p>
+                <p class="product-description">
+                    Designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner, treating texture as an integrated system. The result is depth and tactility that reads naturally across formats and delivery specs.
+                </p>
+                <p class="product-description emphasis">
+                    For colorists shaping the final surface of an image.
+                </p>
+                <hr class="card-divider">
+                <p class="product-price">$XX</p>
+                <a href="https://buy.stripe.com/YOUR_HELIX_LINK" class="buy-button">Buy Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <hr class="divider">
+        <p class="copyright">&copy; 2026 Monos Pros Monon</p>
+        <div class="footer-links">
+            <a href="https://alecwisdom.com">Portfolio</a>
+            <a href="mailto:contact@monosprosmonon.com">Contact</a>
+        </div>
+    </footer>
+    <script>
+        // ASCII Dither Background Animation
+        const canvas = document.getElementById('ascii-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Characters from sparse to dense
+        const chars = ' .·:;+*#@';
+
+        let width, height;
+        let cols, rows;
+        const cellSize = 14;
+        let time = 0;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            cols = Math.ceil(width / cellSize);
+            rows = Math.ceil(height / cellSize);
+        }
+
+        function noise(x, y, t) {
+            // Simple noise function
+            const n = Math.sin(x * 0.05 + t) * Math.cos(y * 0.05 + t * 0.7) +
+                      Math.sin(x * 0.02 - t * 0.5) * Math.cos(y * 0.03 + t * 0.3) +
+                      Math.sin((x + y) * 0.01 + t * 0.2);
+            return (n + 3) / 6; // Normalize to 0-1
+        }
+
+        function draw() {
+            ctx.fillStyle = '#050505';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.font = `${cellSize}px monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const px = x * cellSize + cellSize / 2;
+                    const py = y * cellSize + cellSize / 2;
+
+                    // Distance from center for radial fade
+                    const dx = px - width / 2;
+                    const dy = py - height / 2;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = Math.sqrt(width * width + height * height) / 2;
+                    const fade = 1 - Math.min(dist / (maxDist * 0.7), 1);
+
+                    // Get noise value
+                    const n = noise(x, y, time);
+
+                    // Map to character
+                    const charIndex = Math.floor(n * fade * (chars.length - 1));
+                    const char = chars[Math.max(0, charIndex)];
+
+                    // Opacity based on noise and distance
+                    const opacity = n * fade * 0.4;
+
+                    if (opacity > 0.02) {
+                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                        ctx.fillText(char, px, py);
+                    }
+                }
+            }
+
+            time += 0.008;
+            requestAnimationFrame(draw);
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+        draw();
+    </script>
+</body>
+</html>
