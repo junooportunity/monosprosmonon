@@ -12,6 +12,8 @@
     <meta property="og:image" content="images/og-image.webp">
     <meta property="og:url" content="https://monosprosmonon.com">
     <meta property="og:type" content="website">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
         :root {
@@ -79,56 +81,41 @@
             pointer-events: none;
         }
 
-        /* Radial pulse that hits edges */
-        .halftone-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150vmax;
-            height: 150vmax;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 70%);
-            filter: blur(40px);
-            animation: glow-pulse 6s ease-in-out infinite;
-        }
-
-        /* Border flash when pulse hits */
-        .border-pulse {
+        /* Edge glow pulse - hollow in middle */
+        .edge-pulse {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0);
-            animation: border-flash 6s ease-in-out infinite;
             z-index: 0;
+            animation: edge-breathe 5s ease-in-out infinite;
         }
 
-        @keyframes glow-pulse {
+        @keyframes edge-breathe {
             0%, 100% {
-                opacity: 0.3;
-                transform: translate(-50%, -50%) scale(0.5);
+                box-shadow:
+                    inset 0 0 80px 20px rgba(255, 255, 255, 0.03),
+                    inset 0 0 150px 50px rgba(255, 255, 255, 0.02);
             }
             50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
+                box-shadow:
+                    inset 0 0 150px 60px rgba(255, 255, 255, 0.06),
+                    inset 0 0 250px 100px rgba(255, 255, 255, 0.03);
             }
         }
 
-        @keyframes border-flash {
-            0%, 40% {
-                border-color: rgba(255, 255, 255, 0);
-                box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
-            }
-            50% {
-                border-color: rgba(255, 255, 255, 0.15);
-                box-shadow: inset 0 0 60px 0 rgba(255, 255, 255, 0.03);
-            }
-            60%, 100% {
-                border-color: rgba(255, 255, 255, 0);
-                box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
-            }
+        .ripple {
+            display: none;
+        }
+
+        .border-pulse {
+            display: none;
+        }
+
+        .halftone-glow {
+            display: none;
         }
 
         /* Content needs to be above background */
@@ -139,18 +126,7 @@
 
         /* Navigation */
         .site-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 3rem;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            display: none;
         }
 
         .nav-logo img {
@@ -223,18 +199,13 @@
         }
 
         .hero-logo {
-            width: 120px;
+            width: 280px;
             margin-bottom: 2rem;
             opacity: 0.9;
         }
 
         .hero-title {
-            font-size: 1.8rem;
-            font-weight: 400;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            color: #e0e0e0;
+            display: none;
         }
 
         .hero-tagline {
@@ -247,6 +218,7 @@
         .hero-description {
             max-width: 600px;
             font-size: 0.95rem;
+            font-style: italic;
             color: #999999;
             margin-bottom: 3rem;
             line-height: 1.8;
@@ -295,6 +267,47 @@
             margin: 0 auto;
         }
 
+        .product-single {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .bundle-card {
+            padding: 3rem 2.5rem;
+        }
+
+        .bundle-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bundle-plus {
+            font-size: 1.5rem;
+            color: #666666;
+            font-weight: 300;
+        }
+
+        .plugin-name {
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #cccccc;
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .card-divider-light {
+            width: 40%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 1.5rem auto;
+            border: none;
+        }
+
         .product-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.08) 100%);
             backdrop-filter: blur(40px);
@@ -336,6 +349,7 @@
 
         .product-description {
             font-size: 0.8rem;
+            font-style: italic;
             color: #999999;
             margin-bottom: 1rem;
             line-height: 1.7;
@@ -343,7 +357,6 @@
         }
 
         .product-description.emphasis {
-            font-style: italic;
             color: #b0b0b0;
             text-align: center;
             margin-bottom: 0;
@@ -487,11 +500,10 @@
 <body>
     <!-- ASCII/Halftone Background -->
     <div class="halftone-container">
-        <div class="halftone-glow"></div>
         <canvas id="ascii-canvas"></canvas>
         <div class="halftone-mask"></div>
     </div>
-    <div class="border-pulse"></div>
+    <div class="edge-pulse"></div>
 
     <!-- Navigation -->
     <nav class="site-nav">
@@ -508,7 +520,6 @@
     <!-- Hero -->
     <section class="hero">
         <img src="images/monos-logo.png" alt="Monos Pros Monon" class="hero-logo">
-        <h1 class="hero-title">Monos Pros Monon</h1>
         <p class="hero-tagline">a company</p>
         <hr class="divider">
         <p class="hero-description">
@@ -522,43 +533,39 @@
         <h2 class="section-title">Color Grading Plugins</h2>
         <p class="section-subtitle">For DaVinci Resolve</p>
 
-        <div class="product-grid">
-            <!-- Phi -->
-            <div class="product-card">
-                <img src="images/phi-icon.webp" alt="Phi" class="product-icon">
-                <h3 class="product-name">Phi</h3>
+        <div class="product-single">
+            <div class="product-card bundle-card">
+                <div class="bundle-icons">
+                    <img src="images/phi-icon.webp" alt="Phi" class="product-icon">
+                    <span class="bundle-plus">+</span>
+                    <img src="images/helix-icon.webp" alt="Helix" class="product-icon">
+                </div>
+                <h3 class="product-name">Phi + Helix</h3>
                 <hr class="card-divider">
+
+                <!-- Phi -->
+                <h4 class="plugin-name">Phi</h4>
                 <p class="product-description">
-                    A shot-level solution designed for colorists who want speed without compromise.
-                </p>
-                <p class="product-description">
-                    Consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically—one pass, one intent, one result.
+                    A shot-level solution designed for colorists who want speed without compromise. Consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset.
                 </p>
                 <p class="product-description emphasis">
                     For colorists who value control and speed at the shot level.
                 </p>
-                <hr class="card-divider">
-                <p class="product-price">$XX</p>
-                <a href="https://buy.stripe.com/YOUR_PHI_LINK" class="buy-button">Buy Now</a>
-            </div>
 
-            <!-- Helix -->
-            <div class="product-card">
-                <img src="images/helix-icon.webp" alt="Helix" class="product-icon">
-                <h3 class="product-name">Helix</h3>
-                <hr class="card-divider">
+                <hr class="card-divider-light">
+
+                <!-- Helix -->
+                <h4 class="plugin-name">Helix</h4>
                 <p class="product-description">
-                    A look-development solution focused on texture, structure, and surface character.
-                </p>
-                <p class="product-description">
-                    Designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner, treating texture as an integrated system. The result is depth and tactility that reads naturally across formats and delivery specs.
+                    A look-development solution focused on texture, structure, and surface character. Shapes micro-contrast and perceived detail in a controlled manner, treating texture as an integrated system.
                 </p>
                 <p class="product-description emphasis">
                     For colorists shaping the final surface of an image.
                 </p>
+
                 <hr class="card-divider">
                 <p class="product-price">$XX</p>
-                <a href="https://buy.stripe.com/YOUR_HELIX_LINK" class="buy-button">Buy Now</a>
+                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="buy-button">Buy Now</a>
             </div>
         </div>
     </section>
