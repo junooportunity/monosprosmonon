@@ -32,6 +32,32 @@
             color: #cccccc;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ASCII/Dither Background */
+        .ascii-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #ascii-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Content above background */
+        .hero, .products-section, .comparison-section, .interface-section, .pricing-section, .site-footer {
+            position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -42,18 +68,16 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 3rem 2rem 2rem;
         }
 
         .hero-logo {
-            width: 200px;
-            margin-bottom: 1.5rem;
+            width: 280px;
+            margin-bottom: 1rem;
             opacity: 0.95;
         }
 
@@ -61,13 +85,6 @@
             font-size: 1rem;
             font-style: italic;
             color: #888888;
-            margin-bottom: 2rem;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
         }
 
         .btn {
@@ -91,31 +108,6 @@
 
         .btn-primary:hover {
             background: #e0e0e0;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #cccccc;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .btn-secondary:hover {
-            border-color: rgba(255, 255, 255, 0.5);
-            color: #ffffff;
-        }
-
-        .supported-software {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            opacity: 0.6;
-        }
-
-        .supported-software span {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #666666;
         }
 
         /* Divider */
@@ -151,7 +143,7 @@
 
         /* Product Section */
         .products-section {
-            padding: 4rem 0;
+            padding: 2rem 0;
         }
 
         .product-intro {
@@ -216,7 +208,7 @@
 
         /* Before/After Section */
         .comparison-section {
-            padding: 4rem 0;
+            padding: 2rem 0;
         }
 
         .comparison-grid {
@@ -309,7 +301,7 @@
 
         /* Interface Section */
         .interface-section {
-            padding: 4rem 0;
+            padding: 2rem 0;
         }
 
         .interface-grid {
@@ -338,7 +330,7 @@
 
         /* Pricing Section */
         .pricing-section {
-            padding: 4rem 0;
+            padding: 2rem 0;
             text-align: center;
         }
 
@@ -500,17 +492,15 @@
 </head>
 <body>
 
+    <!-- ASCII Background -->
+    <div class="ascii-bg">
+        <canvas id="ascii-canvas"></canvas>
+    </div>
+
     <!-- Hero -->
     <section class="hero">
         <img src="images/monos-logo.png" alt="Monos Pros Monon" class="hero-logo">
-        <p class="hero-tagline">color, finally playing by your rules</p>
-        <div class="hero-cta">
-            <a href="#pricing" class="btn btn-primary">Buy</a>
-            <a href="#comparison" class="btn btn-secondary">See Examples</a>
-        </div>
-        <div class="supported-software">
-            <span>For DaVinci Resolve</span>
-        </div>
+        <p class="hero-tagline">a company</p>
     </section>
 
     <!-- Products -->
@@ -786,6 +776,69 @@
 
         // Initialize all sliders
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
+
+        // ASCII/Dither Background Animation
+        (function() {
+            const canvas = document.getElementById('ascii-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const chars = ' .·:;+*#@';
+            let width, height, cols, rows;
+            const cellSize = 16;
+            let time = 0;
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                cols = Math.ceil(width / cellSize);
+                rows = Math.ceil(height / cellSize);
+            }
+
+            function noise(x, y, t) {
+                const n = Math.sin(x * 0.03 + t * 1.2) * Math.cos(y * 0.03 + t * 0.8) +
+                          Math.sin(x * 0.02 - t * 0.6) * Math.cos(y * 0.025 + t * 0.4) +
+                          Math.sin((x + y) * 0.015 + t * 0.3);
+                return (n + 3) / 6;
+            }
+
+            function draw() {
+                ctx.fillStyle = '#0a0a0a';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${cellSize}px monospace`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                for (let y = 0; y < rows; y++) {
+                    for (let x = 0; x < cols; x++) {
+                        const px = x * cellSize + cellSize / 2;
+                        const py = y * cellSize + cellSize / 2;
+
+                        const n = noise(x, y, time);
+                        const charIndex = Math.floor(n * (chars.length - 1));
+                        const char = chars[Math.max(0, charIndex)];
+
+                        // Faint wash - low opacity
+                        const opacity = n * 0.08;
+
+                        if (opacity > 0.01) {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                            ctx.fillText(char, px, py);
+                        }
+                    }
+                }
+
+                time += 0.025; // More active animation
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        })();
     </script>
 </body>
 </html>
