@@ -130,6 +130,41 @@
             margin: 0 auto 2rem;
         }
 
+        /* Product Cards Mini */
+        .product-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product-card-mini {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-name {
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-tagline {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #666666;
+        }
+
         /* Buy Button */
         .buy-wrapper {
             text-align: center;
@@ -358,6 +393,19 @@
             .interface-img {
                 max-width: 300px;
             }
+
+            .product-cards {
+                gap: 1rem;
+            }
+
+            .product-card-mini {
+                padding: 1.5rem 1rem;
+            }
+
+            .card-icon {
+                width: 44px;
+                height: 44px;
+            }
         }
     </style>
 </head>
@@ -375,6 +423,24 @@
         <hr class="divider" style="margin-top: 1.5rem;">
     </section>
 
+    <!-- Product Cards -->
+    <section class="section">
+        <div class="container">
+            <div class="product-cards">
+                <div class="product-card-mini">
+                    <img src="images/phi-icon.webp" alt="Phi" class="card-icon">
+                    <h3 class="card-name">Phi</h3>
+                    <p class="card-tagline">Shot-level balance</p>
+                </div>
+                <div class="product-card-mini">
+                    <img src="images/helix-icon.webp" alt="Helix" class="card-icon">
+                    <h3 class="card-name">Helix</h3>
+                    <p class="card-tagline">Texture & surface character</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Overview -->
     <section class="section">
         <div class="container">
@@ -386,7 +452,7 @@
                 Together, they form a complete color grading toolkit built by colorists, for colorists.
             </p>
             <div class="buy-wrapper">
-                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $XX</a>
+                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $99.99</a>
             </div>
             <hr class="divider">
         </div>
@@ -524,7 +590,7 @@
             </div>
 
             <div class="buy-wrapper" style="margin-top: 3rem;">
-                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $XX</a>
+                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $99.99</a>
             </div>
 
             <hr class="divider">
