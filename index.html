@@ -639,8 +639,8 @@
                         const px = x * cellSize + cellSize / 2;
                         const py = y * cellSize + cellSize / 2;
 
-                        // Distance from nearest edge
-                        const distFromEdge = Math.min(px, width - px, py, height - py);
+                        // Distance from left/right edges only
+                        const distFromEdge = Math.min(px, width - px);
 
                         // Skip if too far from edge
                         if (distFromEdge > edgeDepth) continue;
