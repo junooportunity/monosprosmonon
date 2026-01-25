@@ -32,8 +32,6 @@
             min-height: 100vh;
             line-height: 1.6;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
         /* ASCII Background */
@@ -57,9 +55,11 @@
 
         /* Main content */
         .main {
-            position: relative;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,7 +82,10 @@
 
         /* Footer */
         .footer {
-            position: relative;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 1;
             padding: 2rem;
             text-align: center;
