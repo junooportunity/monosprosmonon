@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monos Pros Monon</title>
-    <meta name="description" content="Professional color grading plugins for DaVinci Resolve. Phi for shot-level balance, Helix for texture and look development.">
+    <meta name="description" content="Monos Pros Monon — a company">
 
     <meta property="og:title" content="Monos Pros Monon">
-    <meta property="og:description" content="Professional color grading plugins for DaVinci Resolve.">
+    <meta property="og:description" content="Monos Pros Monon — a company">
     <meta property="og:image" content="images/og-image.png">
     <meta property="og:url" content="https://monosprosmonon.com">
     <meta property="og:type" content="website">
@@ -21,8 +21,8 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
+        html, body {
+            height: 100%;
         }
 
         body {
@@ -32,6 +32,8 @@
             min-height: 100vh;
             line-height: 1.6;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ASCII Background */
@@ -53,332 +55,42 @@
             height: 100%;
         }
 
-        /* All content above background */
-        .hero, .section {
+        /* Main content */
+        .main {
             position: relative;
             z-index: 1;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Hero */
-        .hero {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 4rem 2rem 2rem;
+            padding: 2rem;
         }
 
-        .hero-logo {
+        .logo {
             width: 300px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             opacity: 0.95;
         }
 
-        .hero-tagline {
+        .tagline {
             font-size: 0.9rem;
             font-style: italic;
             color: #777777;
-        }
-
-        /* Divider */
-        .divider {
-            width: 100%;
-            max-width: 500px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 1.5rem auto;
-            border: none;
-        }
-
-        /* Section */
-        .section {
-            padding: 2rem 0;
-        }
-
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #888888;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-subtitle {
-            font-size: 0.85rem;
-            font-style: italic;
-            color: #666666;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        /* Overview Block */
-        .overview-text {
-            font-size: 0.85rem;
-            font-style: italic;
-            color: #999999;
-            line-height: 1.8;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        /* Product Cards Mini */
-        .product-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .product-card-mini {
-            text-align: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-name {
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-tagline {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #666666;
-        }
-
-        /* Buy Button */
-        .buy-wrapper {
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 32px;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.75rem;
-            font-weight: 400;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            border-radius: 20px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            color: #cccccc;
-            position: relative;
-            isolation: isolate;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            box-shadow: inset 0 0 8px 1px rgba(255, 255, 255, 0.08);
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            pointer-events: none;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .btn:hover {
-            color: #ffffff;
-        }
-
-        .btn:hover::before {
-            box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        /* Plugin Block */
-        .plugin-block {
-            padding: 1rem 0;
-        }
-
-        .plugin-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .plugin-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-        }
-
-        .plugin-name {
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-        }
-
-        .plugin-tagline {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #666666;
-        }
-
-        .plugin-description {
-            font-size: 0.85rem;
-            font-style: italic;
-            color: #999999;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .plugin-ethos {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #777777;
-            text-align: center;
-            margin: 2rem 0;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .plugin-interface {
-            text-align: center;
-            margin: 1.5rem 0 0.5rem;
-        }
-
-        .interface-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #555555;
-            margin-bottom: 1rem;
-        }
-
-        .interface-img {
-            max-width: 400px;
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        /* Before/After Section */
-        .comparison-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        /* Before/After Slider */
-        .ba, .ba * {
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        .ba {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            border-radius: 8px;
-            --pos: 50%;
-            touch-action: none;
-        }
-
-        .ba__img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
-
-        .ba__after {
-            position: absolute;
-            inset: 0;
-            clip-path: inset(0 0 0 var(--pos));
-        }
-
-        .ba__divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: var(--pos);
-            width: 2px;
-            transform: translateX(-1px);
-            background: rgba(255, 255, 255, 0.5);
-            pointer-events: none;
-        }
-
-        .ba__handle {
-            position: absolute;
-            top: 50%;
-            left: var(--pos);
-            transform: translate(-50%, -50%);
-            cursor: ew-resize;
-            touch-action: none;
-        }
-
-        .ba__pill {
-            display: inline-grid;
-            grid-auto-flow: column;
-            place-items: center;
-            column-gap: 8px;
-            height: 24px;
-            padding: 0 10px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-        }
-
-        .ba__chev {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
         }
 
         /* Footer */
         .footer {
             position: relative;
             z-index: 1;
-            padding: 3rem 2rem 2rem;
+            padding: 2rem;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 2rem;
         }
 
         .footer-icons {
@@ -464,37 +176,8 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero {
-                padding: 3rem 1.5rem 1.5rem;
-            }
-
-            .hero-logo {
+            .logo {
                 width: 220px;
-            }
-
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            .plugin-description {
-                font-size: 0.8rem;
-            }
-
-            .interface-img {
-                max-width: 300px;
-            }
-
-            .product-cards {
-                gap: 1rem;
-            }
-
-            .product-card-mini {
-                padding: 1.5rem 1rem;
-            }
-
-            .card-icon {
-                width: 44px;
-                height: 44px;
             }
         }
     </style>
@@ -506,173 +189,14 @@
         <canvas id="ascii-canvas"></canvas>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
-        <img src="images/monos-logo.png" alt="Monos Pros Monon" class="hero-logo">
-        <p class="hero-tagline">a company</p>
-        <hr class="divider" style="margin-top: 1.5rem; margin-bottom: 10px;">
-    </section>
-
-    <!-- Product Cards -->
-    <section class="section" style="padding-top: 0;">
-        <div class="container">
-            <div class="product-cards">
-                <div class="product-card-mini">
-                    <img src="images/phi-icon.webp" alt="Phi" class="card-icon">
-                    <h3 class="card-name">Phi</h3>
-                    <p class="card-tagline">Shot-level balance</p>
-                </div>
-                <div class="product-card-mini">
-                    <img src="images/helix-icon.webp" alt="Helix" class="card-icon">
-                    <h3 class="card-name">Helix</h3>
-                    <p class="card-tagline">Texture & surface character</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Overview -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Color Grading Plugins</h2>
-            <p class="section-subtitle">For DaVinci Resolve</p>
-            <div class="buy-wrapper">
-                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $99.99</a>
-            </div>
-            <hr class="divider">
-        </div>
-    </section>
-
-    <!-- PHI Block -->
-    <section class="section plugin-block">
-        <div class="container">
-            <div class="plugin-header">
-                <img src="images/phi-icon.webp" alt="Phi" class="plugin-icon">
-                <h3 class="plugin-name">Phi</h3>
-                <p class="plugin-tagline">Shot-level balance</p>
-            </div>
-
-            <p class="plugin-description">
-                Phi is a shot-level solution designed for colorists who want speed without compromise.
-            </p>
-
-            <p class="plugin-description">
-                It consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically—one pass, one intent, one result.
-            </p>
-
-            <p class="plugin-description">
-                Phi excels at first-pass balance, difficult mixed-lighting shots, and fast turnarounds where consistency matters. Controls are interdependent by design, preserving tonal integrity while allowing decisive moves.
-            </p>
-
-            <div class="plugin-interface">
-                <p class="interface-label">Interface</p>
-                <img src="images/Phi Interface.png" alt="Phi Interface" class="interface-img">
-            </div>
-
-            <hr class="divider">
-        </div>
-    </section>
-
-    <!-- HELIX Block -->
-    <section class="section plugin-block">
-        <div class="container">
-            <div class="plugin-header">
-                <img src="images/helix-icon.webp" alt="Helix" class="plugin-icon">
-                <h3 class="plugin-name">Helix</h3>
-                <p class="plugin-tagline">Texture & surface character</p>
-            </div>
-
-            <p class="plugin-description">
-                Helix is a look-development solution focused on texture, structure, and surface character.
-            </p>
-
-            <p class="plugin-description">
-                It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. Helix treats texture as an integrated system. The result is depth and tactility that reads naturally across formats and delivery specs.
-            </p>
-
-            <p class="plugin-description">
-                Helix is built for intentional look development. It excels after balance is set, when the image needs character without noise, and refinement without distraction. Subtle at low settings, expressive when pushed, it remains stable shot to shot.
-            </p>
-
-            <div class="plugin-interface">
-                <p class="interface-label">Interface</p>
-                <img src="images/Helix Interface.png" alt="Helix Interface" class="interface-img">
-            </div>
-
-            <hr class="divider">
-        </div>
-    </section>
-
-    <!-- Before/After -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Before & After</h2>
-            <p class="section-subtitle">Drag to compare</p>
-
-            <div class="comparison-grid">
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-7-before.webp" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-7-1-after.webp" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-3-before.webp" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-3-1-after.webp" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-2-before.webp" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-2-1-after.webp" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-
-                <div class="ba" data-start="50">
-                    <img class="ba__img" src="images/before-after/helix-9-before.png" alt="Before" draggable="false">
-                    <div class="ba__after">
-                        <img class="ba__img" src="images/before-after/helix-9-1-after.png" alt="After" draggable="false">
-                    </div>
-                    <div class="ba__divider"></div>
-                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
-                </div>
-            </div>
-
-            <div class="buy-wrapper" style="margin-top: 3rem;">
-                <a href="https://buy.stripe.com/YOUR_BUNDLE_LINK" class="btn">Buy — $99.99</a>
-            </div>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <main class="main">
+        <img src="images/monos-logo.png" alt="Monos Pros Monon" class="logo">
+        <p class="tagline">a company</p>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer" style="margin-top: 1.5rem;">
+    <footer class="footer">
         <div class="footer-icons">
             <a href="https://www.imdb.com/name/nm10572249/" target="_blank" class="footer-icon" aria-label="IMDb">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
@@ -704,65 +228,7 @@
     </footer>
 
     <script>
-        // Before/After Slider
-        function initBeforeAfter(ba) {
-            if (!ba || ba.__ba_init) return;
-            ba.__ba_init = true;
-
-            const start = Number(ba.getAttribute("data-start") || 50);
-            const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-            const setPos = (pct) => ba.style.setProperty("--pos", clamp(pct, 0, 100) + "%");
-            const xToPct = (clientX) => {
-                const r = ba.getBoundingClientRect();
-                return (clamp(clientX - r.left, 0, r.width) / r.width) * 100;
-            };
-
-            setPos(start);
-            let dragging = false;
-
-            const down = (clientX) => { dragging = true; setPos(xToPct(clientX)); };
-            const move = (clientX) => { if (dragging) setPos(xToPct(clientX)); };
-            const up = () => { dragging = false; };
-
-            ba.addEventListener("pointerdown", (e) => {
-                if (e.cancelable) e.preventDefault();
-                ba.setPointerCapture?.(e.pointerId);
-                down(e.clientX);
-            }, { passive: false });
-
-            ba.addEventListener("pointermove", (e) => {
-                if (!dragging) return;
-                if (e.cancelable) e.preventDefault();
-                move(e.clientX);
-            }, { passive: false });
-
-            ba.addEventListener("pointerup", (e) => {
-                try { ba.releasePointerCapture?.(e.pointerId); } catch {}
-                up();
-            });
-
-            ba.addEventListener("pointercancel", up);
-
-            ba.addEventListener("touchstart", (e) => {
-                if (e.cancelable) e.preventDefault();
-                const t = e.touches?.[0];
-                if (t) down(t.clientX);
-            }, { passive: false });
-
-            ba.addEventListener("touchmove", (e) => {
-                if (!dragging) return;
-                if (e.cancelable) e.preventDefault();
-                const t = e.touches?.[0];
-                if (t) move(t.clientX);
-            }, { passive: false });
-
-            ba.addEventListener("touchend", up);
-            ba.addEventListener("touchcancel", up);
-        }
-
-        document.querySelectorAll(".ba").forEach(initBeforeAfter);
-
-        // ASCII Background - edges only
+        // ASCII Background - golden ratio based
         (function() {
             const canvas = document.getElementById('ascii-canvas');
             if (!canvas) return;
@@ -772,7 +238,7 @@
             let width, height, cols, rows;
             const cellSize = 16;
             let time = 0;
-            let edgeDepth = 640; // how far from edge the effect reaches
+            let edgeDepth = 640;
             let maxOpacity = 0.12;
 
             function resize() {
@@ -783,7 +249,6 @@
                 cols = Math.ceil(width / cellSize);
                 rows = Math.ceil(height / cellSize);
 
-                // Mobile: narrower edge depth and fainter
                 if (width <= 768) {
                     edgeDepth = 80;
                     maxOpacity = 0.06;
@@ -793,11 +258,10 @@
                 }
             }
 
-            const PHI = 1.618033988749; // golden ratio
-            const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~137.5 degrees
+            const PHI = 1.618033988749;
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
             function noise(x, y, t) {
-                // Golden ratio based spiral movement
                 const spiral = Math.sin(x * 0.02 * PHI + t * PHI) * Math.cos(y * 0.02 / PHI + t);
                 const wave = Math.sin((x + y) * goldenAngle * 0.01 + t * PHI * 0.5);
                 const drift = Math.cos(x * 0.015 - t / PHI) * Math.sin(y * 0.015 * PHI + t * 0.618);
@@ -818,13 +282,10 @@
                         const px = x * cellSize + cellSize / 2;
                         const py = y * cellSize + cellSize / 2;
 
-                        // Distance from left/right edges only
                         const distFromEdge = Math.min(px, width - px);
 
-                        // Skip if too far from edge
                         if (distFromEdge > edgeDepth) continue;
 
-                        // Fade based on distance from edge (stronger near edge)
                         const edgeFade = 1 - (distFromEdge / edgeDepth);
 
                         const n = noise(x, y, time);
