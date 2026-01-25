@@ -34,32 +34,12 @@
             overflow-x: hidden;
         }
 
-        /* ASCII Background */
-        .ascii-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        #ascii-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
         /* Main content */
         .main {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -86,7 +66,6 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 1;
             padding: 2rem;
             text-align: center;
             display: flex;
@@ -168,11 +147,6 @@
 </head>
 <body>
 
-    <!-- ASCII Background -->
-    <div class="ascii-bg">
-        <canvas id="ascii-canvas"></canvas>
-    </div>
-
     <!-- Main Content -->
     <main class="main">
         <img src="images/monos-logo.png" alt="Monos Pros Monon" class="logo">
@@ -191,87 +165,5 @@
         <p class="copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
 
-    <script>
-        // ASCII Background - golden ratio based
-        (function() {
-            const canvas = document.getElementById('ascii-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            const chars = ' .·:;+*#';
-            let width, height, cols, rows;
-            const cellSize = 16;
-            let time = 0;
-            let edgeDepth = 640;
-            let maxOpacity = 0.25;
-
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
-                cols = Math.ceil(width / cellSize);
-                rows = Math.ceil(height / cellSize);
-
-                if (width <= 768) {
-                    edgeDepth = 120;
-                    maxOpacity = 0.15;
-                } else {
-                    edgeDepth = 640;
-                    maxOpacity = 0.25;
-                }
-            }
-
-            const PHI = 1.618033988749;
-            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-
-            function noise(x, y, t) {
-                const spiral = Math.sin(x * 0.02 * PHI + t * PHI) * Math.cos(y * 0.02 / PHI + t);
-                const wave = Math.sin((x + y) * goldenAngle * 0.01 + t * PHI * 0.5);
-                const drift = Math.cos(x * 0.015 - t / PHI) * Math.sin(y * 0.015 * PHI + t * 0.618);
-                const n = spiral + wave * 0.5 + drift * 0.5;
-                return (n + 2) / 4;
-            }
-
-            function draw() {
-                ctx.fillStyle = '#0a0a0a';
-                ctx.fillRect(0, 0, width, height);
-
-                ctx.font = `${cellSize}px monospace`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                for (let y = 0; y < rows; y++) {
-                    for (let x = 0; x < cols; x++) {
-                        const px = x * cellSize + cellSize / 2;
-                        const py = y * cellSize + cellSize / 2;
-
-                        const distFromEdge = Math.min(px, width - px);
-
-                        if (distFromEdge > edgeDepth) continue;
-
-                        const edgeFade = 1 - (distFromEdge / edgeDepth);
-
-                        const n = noise(x, y, time);
-                        const charIndex = Math.floor(n * edgeFade * (chars.length - 1));
-                        const char = chars[Math.max(0, charIndex)];
-                        const opacity = n * edgeFade * maxOpacity;
-
-                        if (opacity > 0.01) {
-                            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-                            ctx.fillText(char, px, py);
-                        }
-                    }
-                }
-
-                time += 0.008;
-                requestAnimationFrame(draw);
-            }
-
-            resize();
-            window.addEventListener('resize', resize);
-            draw();
-        })();
-    </script>
 </body>
 </html>
