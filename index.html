@@ -203,7 +203,7 @@
             const cellSize = 16;
             let time = 0;
             let edgeDepth = 640;
-            let maxOpacity = 0.12;
+            let maxOpacity = 0.25;
 
             function resize() {
                 width = window.innerWidth;
@@ -214,11 +214,11 @@
                 rows = Math.ceil(height / cellSize);
 
                 if (width <= 768) {
-                    edgeDepth = 80;
-                    maxOpacity = 0.06;
+                    edgeDepth = 120;
+                    maxOpacity = 0.15;
                 } else {
                     edgeDepth = 640;
-                    maxOpacity = 0.12;
+                    maxOpacity = 0.25;
                 }
             }
 
@@ -264,7 +264,7 @@
                     }
                 }
 
-                time += 0.025;
+                time += 0.008;
                 requestAnimationFrame(draw);
             }
 
