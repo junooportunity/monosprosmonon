@@ -44,6 +44,28 @@
             color: #cccccc;
             min-height: 100vh;
             line-height: 1.6;
+            position: relative;
+        }
+
+        /* ASCII Golden Ratio Background */
+        .ascii-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.03;
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 1.2;
+            color: #ffffff;
+            white-space: pre;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
@@ -1009,6 +1031,33 @@
     </style>
 </head>
 <body>
+
+    <!-- ASCII Golden Ratio Background -->
+    <div class="ascii-bg" aria-hidden="true">
+                                                    φ
+                                               φ    φ    φ
+                                          φ    φ    φ    φ    φ
+                                     φ    φ    φ    φ    φ    φ    φ
+                                φ    φ    φ    φ    φ    φ    φ    φ    φ
+                           φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                      φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                 φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+            φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+       φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+  φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+       φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+            φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                 φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                      φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                           φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
+                                φ    φ    φ    φ    φ    φ    φ    φ    φ
+                                     φ    φ    φ    φ    φ    φ    φ
+                                          φ    φ    φ    φ    φ
+                                               φ    φ    φ
+                                                    φ
+
+                              1.618033988749894848204586834365638117720309180...
+    </div>
 
     <!-- Hero -->
     <section class="hero">
