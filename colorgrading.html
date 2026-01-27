@@ -162,20 +162,31 @@
             padding: 2rem 0;
         }
 
+        .pricing-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #e0e0e0;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
         .pricing-card {
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             border-radius: 16px;
             position: relative;
             isolation: isolate;
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Liquid glass tint layer */
@@ -214,41 +225,80 @@
             background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
         }
 
-        .pricing-tier {
-            font-size: 0.65rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #555555;
-            margin-bottom: 0.75rem;
-        }
-
-        .pricing-name {
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-includes {
-            font-size: 0.75rem;
-            font-style: italic;
-            color: #666666;
+        .pricing-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
-            line-height: 1.6;
+        }
+
+        .pricing-icons {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .pricing-icon {
+            width: 28px;
+            height: 28px;
+            opacity: 0.85;
+        }
+
+        .pricing-tier {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #e0e0e0;
         }
 
         .pricing-price {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 300;
             color: #ffffff;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
-        .pricing-price span {
-            font-size: 0.9rem;
+        .pricing-details {
+            font-size: 0.75rem;
+            color: #888888;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            padding: 0 0.5rem;
+        }
+
+        .pricing-details span {
+            display: block;
+        }
+
+        .pricing-details strong {
+            color: #cccccc;
+            font-weight: 400;
+        }
+
+        .pricing-btn-wrap {
+            margin-top: auto;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-note {
+            font-size: 0.65rem;
+            color: #555555;
+            font-style: italic;
+        }
+
+        .pricing-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .pricing-requirements {
+            font-size: 0.75rem;
             color: #666666;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .btn {
@@ -386,80 +436,120 @@
             margin: 0 auto;
         }
 
-        /* Interface Accordion */
-        .interface-accordion {
-            margin-top: 1.5rem;
-        }
-
-        .interface-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #999999;
-            background: transparent;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
+        /* Interface Explainer Panel */
+        .interface-panel {
+            margin-top: 2rem;
+            border-radius: 16px;
             position: relative;
             isolation: isolate;
-            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.25);
+            overflow: hidden;
         }
 
-        .interface-toggle::before {
+        .interface-panel::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 25px;
-            box-shadow: inset 0 0 8px -4px rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            z-index: 0;
+            border-radius: 16px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), 0.03);
+            border: var(--lg-border-width) solid var(--lg-border-color);
             pointer-events: none;
         }
 
-        .interface-toggle::after {
+        .interface-panel::after {
             content: '';
             position: absolute;
             inset: 0;
             z-index: -1;
-            border-radius: 25px;
+            border-radius: 16px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
 
-        .interface-toggle:hover {
-            color: #cccccc;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+        .interface-panel-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
         }
 
-        .interface-toggle:hover::before {
-            background-color: rgba(255, 255, 255, 0.08);
+        .interface-panel-inner::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .interface-toggle .toggle-icon {
+        .interface-panel-inner::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .interface-panel-inner::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .interface-panel-inner::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .interface-explainer {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .explainer-section {
+            text-align: left;
+        }
+
+        .explainer-title {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+        }
+
+        .explainer-text {
             font-size: 0.8rem;
-            transition: transform 0.3s ease;
+            font-style: italic;
+            color: #777777;
+            line-height: 1.7;
         }
 
-        .interface-toggle.open .toggle-icon {
-            transform: rotate(180deg);
+        .interface-preview {
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
         }
 
-        .interface-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0;
+        .interface-preview img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 8px;
+            opacity: 0.95;
+            position: sticky;
+            top: 1.5rem;
         }
 
-        .interface-content.open {
-            max-height: 600px;
-            padding-top: 1.5rem;
+        @media (max-width: 768px) {
+            .interface-panel-inner {
+                grid-template-columns: 1fr;
+                max-height: none;
+            }
+
+            .interface-preview {
+                order: -1;
+            }
+
+            .interface-preview img {
+                position: static;
+                max-width: 100%;
+            }
         }
 
         /* Aletheia Section */
@@ -934,8 +1024,13 @@
 
             .pricing-grid {
                 grid-template-columns: 1fr;
-                max-width: 400px;
+                max-width: 350px;
                 margin: 0 auto;
+            }
+
+            .pricing-header {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
 
@@ -1014,28 +1109,75 @@
     <!-- Pricing -->
     <section class="pricing">
         <div class="container">
+            <h2 class="pricing-title">Get the Tools</h2>
             <div class="pricing-grid">
                 <div class="pricing-card">
-                    <p class="pricing-tier">Foundation</p>
-                    <h3 class="pricing-name">Phi + Helix</h3>
-                    <p class="pricing-includes">Core grading engine<br>Texture & detail control</p>
+                    <div class="pricing-header">
+                        <div class="pricing-icons">
+                            <img src="images/phi-icon.webp" alt="Phi" class="pricing-icon">
+                            <img src="images/helix-icon.webp" alt="Helix" class="pricing-icon">
+                        </div>
+                        <span class="pricing-tier">Foundation</span>
+                    </div>
                     <p class="pricing-price">$99</p>
-                    <a href="#" class="btn">Buy</a>
+                    <div class="pricing-details">
+                        <span>▸ Billed <strong>once</strong></span>
+                        <span>▸ <strong>1</strong> seat</span>
+                        <span>▸ Phi + Helix</span>
+                        <span>▸ Core grading & texture</span>
+                    </div>
+                    <div class="pricing-btn-wrap">
+                        <a href="#" class="btn">Buy</a>
+                    </div>
+                    <p class="pricing-note">Perpetual license</p>
                 </div>
                 <div class="pricing-card">
-                    <p class="pricing-tier">Look Development</p>
-                    <h3 class="pricing-name">Alpha + Omega</h3>
-                    <p class="pricing-includes">Film-negative transform<br>Look development system</p>
+                    <div class="pricing-header">
+                        <div class="pricing-icons">
+                            <img src="images/alpha-icon.png" alt="Alpha" class="pricing-icon">
+                            <img src="images/omega-icon.png" alt="Omega" class="pricing-icon">
+                        </div>
+                        <span class="pricing-tier">Look Development</span>
+                    </div>
                     <p class="pricing-price">$199</p>
-                    <a href="#" class="btn">Buy</a>
+                    <div class="pricing-details">
+                        <span>▸ Billed <strong>once</strong></span>
+                        <span>▸ <strong>1</strong> seat</span>
+                        <span>▸ Alpha + Omega</span>
+                        <span>▸ Film transform & look system</span>
+                    </div>
+                    <div class="pricing-btn-wrap">
+                        <a href="#" class="btn">Buy</a>
+                    </div>
+                    <p class="pricing-note">Perpetual license</p>
                 </div>
                 <div class="pricing-card featured">
-                    <p class="pricing-tier">Complete</p>
-                    <h3 class="pricing-name">Aletheia</h3>
-                    <p class="pricing-includes">All four plugins<br>Developer documentation</p>
+                    <div class="pricing-header">
+                        <div class="pricing-icons">
+                            <img src="images/alpha-icon.png" alt="Alpha" class="pricing-icon">
+                            <img src="images/phi-icon.webp" alt="Phi" class="pricing-icon">
+                            <img src="images/helix-icon.webp" alt="Helix" class="pricing-icon">
+                            <img src="images/omega-icon.png" alt="Omega" class="pricing-icon">
+                        </div>
+                        <span class="pricing-tier">Complete</span>
+                    </div>
                     <p class="pricing-price">$299</p>
-                    <a href="#" class="btn btn-primary">Buy</a>
+                    <div class="pricing-details">
+                        <span>▸ Billed <strong>once</strong></span>
+                        <span>▸ <strong>1</strong> seat</span>
+                        <span>▸ All four plugins</span>
+                        <span>▸ Developer documentation</span>
+                    </div>
+                    <div class="pricing-btn-wrap">
+                        <a href="#" class="btn btn-primary">Buy</a>
+                    </div>
+                    <p class="pricing-note">Perpetual license</p>
                 </div>
+            </div>
+            <div class="pricing-footer">
+                <p class="pricing-requirements">
+                    Supports DaVinci Resolve 18+. macOS 12+ with Apple Silicon or Intel. Windows 10+ with CUDA-capable GPU.
+                </p>
             </div>
         </div>
     </section>
@@ -1116,12 +1258,33 @@
                 </div>
 
 
-                <div class="interface-accordion">
-                    <button class="interface-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        View Interface <span class="toggle-icon">↓</span>
-                    </button>
-                    <div class="interface-content">
-                        <img src="images/Phi Interface.png" alt="Phi Interface" class="interface-img">
+                <div class="interface-panel">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Exposure</h4>
+                                <p class="explainer-text">Scene-referred exposure in stops. Adjusts the image before contrast is applied, preserving the full dynamic range of your source.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Contrast & Pivot</h4>
+                                <p class="explainer-text">Pivot sets where contrast hinges. Raise it to protect highlights, lower it to protect shadows. Contrast expands or compresses around that point.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Density</h4>
+                                <p class="explainer-text">Controls how much light passes through the image. Increase for richer blacks, decrease for a lifted, faded look. Works independently of exposure.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Saturation & Vibrance</h4>
+                                <p class="explainer-text">OKLAB-based saturation for perceptually uniform adjustments. Vibrance targets less-saturated areas, leaving already-vivid colors alone.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Secondary Colors</h4>
+                                <p class="explainer-text">Tetrahedral interpolation for targeting specific hues. Adjust individual color ranges without artifacts or banding at the boundaries.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview">
+                            <img src="images/Phi Interface.png" alt="Phi Interface">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1162,12 +1325,33 @@
                 </div>
 
 
-                <div class="interface-accordion">
-                    <button class="interface-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        View Interface <span class="toggle-icon">↓</span>
-                    </button>
-                    <div class="interface-content">
-                        <img src="images/Helix Interface.png" alt="Helix Interface" class="interface-img">
+                <div class="interface-panel">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Frequency Bands</h4>
+                                <p class="explainer-text">Separate your image into low, mid, and high frequency layers. Each band captures detail at a different spatial scale—from broad tonal shapes to fine texture.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Detail Amount</h4>
+                                <p class="explainer-text">Control how much detail exists in each band. Reduce high-frequency detail to soften skin, boost mid-frequency to add depth to fabric and architecture.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Local Contrast</h4>
+                                <p class="explainer-text">Add dimensionality without affecting global contrast. Surfaces gain depth and presence while the overall image balance remains unchanged.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Texture Response</h4>
+                                <p class="explainer-text">Shape how textures render across the image. Control whether surfaces read as matte or glossy, rough or smooth—independent of color.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Edge Handling</h4>
+                                <p class="explainer-text">Adjustments stay clean at boundaries. No haloing around high-contrast edges, no ringing artifacts. Detail changes blend naturally.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview">
+                            <img src="images/Helix Interface.png" alt="Helix Interface">
+                        </div>
                     </div>
                 </div>
 
