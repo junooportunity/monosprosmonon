@@ -683,6 +683,48 @@
             letter-spacing: 0.1em;
         }
 
+        /* Compatibility Section */
+        .compatibility {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .compatibility-label {
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #555555;
+            margin-bottom: 1.5rem;
+        }
+
+        .compatibility-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .compatibility-logo {
+            height: 50px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .compatibility-logo:hover {
+            opacity: 0.9;
+        }
+
+        .compatibility-text {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #666666;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .pipeline-grid {
@@ -961,6 +1003,20 @@
         </div>
     </section>
 
+    <!-- Compatibility -->
+    <section class="compatibility">
+        <div class="container">
+            <p class="compatibility-label">Compatible With</p>
+            <div class="compatibility-logos">
+                <img src="images/davinci-logo.png" alt="DaVinci Resolve" class="compatibility-logo">
+                <img src="images/aces-logo.png" alt="ACES" class="compatibility-logo">
+            </div>
+            <p class="compatibility-text">
+                Built for DaVinci Resolve 18+ with full ACES pipeline support. Works seamlessly in both DaVinci Wide Gamut and ACES color-managed workflows.
+            </p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-icons">
@@ -970,7 +1026,6 @@
                 </svg>
             </a>
         </div>
-        <p class="footer-text">For DaVinci Resolve 18+</p>
         <p class="footer-copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
 
