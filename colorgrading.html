@@ -21,6 +21,19 @@
             box-sizing: border-box;
         }
 
+        :root {
+            /* Liquid Glass Variables */
+            --lg-shadow-blur: 10px;
+            --lg-shadow-spread: -6px;
+            --lg-shadow-color: rgba(255, 255, 255, 0.4);
+            --lg-tint-color: 255, 255, 255;
+            --lg-tint-opacity: 0.04;
+            --lg-frost-blur: 2px;
+            --lg-outer-shadow-blur: 24px;
+            --lg-border-color: rgba(255, 255, 255, 0.25);
+            --lg-border-width: 0.5px;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -159,18 +172,50 @@
         .pricing-card {
             padding: 2.5rem 2rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            transition: border-color 0.3s ease;
+            border-radius: 16px;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Liquid glass tint layer */
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 16px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        /* Liquid glass distortion layer */
+        .pricing-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 16px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-filter: url("#glass-distortion");
         }
 
         .pricing-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0px 10px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
         }
 
-        .pricing-card.featured {
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.02);
+        .pricing-card:hover::before {
+            box-shadow: inset 0 0 calc(var(--lg-shadow-blur) + 2px) var(--lg-shadow-spread) var(--lg-shadow-color);
+        }
+
+        .pricing-card.featured::before {
+            background-color: rgba(var(--lg-tint-color), 0.06);
         }
 
         .pricing-tier {
@@ -219,23 +264,57 @@
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            border-radius: 2px;
-            transition: all 0.2s ease;
+            border-radius: 20px;
+            transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
             background: transparent;
             color: #cccccc;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Liquid glass tint layer for buttons */
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 20px;
+            box-shadow: inset 0 0 8px -4px rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            pointer-events: none;
+        }
+
+        /* Liquid glass distortion layer for buttons */
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 20px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-filter: url("#glass-distortion");
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
             color: #ffffff;
         }
 
-        .btn-primary {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.25);
+        .btn:hover::before {
+            box-shadow: inset 0 0 10px -4px rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-primary::before {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         /* Plugin Details */
@@ -308,9 +387,41 @@
 
         /* Aletheia Section */
         .aletheia {
-            padding: 4rem 0;
+            padding: 4rem 2rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin: 3rem auto;
+            max-width: 700px;
+            border-radius: 20px;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 8px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+        }
+
+        /* Liquid glass tint layer */
+        .aletheia::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 20px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), 0.03);
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        /* Liquid glass distortion layer */
+        .aletheia::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 20px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-filter: url("#glass-distortion");
         }
 
         .aletheia-name {
@@ -350,18 +461,222 @@
             margin-bottom: 2rem;
         }
 
+        /* Before/After Section */
+        .comparison {
+            padding: 3rem 0;
+        }
+
+        .comparison-label {
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #555555;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-subtitle {
+            font-size: 0.75rem;
+            font-style: italic;
+            color: #444444;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Before/After Slider */
+        .ba, .ba * {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .ba {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 12px;
+            --pos: 50%;
+            touch-action: none;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+        }
+
+        .ba__img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .ba__after {
+            position: absolute;
+            inset: 0;
+            clip-path: inset(0 0 0 var(--pos));
+        }
+
+        .ba__divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: var(--pos);
+            width: 2px;
+            transform: translateX(-1px);
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+
+        .ba__handle {
+            position: absolute;
+            top: 50%;
+            left: var(--pos);
+            transform: translate(-50%, -50%);
+            cursor: ew-resize;
+            touch-action: none;
+        }
+
+        .ba__pill {
+            display: inline-grid;
+            grid-auto-flow: column;
+            place-items: center;
+            column-gap: 8px;
+            height: 28px;
+            padding: 0 12px;
+            border-radius: 999px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .ba__pill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            box-shadow: inset 0 0 8px -4px rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+
+        .ba__pill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .ba__chev {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         /* Footer */
         .footer {
             padding: 4rem 2rem 2rem;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             margin-top: 3rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            position: relative;
+            isolation: isolate;
+            text-decoration: none;
+            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .footer-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        .footer-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 12px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            filter: url(#glass-distortion);
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-filter: url("#glass-distortion");
+        }
+
+        .footer-icon:hover {
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .footer-icon:hover::before {
+            box-shadow: inset 0 0 calc(var(--lg-shadow-blur) + 2px) var(--lg-shadow-spread) var(--lg-shadow-color);
+        }
+
+        .footer-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #888888;
+            transition: fill 0.3s ease;
+        }
+
+        .footer-icon:hover svg {
+            fill: #aaaaaa;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.7rem;
+            color: #666666;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #999999;
         }
 
         .footer-text {
             font-size: 0.7rem;
             color: #444444;
-            margin-bottom: 1rem;
         }
 
         .footer-copyright {
@@ -419,6 +734,17 @@
     </style>
 </head>
 <body>
+
+    <!-- SVG Filter for Liquid Glass Distortion -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+        <defs>
+            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+                <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
     <!-- Hero -->
     <section class="hero">
@@ -578,11 +904,144 @@
         </div>
     </section>
 
+    <!-- Before/After -->
+    <section class="comparison">
+        <div class="container">
+            <p class="comparison-label">Before & After</p>
+            <p class="comparison-subtitle">Drag to compare</p>
+
+            <div class="comparison-grid">
+                <div class="ba" data-start="50">
+                    <img class="ba__img" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false">
+                    <div class="ba__after">
+                        <img class="ba__img" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false">
+                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
+                </div>
+
+                <div class="ba" data-start="50">
+                    <img class="ba__img" src="images/before-after/helix-7-before.webp" alt="Before" draggable="false">
+                    <div class="ba__after">
+                        <img class="ba__img" src="images/before-after/helix-7-1-after.webp" alt="After" draggable="false">
+                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
+                </div>
+
+                <div class="ba" data-start="50">
+                    <img class="ba__img" src="images/before-after/helix-3-before.webp" alt="Before" draggable="false">
+                    <div class="ba__after">
+                        <img class="ba__img" src="images/before-after/helix-3-1-after.webp" alt="After" draggable="false">
+                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
+                </div>
+
+                <div class="ba" data-start="50">
+                    <img class="ba__img" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false">
+                    <div class="ba__after">
+                        <img class="ba__img" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false">
+                    </div>
+                    <div class="ba__divider"></div>
+                    <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-icons">
+            <a href="https://www.imdb.com/name/nm10572249/" target="_blank" class="footer-icon" aria-label="IMDb">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                    <text x="12" y="14" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#888888" text-anchor="middle">IMDb</text>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/alecwisdom" target="_blank" class="footer-icon" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/alecwisdom" target="_blank" class="footer-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </a>
+            <a href="https://x.com/monosprosmonon" target="_blank" class="footer-icon" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+        </div>
+        <div class="footer-links">
+            <a href="https://alecwisdom.com">Portfolio</a>
+            <a href="mailto:support@monosprosmonon.com">Support</a>
+            <a href="/privacy.html">Privacy</a>
+        </div>
         <p class="footer-text">For DaVinci Resolve 18+</p>
         <p class="footer-copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
+
+    <script>
+        // Before/After Slider
+        function initBeforeAfter(ba) {
+            if (!ba || ba.__ba_init) return;
+            ba.__ba_init = true;
+
+            const start = Number(ba.getAttribute("data-start") || 50);
+            const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+            const setPos = (pct) => ba.style.setProperty("--pos", clamp(pct, 0, 100) + "%");
+            const xToPct = (clientX) => {
+                const r = ba.getBoundingClientRect();
+                return (clamp(clientX - r.left, 0, r.width) / r.width) * 100;
+            };
+
+            setPos(start);
+            let dragging = false;
+
+            const down = (clientX) => { dragging = true; setPos(xToPct(clientX)); };
+            const move = (clientX) => { if (dragging) setPos(xToPct(clientX)); };
+            const up = () => { dragging = false; };
+
+            ba.addEventListener("pointerdown", (e) => {
+                if (e.cancelable) e.preventDefault();
+                ba.setPointerCapture?.(e.pointerId);
+                down(e.clientX);
+            }, { passive: false });
+
+            ba.addEventListener("pointermove", (e) => {
+                if (!dragging) return;
+                if (e.cancelable) e.preventDefault();
+                move(e.clientX);
+            }, { passive: false });
+
+            ba.addEventListener("pointerup", (e) => {
+                try { ba.releasePointerCapture?.(e.pointerId); } catch {}
+                up();
+            });
+
+            ba.addEventListener("pointercancel", up);
+
+            ba.addEventListener("touchstart", (e) => {
+                if (e.cancelable) e.preventDefault();
+                const t = e.touches?.[0];
+                if (t) down(t.clientX);
+            }, { passive: false });
+
+            ba.addEventListener("touchmove", (e) => {
+                if (!dragging) return;
+                if (e.cancelable) e.preventDefault();
+                const t = e.touches?.[0];
+                if (t) move(t.clientX);
+            }, { passive: false });
+
+            ba.addEventListener("touchend", up);
+            ba.addEventListener("touchcancel", up);
+        }
+
+        document.querySelectorAll(".ba").forEach(initBeforeAfter);
+    </script>
 
 </body>
 </html>
