@@ -387,6 +387,82 @@
             margin: 0 auto;
         }
 
+        /* Interface Accordion */
+        .interface-accordion {
+            margin-top: 2rem;
+        }
+
+        .interface-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #999999;
+            background: transparent;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            position: relative;
+            isolation: isolate;
+            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .interface-toggle::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+            box-shadow: inset 0 0 8px -4px rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            pointer-events: none;
+        }
+
+        .interface-toggle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .interface-toggle:hover {
+            color: #cccccc;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .interface-toggle:hover::before {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .interface-toggle .toggle-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .interface-toggle.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .interface-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0;
+        }
+
+        .interface-content.open {
+            max-height: 600px;
+            padding-top: 1.5rem;
+        }
+
         /* Aletheia Section */
         .aletheia {
             padding: 4rem 2rem;
@@ -1017,9 +1093,13 @@
                 </div>
 
 
-                <div class="plugin-interface">
-                    <p class="interface-label">Interface</p>
-                    <img src="images/Phi Interface.png" alt="Phi Interface" class="interface-img">
+                <div class="interface-accordion">
+                    <button class="interface-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+                        View Interface <span class="toggle-icon">↓</span>
+                    </button>
+                    <div class="interface-content">
+                        <img src="images/Phi Interface.png" alt="Phi Interface" class="interface-img">
+                    </div>
                 </div>
             </div>
 
@@ -1059,9 +1139,13 @@
                 </div>
 
 
-                <div class="plugin-interface">
-                    <p class="interface-label">Interface</p>
-                    <img src="images/Helix Interface.png" alt="Helix Interface" class="interface-img">
+                <div class="interface-accordion">
+                    <button class="interface-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+                        View Interface <span class="toggle-icon">↓</span>
+                    </button>
+                    <div class="interface-content">
+                        <img src="images/Helix Interface.png" alt="Helix Interface" class="interface-img">
+                    </div>
                 </div>
 
                 <div class="plugin-comparison">
