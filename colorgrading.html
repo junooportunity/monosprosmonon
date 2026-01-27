@@ -683,6 +683,102 @@
             letter-spacing: 0.1em;
         }
 
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2.5rem 0;
+            text-align: left;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+            border-radius: 12px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        .feature-name {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-detail {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #777777;
+            line-height: 1.6;
+        }
+
+        /* Technical Specs */
+        .specs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .spec {
+            text-align: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .spec-value {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #e0e0e0;
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #555555;
+        }
+
+        /* Capability List */
+        .capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .capability {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888888;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        @media (max-width: 600px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Compatibility Section */
         .compatibility {
             padding: 3rem 0;
@@ -863,6 +959,32 @@
                 <p class="plugin-description">
                     Alpha defines the working space. It moves images into and out of film-negative domains, enabling printer-light style balancing and exposure-driven shot control.
                 </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <p class="feature-name">Printer Lights</p>
+                        <p class="feature-detail">RGB exposure controls that behave like traditional lab timing. Adjustments interact naturally with contrast and saturation.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Negative Density</p>
+                        <p class="feature-detail">Controls that respect the nonlinear response of film emulsion. Push and pull behave as expected.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Transform Modes</p>
+                        <p class="feature-detail">Multiple film-negative encodings available. Match the working space to the source or creative intent.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Bidirectional</p>
+                        <p class="feature-detail">Enter and exit negative space freely. Use as input transform, output transform, or creative tool.</p>
+                    </div>
+                </div>
+
+                <div class="capabilities">
+                    <span class="capability">Log to Negative</span>
+                    <span class="capability">Printer Points</span>
+                    <span class="capability">Density Control</span>
+                    <span class="capability">Scene-Referred</span>
+                </div>
             </div>
 
             <!-- Phi -->
@@ -880,9 +1002,34 @@
                 <p class="plugin-description">
                     It consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically—one pass, one intent, one result.
                 </p>
-                <p class="plugin-description">
-                    Phi excels at first-pass balance, difficult mixed-lighting shots, and fast turnarounds where consistency matters. Controls are interdependent by design, preserving tonal integrity while allowing decisive moves.
-                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <p class="feature-name">Exposure & Density</p>
+                        <p class="feature-detail">Scene-referred exposure control with density adjustments that preserve highlight and shadow detail.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Contrast Shaping</p>
+                        <p class="feature-detail">Pivot-based contrast with separate highlight and shadow controls. No clipping, no crushing.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">OKLAB Saturation</p>
+                        <p class="feature-detail">Perceptually uniform saturation and vibrance. Colors shift in hue less as saturation increases.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Tetrahedral Interpolation</p>
+                        <p class="feature-detail">Secondary color adjustments that maintain smooth gradients and avoid color banding.</p>
+                    </div>
+                </div>
+
+                <div class="capabilities">
+                    <span class="capability">Exposure</span>
+                    <span class="capability">Contrast</span>
+                    <span class="capability">Saturation</span>
+                    <span class="capability">Color Balance</span>
+                    <span class="capability">OKLAB</span>
+                </div>
+
                 <div class="plugin-interface">
                     <p class="interface-label">Interface</p>
                     <img src="images/Phi Interface.png" alt="Phi Interface" class="interface-img">
@@ -902,11 +1049,35 @@
                     Helix is a look-development solution focused on texture, structure, and surface character.
                 </p>
                 <p class="plugin-description">
-                    It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. Helix treats texture as an integrated system. The result is depth and tactility that reads naturally across formats and delivery specs.
+                    It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. The result is depth and tactility that reads naturally across formats and delivery specs.
                 </p>
-                <p class="plugin-description">
-                    Helix is built for intentional look development. It excels after balance is set, when the image needs character without noise, and refinement without distraction. Subtle at low settings, expressive when pushed, it remains stable shot to shot.
-                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <p class="feature-name">Frequency Separation</p>
+                        <p class="feature-detail">Isolate and adjust detail at different spatial scales. Skin texture, fabric weave, architectural detail—each controllable independently.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Micro-Contrast</p>
+                        <p class="feature-detail">Local contrast adjustments that add depth without haloing. Edges stay clean, surfaces gain dimension.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Surface Character</p>
+                        <p class="feature-detail">Shape how materials render. Matte vs. glossy, rough vs. smooth—texture defines the look as much as color.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Detail Redistribution</p>
+                        <p class="feature-detail">Move detail between frequency bands. Soften skin while retaining hair detail. Sharpen eyes without sharpening pores.</p>
+                    </div>
+                </div>
+
+                <div class="capabilities">
+                    <span class="capability">Frequency Bands</span>
+                    <span class="capability">Micro-Contrast</span>
+                    <span class="capability">Texture Shaping</span>
+                    <span class="capability">Detail Control</span>
+                </div>
+
                 <div class="plugin-interface">
                     <p class="interface-label">Interface</p>
                     <img src="images/Helix Interface.png" alt="Helix Interface" class="interface-img">
@@ -984,6 +1155,33 @@
                 <p class="plugin-description">
                     Omega defines the look. It reconstructs film behavior through parametric models and spectral simulation, driven by a piecewise 1D contrast curve. Grain, halation, and Chen & OKLAB color models are integrated, with unified SDR and HDR output.
                 </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <p class="feature-name">Film Contrast Curves</p>
+                        <p class="feature-detail">Piecewise 1D curves that model real film response. Toe, shoulder, and midtone behavior—adjustable independently.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Grain Synthesis</p>
+                        <p class="feature-detail">Physically-based grain that responds to exposure and color. Not a texture overlay—grain that lives in the image.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Halation Model</p>
+                        <p class="feature-detail">Light scatter through emulsion layers. Blooming highlights that wrap color naturally, not digitally.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Unified Output</p>
+                        <p class="feature-detail">Single toolset for SDR and HDR delivery. The look translates across formats without rebuilding.</p>
+                    </div>
+                </div>
+
+                <div class="capabilities">
+                    <span class="capability">Film Curves</span>
+                    <span class="capability">Grain</span>
+                    <span class="capability">Halation</span>
+                    <span class="capability">HDR/SDR</span>
+                    <span class="capability">Spectral</span>
+                </div>
             </div>
 
         </div>
