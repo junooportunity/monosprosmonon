@@ -89,11 +89,10 @@
         }
 
         .hero-tagline {
-            font-size: 1.5rem;
+            font-size: 0.9rem;
             font-style: italic;
-            color: #999999;
-            max-width: 500px;
-            line-height: 1.5;
+            color: #777777;
+            margin-bottom: 0;
         }
 
         /* Divider */
@@ -108,9 +107,10 @@
 
         .divider-full {
             width: 100%;
+            max-width: 600px;
             height: 1px;
             background: rgba(255, 255, 255, 0.08);
-            margin: 1.5rem 0;
+            margin: 1.5rem auto;
             border: none;
         }
 
@@ -985,12 +985,12 @@
         /* Responsive */
         @media (max-width: 900px) {
             .pipeline-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .pipeline-item::after {
-                display: none;
+                font-size: 1rem;
+                right: -0.5rem;
             }
         }
 
@@ -999,9 +999,8 @@
                 display: block;
             }
 
-            hr.divider-full.mobile-only {
-                display: block;
-                width: 100%;
+            hr.divider-full {
+                max-width: none;
                 margin: 1.25rem 0;
             }
 
@@ -1018,11 +1017,8 @@
                 margin-bottom: 0.75rem;
             }
 
-            .hero-tagline.mobile-only {
+            .hero-tagline {
                 font-size: 0.85rem;
-                font-style: italic;
-                color: #777777;
-                margin-bottom: 0;
             }
 
             .hero-name {
@@ -1047,27 +1043,33 @@
             }
 
             .pipeline-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.25rem;
             }
 
             .pipeline-item {
-                padding: 0.75rem 0.5rem;
+                padding: 0.5rem 0.25rem;
+            }
+
+            .pipeline-item::after {
+                display: block;
+                font-size: 0.8rem;
+                right: -0.4rem;
             }
 
             .pipeline-icon {
-                width: 36px;
-                height: 36px;
-                margin-bottom: 0.5rem;
+                width: 28px;
+                height: 28px;
+                margin-bottom: 0.35rem;
             }
 
             .pipeline-name {
-                font-size: 0.7rem;
-                margin-bottom: 0.25rem;
+                font-size: 0.5rem;
+                margin-bottom: 0.15rem;
             }
 
             .pipeline-role {
-                font-size: 0.6rem;
+                font-size: 0.4rem;
             }
 
             .pricing {
@@ -1249,8 +1251,8 @@
         <a href="/">
             <img src="images/monos-logo.png" alt="Monos Pros Monon" class="hero-logo">
         </a>
-        <p class="hero-tagline mobile-only">a company</p>
-        <hr class="divider-full mobile-only">
+        <p class="hero-tagline">a company</p>
+        <hr class="divider-full">
         <h1 class="hero-name">Aletheia</h1>
         <p class="hero-subtitle">Color Grading Suite</p>
     </section>
