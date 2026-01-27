@@ -854,21 +854,6 @@
             }
         }
 
-        /* Philosophy Section */
-        .philosophy {
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .philosophy-text {
-            font-size: 0.95rem;
-            font-style: italic;
-            color: #888888;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
         /* Closing Section */
         .closing {
             padding: 3rem 2rem;
@@ -900,79 +885,6 @@
 
         .closing-cta a:hover {
             color: #aaaaaa;
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 2rem 0;
-        }
-
-        .faq-label {
-            font-size: 0.65rem;
-            font-weight: 400;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: #555555;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .faq-list {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 1.25rem 0;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #cccccc;
-            background: transparent;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: color 0.2s ease;
-        }
-
-        .faq-question:hover {
-            color: #ffffff;
-        }
-
-        .faq-question .faq-icon {
-            font-size: 1rem;
-            color: #555555;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-question.open .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-answer.open {
-            max-height: 200px;
-            padding-bottom: 1.25rem;
-        }
-
-        .faq-answer p {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #777777;
-            line-height: 1.7;
         }
 
         /* Compatibility Section */
@@ -1102,15 +1014,6 @@
                     <p class="pipeline-role">Look Development</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Philosophy -->
-    <section class="philosophy">
-        <div class="container">
-            <p class="philosophy-text">
-                Four tools, one intent. Each plugin handles a specific stage of the grading process—transform, balance, texture, look—but they share a common architecture. Adjustments in one don't fight adjustments in another. The pipeline is designed to compound, not compete.
-            </p>
         </div>
     </section>
 
@@ -1384,114 +1287,6 @@
             <p class="aletheia-includes">Alpha + Phi + Helix + Omega + Developer Documentation</p>
             <p class="aletheia-price">$299</p>
             <a href="#" class="btn btn-primary">Buy Aletheia</a>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="faq">
-        <div class="container">
-            <p class="faq-label">Frequently Asked Questions</p>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Are there payment plans?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes. At checkout, select Klarna or Afterpay to get set up with a payment plan that works for you.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Does this work with ACES?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes, with full ACES pipeline support. The plugins work within ACES color-managed workflows. Setup instructions are included in the documentation.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Does this work with DaVinci Wide Gamut?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes. The plugins work seamlessly in DaVinci Wide Gamut / Resolve Color Management workflows. Full setup instructions included.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Can I use the grain and halation tools on their own?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Grain and halation are part of Omega. They work within the Omega look development system.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Can I use this with Dolby Vision?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Can I use this in HDR workflows?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Is this compatible with Linux?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Not currently.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Can this be used with Baselight?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Not currently.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        How many systems can I install on?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Each license allows activation on one machine.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
-                        Can I upgrade to a higher license later?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes. Reach out and we'll help you upgrade. You'll pay the difference between your current license and the one you're upgrading to.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
