@@ -47,25 +47,40 @@
             position: relative;
         }
 
-        /* ASCII Golden Ratio Background */
-        .ascii-bg {
+        /* ASCII Golden Spiral Background */
+        .ascii-spiral {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            transform: translateY(-50%);
             pointer-events: none;
             z-index: -1;
-            overflow: hidden;
-            opacity: 0.03;
+            opacity: 0.06;
             font-family: monospace;
-            font-size: 10px;
-            line-height: 1.2;
+            font-size: 8px;
+            line-height: 1;
             color: #ffffff;
             white-space: pre;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            animation: spiral-pulse 8s ease-in-out infinite;
+        }
+
+        .ascii-spiral.left {
+            left: 20px;
+        }
+
+        .ascii-spiral.right {
+            right: 20px;
+            transform: translateY(-50%) scaleX(-1);
+        }
+
+        @keyframes spiral-pulse {
+            0%, 100% { opacity: 0.04; }
+            50% { opacity: 0.08; }
+        }
+
+        @media (max-width: 1200px) {
+            .ascii-spiral {
+                display: none;
+            }
         }
 
         .container {
@@ -1032,31 +1047,92 @@
 </head>
 <body>
 
-    <!-- ASCII Golden Ratio Background -->
-    <div class="ascii-bg" aria-hidden="true">
-                                                    φ
-                                               φ    φ    φ
-                                          φ    φ    φ    φ    φ
-                                     φ    φ    φ    φ    φ    φ    φ
-                                φ    φ    φ    φ    φ    φ    φ    φ    φ
-                           φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                      φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                 φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-            φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-       φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-  φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-       φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-            φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                 φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                      φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                           φ    φ    φ    φ    φ    φ    φ    φ    φ    φ    φ
-                                φ    φ    φ    φ    φ    φ    φ    φ    φ
-                                     φ    φ    φ    φ    φ    φ    φ
-                                          φ    φ    φ    φ    φ
-                                               φ    φ    φ
-                                                    φ
+    <!-- ASCII Golden Spiral - Left -->
+    <div class="ascii-spiral left" aria-hidden="true">
+                        φφφφφφφφφφφφφφφφφφφφ
+                    φφφφ                    φφφφ
+                 φφφ                            φφφ
+               φφφ                                φφφ
+             φφφ                                    φφφ
+            φφ                                        φφ
+           φφ                                          φφ
+          φφ                                            φφ
+         φφ                                              φφ
+         φφ                                              φφ
+        φφ                φφφφφφφφφφφφφ                   φφ
+        φφ            φφφφ             φφφφ               φφ
+        φφ          φφφ                   φφφ             φφ
+        φφ         φφ                       φφ            φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ        φφφφφφφ          φφ           φφ
+        φφ        φφ       φφ     φφ         φφ           φφ
+        φφ        φφ      φφ       φφ        φφ           φφ
+        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
+        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
+        φφ        φφ      φφ       φφ        φφ           φφ
+        φφ        φφ       φφ     φφ         φφ           φφ
+        φφ        φφ        φφφφφφφ          φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ         φφ                       φφ            φφ
+        φφ          φφφ                   φφφ             φφ
+        φφ            φφφφ             φφφφ               φφ
+        φφ                φφφφφφφφφφφφφ                   φφ
+         φφ                                              φφ
+         φφ                                              φφ
+          φφ                                            φφ
+           φφ                                          φφ
+            φφ                                        φφ
+             φφφ                                    φφφ
+               φφφ                                φφφ
+                 φφφ                            φφφ
+                    φφφφ                    φφφφ
+                        φφφφφφφφφφφφφφφφφφφφ
+    </div>
 
-                              1.618033988749894848204586834365638117720309180...
+    <!-- ASCII Golden Spiral - Right -->
+    <div class="ascii-spiral right" aria-hidden="true">
+                        φφφφφφφφφφφφφφφφφφφφ
+                    φφφφ                    φφφφ
+                 φφφ                            φφφ
+               φφφ                                φφφ
+             φφφ                                    φφφ
+            φφ                                        φφ
+           φφ                                          φφ
+          φφ                                            φφ
+         φφ                                              φφ
+         φφ                                              φφ
+        φφ                φφφφφφφφφφφφφ                   φφ
+        φφ            φφφφ             φφφφ               φφ
+        φφ          φφφ                   φφφ             φφ
+        φφ         φφ                       φφ            φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ        φφφφφφφ          φφ           φφ
+        φφ        φφ       φφ     φφ         φφ           φφ
+        φφ        φφ      φφ       φφ        φφ           φφ
+        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
+        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
+        φφ        φφ      φφ       φφ        φφ           φφ
+        φφ        φφ       φφ     φφ         φφ           φφ
+        φφ        φφ        φφφφφφφ          φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ        φφ                         φφ           φφ
+        φφ         φφ                       φφ            φφ
+        φφ          φφφ                   φφφ             φφ
+        φφ            φφφφ             φφφφ               φφ
+        φφ                φφφφφφφφφφφφφ                   φφ
+         φφ                                              φφ
+         φφ                                              φφ
+          φφ                                            φφ
+           φφ                                          φφ
+            φφ                                        φφ
+             φφφ                                    φφφ
+               φφφ                                φφφ
+                 φφφ                            φφφ
+                    φφφφ                    φφφφ
+                        φφφφφφφφφφφφφφφφφφφφ
     </div>
 
     <!-- Hero -->
