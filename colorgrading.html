@@ -44,43 +44,6 @@
             color: #cccccc;
             min-height: 100vh;
             line-height: 1.6;
-            position: relative;
-        }
-
-        /* ASCII Golden Spiral Background */
-        .ascii-spiral {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.06;
-            font-family: monospace;
-            font-size: 8px;
-            line-height: 1;
-            color: #ffffff;
-            white-space: pre;
-            animation: spiral-pulse 8s ease-in-out infinite;
-        }
-
-        .ascii-spiral.left {
-            left: 20px;
-        }
-
-        .ascii-spiral.right {
-            right: 20px;
-            transform: translateY(-50%) scaleX(-1);
-        }
-
-        @keyframes spiral-pulse {
-            0%, 100% { opacity: 0.04; }
-            50% { opacity: 0.08; }
-        }
-
-        @media (max-width: 1200px) {
-            .ascii-spiral {
-                display: none;
-            }
         }
 
         .container {
@@ -1046,94 +1009,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ASCII Golden Spiral - Left -->
-    <div class="ascii-spiral left" aria-hidden="true">
-                        φφφφφφφφφφφφφφφφφφφφ
-                    φφφφ                    φφφφ
-                 φφφ                            φφφ
-               φφφ                                φφφ
-             φφφ                                    φφφ
-            φφ                                        φφ
-           φφ                                          φφ
-          φφ                                            φφ
-         φφ                                              φφ
-         φφ                                              φφ
-        φφ                φφφφφφφφφφφφφ                   φφ
-        φφ            φφφφ             φφφφ               φφ
-        φφ          φφφ                   φφφ             φφ
-        φφ         φφ                       φφ            φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ        φφφφφφφ          φφ           φφ
-        φφ        φφ       φφ     φφ         φφ           φφ
-        φφ        φφ      φφ       φφ        φφ           φφ
-        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
-        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
-        φφ        φφ      φφ       φφ        φφ           φφ
-        φφ        φφ       φφ     φφ         φφ           φφ
-        φφ        φφ        φφφφφφφ          φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ         φφ                       φφ            φφ
-        φφ          φφφ                   φφφ             φφ
-        φφ            φφφφ             φφφφ               φφ
-        φφ                φφφφφφφφφφφφφ                   φφ
-         φφ                                              φφ
-         φφ                                              φφ
-          φφ                                            φφ
-           φφ                                          φφ
-            φφ                                        φφ
-             φφφ                                    φφφ
-               φφφ                                φφφ
-                 φφφ                            φφφ
-                    φφφφ                    φφφφ
-                        φφφφφφφφφφφφφφφφφφφφ
-    </div>
-
-    <!-- ASCII Golden Spiral - Right -->
-    <div class="ascii-spiral right" aria-hidden="true">
-                        φφφφφφφφφφφφφφφφφφφφ
-                    φφφφ                    φφφφ
-                 φφφ                            φφφ
-               φφφ                                φφφ
-             φφφ                                    φφφ
-            φφ                                        φφ
-           φφ                                          φφ
-          φφ                                            φφ
-         φφ                                              φφ
-         φφ                                              φφ
-        φφ                φφφφφφφφφφφφφ                   φφ
-        φφ            φφφφ             φφφφ               φφ
-        φφ          φφφ                   φφφ             φφ
-        φφ         φφ                       φφ            φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ        φφφφφφφ          φφ           φφ
-        φφ        φφ       φφ     φφ         φφ           φφ
-        φφ        φφ      φφ       φφ        φφ           φφ
-        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
-        φφ        φφ      φφ  φφφ  φφ        φφ           φφ
-        φφ        φφ      φφ       φφ        φφ           φφ
-        φφ        φφ       φφ     φφ         φφ           φφ
-        φφ        φφ        φφφφφφφ          φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ        φφ                         φφ           φφ
-        φφ         φφ                       φφ            φφ
-        φφ          φφφ                   φφφ             φφ
-        φφ            φφφφ             φφφφ               φφ
-        φφ                φφφφφφφφφφφφφ                   φφ
-         φφ                                              φφ
-         φφ                                              φφ
-          φφ                                            φφ
-           φφ                                          φφ
-            φφ                                        φφ
-             φφφ                                    φφφ
-               φφφ                                φφφ
-                 φφφ                            φφφ
-                    φφφφ                    φφφφ
-                        φφφφφφφφφφφφφφφφφφφφ
-    </div>
 
     <!-- Hero -->
     <section class="hero">
