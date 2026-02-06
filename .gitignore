@@ -1,0 +1,10 @@
+# Large staging folders
+omega-demo-staging/
+
+# Python
+__pycache__/
+*.pyc
+scripts/
+
+# OS files
+.DS_Store

@@ -282,12 +282,25 @@
             margin-bottom: 0.5rem;
         }
 
+        .pricing-description {
+            font-size: 0.85rem;
+            color: #999999;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
         .pricing-includes {
             font-size: 0.75rem;
             font-style: italic;
             color: #666666;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.75rem;
             line-height: 1.6;
+        }
+
+        .pricing-stats {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            margin-bottom: 1.5rem;
         }
 
         .pricing-price {
@@ -1023,6 +1036,234 @@
             }
         }
 
+        /* ========== OMEGA DEMO ========== */
+        .omega-demo-section {
+            padding: 2rem 0;
+        }
+
+        .demo-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .demo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .demo-image-hidden {
+            display: none;
+        }
+
+        .demo-controls {
+            margin-top: 1.5rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tab Navigation */
+        .demo-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .demo-tab {
+            padding: 0.6rem 1.25rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #555;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .demo-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.5);
+            transition: width 0.2s ease;
+        }
+
+        .demo-tab:hover { color: #888; }
+        .demo-tab.active { color: #ccc; }
+        .demo-tab.active::after { width: 50%; }
+
+        .demo-panel { display: none; }
+        .demo-panel.active { display: block; }
+
+        /* Controls */
+        .demo-field {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .demo-field-label {
+            flex: 0 0 110px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            white-space: nowrap;
+            letter-spacing: 0.1em;
+            color: #555;
+            text-align: right;
+        }
+
+        .demo-dropdown {
+            flex: 1;
+            padding: 0.45rem 2rem 0.45rem 0.65rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #bbb;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.65rem center;
+        }
+
+        .demo-dropdown:hover { border-color: rgba(255, 255, 255, 0.18); }
+        .demo-dropdown:focus { outline: none; border-color: rgba(255, 255, 255, 0.22); }
+        .demo-dropdown option { background: #1a1a1a; color: #ccc; }
+
+        .demo-slider-field {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-slider-label {
+            flex: 0 0 100px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #555;
+            text-align: right;
+        }
+
+        .demo-slider-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .demo-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .demo-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .demo-slider::-webkit-slider-thumb:hover { background: rgba(255, 255, 255, 0.85); }
+
+        .demo-slider-value {
+            flex: 0 0 32px;
+            font-size: 0.6rem;
+            font-family: 'SF Mono', Monaco, monospace;
+            color: #555;
+            text-align: right;
+        }
+
+        .demo-toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-toggle-label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .demo-toggle-label input { display: none; }
+
+        .demo-toggle-pill {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #444;
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .demo-toggle-pill:hover { color: #666; border-color: rgba(255, 255, 255, 0.12); }
+        .demo-toggle-label input:checked + .demo-toggle-pill {
+            color: #bbb;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .demo-section-title {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #444;
+            margin: 1rem 0 0.6rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .demo-toggles {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: calc(100px + 1rem);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .demo-controls { max-width: 100%; }
+            .demo-field, .demo-slider-field { flex-direction: column; align-items: stretch; gap: 0.3rem; }
+            .demo-field-label, .demo-slider-label { flex: none; text-align: left; }
+            .demo-toggles { margin-left: 0; }
+        }
+
         /* Closing Section */
         .closing {
             padding: 3rem 2rem;
@@ -1427,8 +1668,433 @@
         <h1 class="hero-name">Aletheia</h1>
         <p class="hero-greek">ἀλήθεια — truth, unconcealment</p>
         <p class="hero-subtitle">Color Grading Suite</p>
-        <p class="hero-blurb">Film emulation built on spectral simulation, H&D curves, and perceptual color science.</p>
-        <p class="hero-pitch">Professional quality. One-time price. 840 film looks. $299.</p>
+        <p class="hero-blurb">Film emulation built on spectral simulation and perceptual color science.</p>
+        <p class="hero-pitch">7,980 film looks. One-time price.</p>
+    </section>
+
+    <!-- Omega Demo -->
+    <section class="omega-demo-section">
+        <div class="container">
+            <div class="demo-image-container">
+                <canvas id="helix-canvas" class="demo-canvas" style="display:none;"></canvas>
+                <img id="omega-demo-image" src="omega-demo-staging/neg_03_print_01_dye_00_none.webp" alt="Film Stock Preview" class="demo-image">
+            </div>
+
+            <div class="demo-controls">
+                <!-- Tabs -->
+                <div class="demo-tabs">
+                    <button class="demo-tab" data-tab="phi" style="display: none;">Phi</button>
+                    <button class="demo-tab" data-tab="helix">Helix</button>
+                    <button class="demo-tab active" data-tab="omega">Omega</button>
+                </div>
+
+                <!-- ALPHA Panel - Hidden -->
+                <div class="demo-panel" id="panel-alpha" style="display: none;">
+                    <p class="demo-section-title">Source</p>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Input Gamut</span>
+                        <select id="alpha-input-gamut" class="demo-dropdown">
+                            <option value="0" selected>ARRI Wide Gamut 3</option>
+                            <option value="1">ARRI Wide Gamut 4</option>
+                            <option value="2">Sony S-Gamut3.Cine</option>
+                            <option value="3">RED Wide Gamut</option>
+                            <option value="4">DaVinci Wide Gamut</option>
+                            <option value="5">Rec. 709</option>
+                            <option value="6">P3-D65</option>
+                            <option value="7">ACEScg (AP1)</option>
+                        </select>
+                    </div>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Input Gamma</span>
+                        <select id="alpha-input-gamma" class="demo-dropdown">
+                            <option value="0" selected>LogC3</option>
+                            <option value="1">LogC4</option>
+                            <option value="2">S-Log3</option>
+                            <option value="3">Log3G10</option>
+                            <option value="4">DaVinci Intermediate</option>
+                            <option value="5">ACEScct</option>
+                            <option value="6">Linear</option>
+                            <option value="7">Gamma 2.4</option>
+                        </select>
+                    </div>
+
+                    <p class="demo-section-title">Digital Negative</p>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Working Gamut</span>
+                        <select id="alpha-working-gamut" class="demo-dropdown">
+                            <option value="0" selected>ACEScg (AP1)</option>
+                            <option value="1">ARRI Wide Gamut 3</option>
+                            <option value="2">DaVinci Wide Gamut</option>
+                        </select>
+                    </div>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Working Gamma</span>
+                        <select id="alpha-working-gamma" class="demo-dropdown">
+                            <option value="0" selected>ACEScct</option>
+                            <option value="1">DaVinci Intermediate</option>
+                            <option value="2">Linear</option>
+                        </select>
+                    </div>
+
+                    <p class="demo-section-title">Output</p>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Display Target</span>
+                        <select id="alpha-output-gamut" class="demo-dropdown">
+                            <option value="0" selected>Rec. 709 / sRGB</option>
+                            <option value="1">P3-D65 (Display)</option>
+                            <option value="2">Rec. 2020</option>
+                        </select>
+                    </div>
+                    <div class="demo-field">
+                        <span class="demo-field-label">Output Gamma</span>
+                        <select id="alpha-output-gamma" class="demo-dropdown">
+                            <option value="0" selected>Gamma 2.4 (SDR)</option>
+                            <option value="1">Gamma 2.2 (SDR)</option>
+                            <option value="2">PQ (HDR)</option>
+                            <option value="3">HLG (HDR)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PHI Panel - 1:1 match to OFX -->
+                <div class="demo-panel" id="panel-phi">
+                    <p class="demo-section-title">Printer Lights</p>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Printer R</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="phi-printer-r" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Printer G</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="phi-printer-g" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Printer B</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="phi-printer-b" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Tone</p>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Exposure</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="exposure-slider" class="demo-slider" min="-4" max="4" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Contrast</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="contrast-slider" class="demo-slider" min="0" max="2" value="1" step="0.001">
+                            <span class="demo-slider-value">1.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Shadows</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="shadows-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Midtones</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="midtones-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Highlights</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="highlights-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">White Point</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="white-point-slider" class="demo-slider" min="1" max="16" value="9" step="0.001">
+                            <span class="demo-slider-value">9.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Black Point</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="black-point-slider" class="demo-slider" min="-0.1" max="0.1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Saturation</p>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Saturation</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="saturation-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Vibrance</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="vibrance-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Skin</p>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Skin Texture</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-texture-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Melanin</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-melanin-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Hemoglobin</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-hemo-slider" class="demo-slider" min="-1" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Reduce Redness</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-redness-slider" class="demo-slider" min="0" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Skin Richness</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-rich-slider" class="demo-slider" min="0" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Skin Density</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="skin-density-slider" class="demo-slider" min="0" max="1" value="0" step="0.001">
+                            <span class="demo-slider-value">0.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HELIX Panel -->
+                <div class="demo-panel" id="panel-helix">
+                    <p class="demo-section-title">Clarity</p>
+                    <div class="demo-toggle-row">
+                        <label class="demo-toggle-label">
+                            <input type="checkbox" id="clarity-enable" checked>
+                            <span class="demo-toggle-pill">Enable</span>
+                        </label>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Amount</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="clarity-slider" class="demo-slider" min="-50" max="50" value="0" step="0.1">
+                            <span class="demo-slider-value" id="clarity-value">0</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Acutance</p>
+                    <div class="demo-toggle-row">
+                        <label class="demo-toggle-label">
+                            <input type="checkbox" id="micro-enable" checked>
+                            <span class="demo-toggle-pill">Enable</span>
+                        </label>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Amount</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="micro-slider" class="demo-slider" min="-50" max="50" value="0" step="0.1">
+                            <span class="demo-slider-value" id="micro-value">0</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Spatial EQ</p>
+                    <div class="demo-toggle-row">
+                        <label class="demo-toggle-label">
+                            <input type="checkbox" id="spatial-enable" checked>
+                            <span class="demo-toggle-pill">Enable</span>
+                        </label>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Ultra Fine</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z1-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z1-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Fine</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z2-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z2-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Medium</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z3-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z3-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Coarse</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z4-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z4-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Very Coarse</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z5-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z5-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Ultra Coarse</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="z6-slider" class="demo-slider" min="-1" max="1" value="0" step="0.01">
+                            <span class="demo-slider-value" id="z6-value">0</span>
+                        </div>
+                    </div>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Spatial Mix</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="spatial-mix-slider" class="demo-slider" min="0" max="1" value="1" step="0.01">
+                            <span class="demo-slider-value" id="spatial-mix-value">1</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-section-title">Global</p>
+                    <div class="demo-slider-field">
+                        <span class="demo-slider-label">Mix</span>
+                        <div class="demo-slider-wrap">
+                            <input type="range" id="global-mix-slider" class="demo-slider" min="0" max="1" value="1" step="0.01">
+                            <span class="demo-slider-value" id="global-mix-value">1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OMEGA Panel - 1:1 match to OFX -->
+                <div class="demo-panel active" id="panel-omega">
+                    <div class="demo-field">
+                        <span class="demo-field-label">Negative Stock</span>
+                        <select id="negative-select" class="demo-dropdown">
+                            <option value="0">Kodak Vision3 5203 50D (2007)</option>
+                            <option value="1">Kodak Vision3 5207 250D (2007)</option>
+                            <option value="2">Kodak Vision3 5213 200T (2007)</option>
+                            <option value="3" selected>Kodak Vision3 5219 500T (2007)</option>
+                            <option value="4">Kodak ECN-I 5247 100T (1950)</option>
+                            <option value="5">Kodak ECN-I 5248 50T (1952)</option>
+                            <option value="6">Kodak ECN-II 5247 100T (1974)</option>
+                            <option value="7">Kodak ECN-II 5250 50D (1974)</option>
+                            <option value="8">Kodak ECN-II 5277 400T (1976)</option>
+                            <option value="9">Kodak EXR 5293 200T (1989)</option>
+                            <option value="10">Kodak EXR 5248 100T (1989)</option>
+                            <option value="11">Kodak B&W 5222 Double-X (1959)</option>
+                            <option value="12">Kodak Portra 160D (2010)</option>
+                            <option value="13">Kodak Portra 400D (2010)</option>
+                            <option value="14">Kodak Portra 800D (2001)</option>
+                            <option value="15">Kodak Ektar 100D (2008)</option>
+                            <option value="16">Kodak Gold 200D (1988)</option>
+                            <option value="17">Kodak Ultramax 400D (1997)</option>
+                            <option value="18">Kodak Vericolor III 160D (1980)</option>
+                            <option value="19">Kodak Aerocolor IV 125D (1995)</option>
+                            <option value="20">Kodak Ektachrome E100D (2018)</option>
+                            <option value="21">Kodak Ektachrome 100D (2002)</option>
+                            <option value="22">Kodak Tri-X 400 B&W (1954)</option>
+                            <option value="23">Kodak Plus-X 125 B&W (1956)</option>
+                            <option value="24">Fuji Eterna 500T (2006)</option>
+                            <option value="25">Fuji Eterna 500T Vivid (2006)</option>
+                            <option value="26">Fuji Pro 400H 400D (2004)</option>
+                            <option value="27">Fuji Pro 160C 160D (2004)</option>
+                            <option value="28">Fuji Pro 160S 160D (2004)</option>
+                            <option value="29">Fuji C200 200D (1998)</option>
+                            <option value="30">Fuji Superia 400D (1998)</option>
+                            <option value="31">Fuji Superia X-tra 400D (2000)</option>
+                            <option value="32">Fuji Reala 100D (1989)</option>
+                            <option value="33">Fuji Natura 1600T (2005)</option>
+                            <option value="34">Fuji Provia 100F 100D (2002)</option>
+                            <option value="35">Fuji Velvia 50D (1990)</option>
+                            <option value="36">Fuji FP-100C 100D (1980)</option>
+                            <option value="37">Fuji Instax 800D (1998)</option>
+                            <option value="38">Agfa Vista 100D (1999)</option>
+                            <option value="39">Agfa Optima 100D (2000)</option>
+                            <option value="40">Agfa Ultra 100D (1999)</option>
+                        </select>
+                    </div>
+
+                    <div class="demo-field">
+                        <span class="demo-field-label">Dye Process</span>
+                        <select id="dye-select" class="demo-dropdown">
+                            <option value="0" selected>None</option>
+                            <option value="1">Kodak Dye Transfer Neg Matrix (1946)</option>
+                            <option value="2">Kodak Dye Transfer Kodachrome (1935)</option>
+                            <option value="3">Kodak Dye Transfer Slide Matrix (1946)</option>
+                            <option value="4">Kodak Ektachrome Radiance III (1989)</option>
+                            <option value="5">Technicolor Dye Transfer 3-Strip (1932)</option>
+                            <option value="6">Technicolor Process IV 3-Strip (1932)</option>
+                            <option value="7">Technicolor Process V Monopack (1954)</option>
+                            <option value="8">Ilford Ilfochrome Micrographic M (1963)</option>
+                            <option value="9">Ilford Ilfochrome Micrographic P (1991)</option>
+                        </select>
+                    </div>
+
+                    <div class="demo-field">
+                        <span class="demo-field-label">Print Stock</span>
+                        <select id="print-select" class="demo-dropdown">
+                            <option value="1" selected>Kodak Vision 2383 (2002)</option>
+                            <option value="2">Kodak Vision Premier 2393 (2004)</option>
+                            <option value="3">Kodak Intermediate 5383 (1979)</option>
+                            <option value="4">Kodak ECP 5381 (1974)</option>
+                            <option value="5">Kodak ECP 5384 (1984)</option>
+                            <option value="6">Kodak EXR 5386 (1989)</option>
+                            <option value="7">Kodak 2303 B&W (1979)</option>
+                            <option value="8">Kodak Duraflex Plus (1995)</option>
+                            <option value="9">Kodak Endura Premier (2005)</option>
+                            <option value="10">Kodak Portra Endura (2003)</option>
+                            <option value="11">Kodak Supra Endura (2002)</option>
+                            <option value="12">Kodak Polymax Fine Art B&W (1990)</option>
+                            <option value="13">Fuji Eterna-RDI 3513DI (2005)</option>
+                            <option value="14">Fuji Fujiflex SFA3 (1988)</option>
+                            <option value="15">Fuji Fujiflex Crystal (2001)</option>
+                            <option value="16">Fuji Crystal Archive Super C (1998)</option>
+                            <option value="17">Fuji Crystal Archive DP II (2002)</option>
+                            <option value="18">Fuji Crystal Archive Maxima (2005)</option>
+                            <option value="19">Fuji Crystal Archive Pro PD II (2008)</option>
+                        </select>
+                    </div>
+
+                    <div class="demo-toggle-row" style="margin-top: 1rem;">
+                        <label class="demo-toggle-label">
+                            <input type="checkbox" id="halation-check">
+                            <span class="demo-toggle-pill">Halation</span>
+                        </label>
+                        <label class="demo-toggle-label">
+                            <input type="checkbox" id="grain-check">
+                            <span class="demo-toggle-pill">Grain</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <hr class="divider">
@@ -1457,31 +2123,6 @@
                     <img src="images/omega-icon.png" alt="Omega" class="pipeline-icon">
                     <h3 class="pipeline-name">Omega</h3>
                     <p class="pipeline-role">Look Development</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <hr class="divider">
-
-    <!-- Bundles Overview -->
-    <section class="pricing">
-        <div class="container">
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <p class="pricing-tier">Foundation</p>
-                    <h3 class="pricing-name">Phi + Helix</h3>
-                    <p class="pricing-includes">Core grading engine<br>Texture & detail control</p>
-                </div>
-                <div class="pricing-card">
-                    <p class="pricing-tier">Look Development</p>
-                    <h3 class="pricing-name">Alpha + Omega</h3>
-                    <p class="pricing-includes">Film-negative transform<br>Look development system</p>
-                </div>
-                <div class="pricing-card featured">
-                    <p class="pricing-tier">Complete</p>
-                    <h3 class="pricing-name">Aletheia</h3>
-                    <p class="pricing-includes">All four plugins<br>Developer documentation</p>
                 </div>
             </div>
         </div>
@@ -1522,40 +2163,6 @@
                     <div class="feature-item">
                         <p class="feature-name">Bidirectional</p>
                         <p class="feature-detail">Enter and exit negative space freely. Use as input transform, output transform, or creative tool.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Omega -->
-            <div class="plugin-section">
-                <div class="plugin-header">
-                    <img src="images/omega-icon.png" alt="Omega" class="plugin-icon">
-                    <div class="plugin-title">
-                        <h3 class="plugin-name">Omega</h3>
-                        <p class="plugin-tagline">Look Development System</p>
-                    </div>
-                </div>
-                <p class="plugin-description-large">
-                    Omega defines the look. It reconstructs film behavior through parametric models and spectral simulation, driven by a piecewise 1D contrast curve. Grain, halation, and Chen & OKLAB color models are integrated, with unified SDR and HDR output.
-                </p>
-
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <p class="feature-name">Film Contrast Curves</p>
-                        <p class="feature-detail">Piecewise 1D curves that model real film response. Toe, shoulder, and midtone behavior—adjustable independently.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Grain Synthesis</p>
-                        <p class="feature-detail">Physically-based grain that responds to exposure and color. Not a texture overlay—grain that lives in the image.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Halation Model</p>
-                        <p class="feature-detail">Light scatter through emulsion layers. Blooming highlights that wrap color naturally, not digitally.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Unified Output</p>
-                        <p class="feature-detail">Single toolset for SDR and HDR delivery. The look translates across formats without rebuilding.</p>
                     </div>
                 </div>
 
@@ -1754,6 +2361,40 @@
                 </div>
             </div>
 
+            <!-- Omega -->
+            <div class="plugin-section">
+                <div class="plugin-header">
+                    <img src="images/omega-icon.png" alt="Omega" class="plugin-icon">
+                    <div class="plugin-title">
+                        <h3 class="plugin-name">Omega</h3>
+                        <p class="plugin-tagline">Look Development System</p>
+                    </div>
+                </div>
+                <p class="plugin-description-large">
+                    Omega defines the look. It reconstructs film behavior through parametric models and spectral simulation, driven by a piecewise 1D contrast curve. Grain, halation, and Chen & OKLAB color models are integrated, with unified SDR and HDR output.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <p class="feature-name">Film Contrast Curves</p>
+                        <p class="feature-detail">Piecewise 1D curves that model real film response. Toe, shoulder, and midtone behavior—adjustable independently.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Grain Synthesis</p>
+                        <p class="feature-detail">Physically-based grain that responds to exposure and color. Not a texture overlay—grain that lives in the image.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Halation Model</p>
+                        <p class="feature-detail">Light scatter through emulsion layers. Blooming highlights that wrap color naturally, not digitally.</p>
+                    </div>
+                    <div class="feature-item">
+                        <p class="feature-name">Unified Output</p>
+                        <p class="feature-detail">Single toolset for SDR and HDR delivery. The look translates across formats without rebuilding.</p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
 
@@ -1761,9 +2402,8 @@
     <section class="pricing">
         <div class="container">
             <div class="pricing-card featured" style="max-width: 400px; margin: 0 auto;">
-                <p class="pricing-tier">Complete Suite</p>
-                <h3 class="pricing-name">Aletheia</h3>
-                <p class="pricing-includes">Alpha · Phi · Helix · Omega<br>Developer documentation</p>
+                <h3 class="pricing-name">ALETHEIA</h3>
+                <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
                 <p class="pricing-price">$299</p>
                 <a href="#" class="btn btn-primary">Buy</a>
             </div>
@@ -1860,6 +2500,39 @@
         }
 
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
+    </script>
+
+    <!-- Omega Demo -->
+    <script src="js/omega-demo.js"></script>
+
+    <!-- UI Controller -->
+    <script>
+    (function() {
+        'use strict';
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.demo-tab');
+        const panels = document.querySelectorAll('.demo-panel');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Slider value displays
+        document.querySelectorAll('.demo-slider').forEach(slider => {
+            const valueSpan = document.getElementById(slider.id.replace('-slider', '-value'));
+            if (valueSpan) {
+                slider.addEventListener('input', () => {
+                    const step = slider.step || '1';
+                    const decimals = step.includes('.') ? step.split('.')[1].length : 0;
+                    valueSpan.textContent = parseFloat(slider.value).toFixed(decimals);
+                });
+            }
+        });
+    })();
     </script>
 
 </body>
