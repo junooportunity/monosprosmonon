@@ -208,42 +208,8 @@
                 rgb = clamp(rgb + lumDetail * microGain, 0.0, 1.0);
             }
 
-            // === SPATIAL EQUALIZER (6-band frequency control) ===
-            bool spatialActive = abs(u_z1) > 0.001 || abs(u_z2) > 0.001 || abs(u_z3) > 0.001 ||
-                                 abs(u_z4) > 0.001 || abs(u_z5) > 0.001 || abs(u_z6) > 0.001;
-
-            if (spatialActive) {
-                // Band radii matching Helix.cpp: 2, 6, 15, 30, 55, 90
-                // Sample cumulative blurs at each radius
-                vec3 blur1 = sampleBlur(v_texCoord, px, 2.0);
-                vec3 blur2 = sampleBlur(v_texCoord, px, 6.0);
-                vec3 blur3 = sampleBlur(v_texCoord, px, 15.0);
-                vec3 blur4 = sampleBlur(v_texCoord, px, 30.0);
-                vec3 blur5 = sampleBlur(v_texCoord, px, 55.0);
-                vec3 blur6 = sampleBlur(v_texCoord, px, 90.0);
-
-                // Extract frequency bands (difference between adjacent blurs)
-                vec3 band1 = rgb - blur1;           // Ultra Fine
-                vec3 band2 = blur1 - blur2;         // Fine
-                vec3 band3 = blur2 - blur3;         // Medium
-                vec3 band4 = blur3 - blur4;         // Coarse
-                vec3 band5 = blur4 - blur5;         // Very Coarse
-                vec3 band6 = blur5 - blur6;         // Ultra Coarse
-
-                // Per-band gains (reduced from 2.5x for web - fewer samples = harsher effect)
-                float g1 = 1.0 + u_z1 * 1.2;
-                float g2 = 1.0 + u_z2 * 1.2;
-                float g3 = 1.0 + u_z3 * 1.2;
-                float g4 = 1.0 + u_z4 * 1.2;
-                float g5 = 1.0 + u_z5 * 1.2;
-                float g6 = 1.0 + u_z6 * 1.2;
-
-                // Reconstruct: base (blur6) + all bands with gains
-                vec3 result = blur6 + band6 * g6 + band5 * g5 + band4 * g4 +
-                              band3 * g3 + band2 * g2 + band1 * g1;
-
-                rgb = clamp(result, 0.0, 1.0);
-            }
+            // Spatial EQ disabled - needs proper progressive sampling to match OFX
+            // The sliders are visible but non-functional in the web demo
 
             gl_FragColor = vec4(clamp(rgb, 0.0, 1.0), 1.0);
         }
