@@ -5,7 +5,7 @@
 (function() {
     'use strict';
 
-    const CDN_BASE = 'omega-demo-staging';
+    const CDN_BASE = 'https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev';
 
     // Elements
     const demoImage = document.getElementById('omega-demo-image');
