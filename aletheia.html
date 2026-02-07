@@ -1076,40 +1076,70 @@
         .video-toggle {
             display: flex;
             justify-content: center;
-            gap: 0;
+            align-items: center;
+            gap: 0.75rem;
             margin-top: 1rem;
         }
 
-        .video-toggle-btn {
-            padding: 0.5rem 1.25rem;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.5);
+        .video-toggle-label {
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
             font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .video-toggle-btn:first-child {
-            border-radius: 6px 0 0 6px;
-            border-right: none;
-        }
-
-        .video-toggle-btn:last-child {
-            border-radius: 0 6px 6px 0;
-        }
-
-        .video-toggle-btn.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .video-toggle-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.7);
+        }
+
+        .video-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .video-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .video-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .video-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .video-switch input:checked + .video-slider {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .video-switch input:checked + .video-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* ========== DEMO MODAL ========== */
+        .demo-modal {
+            background: rgba(10, 10, 12, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 2rem auto;
         }
 
         /* ========== OMEGA DEMO ========== */
@@ -1777,28 +1807,31 @@
         </div>
     </section>
 
-    <!-- Video Demo Modal -->
-    <section class="video-demo-section">
+    <!-- Demo Modal -->
+    <section class="demo-modal-section">
         <div class="container">
-            <div class="video-demo-container">
-                <div class="video-wrapper">
-                    <video id="video-rec709" class="demo-video active" autoplay loop muted playsinline>
-                        <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-web.mp4" type="video/mp4">
-                    </video>
-                    <video id="video-film" class="demo-video" loop muted playsinline>
-                        <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/5219-2383-web.mp4" type="video/mp4">
-                    </video>
+            <div class="demo-modal">
+                <!-- Video Demo -->
+                <div class="video-demo-container">
+                    <div class="video-wrapper">
+                        <video id="video-rec709" class="demo-video" loop muted playsinline>
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-web.mp4" type="video/mp4">
+                        </video>
+                        <video id="video-film" class="demo-video active" autoplay loop muted playsinline>
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/5219-2383-web.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-toggle">
+                        <span class="video-toggle-label">Look Preview</span>
+                        <label class="video-switch">
+                            <input type="checkbox" id="video-toggle-switch">
+                            <span class="video-slider"></span>
+                        </label>
+                    </div>
                 </div>
-                <div class="video-toggle">
-                    <button class="video-toggle-btn active" data-video="rec709">Rec 709</button>
-                    <button class="video-toggle-btn" data-video="film">5219 — 2383</button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Omega Demo -->
-    <section class="omega-demo-section">
+                <!-- Omega Demo -->
+                <div class="omega-demo-content">
         <div class="container">
             <div class="demo-image-container">
                 <canvas id="helix-canvas" class="demo-canvas" style="display:none;"></canvas>
@@ -2201,6 +2234,7 @@
                         </label>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2584,33 +2618,25 @@
     (function() {
         const videoRec709 = document.getElementById('video-rec709');
         const videoFilm = document.getElementById('video-film');
-        const buttons = document.querySelectorAll('.video-toggle-btn');
+        const toggle = document.getElementById('video-toggle-switch');
 
-        const videos = {
-            'rec709': videoRec709,
-            'film': videoFilm
-        };
+        // Default to film look (toggle on)
+        toggle.checked = true;
+        videoRec709.classList.remove('active');
+        videoFilm.classList.add('active');
+        videoFilm.play();
 
-        let currentVideo = 'rec709';
+        toggle.addEventListener('change', () => {
+            const showFilm = toggle.checked;
+            const fromVideo = showFilm ? videoRec709 : videoFilm;
+            const toVideo = showFilm ? videoFilm : videoRec709;
 
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const videoType = btn.dataset.video;
-                if (videoType === currentVideo) return;
+            // Sync playback position and swap
+            toVideo.currentTime = fromVideo.currentTime;
+            toVideo.play();
 
-                buttons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // Sync playback position and swap
-                const currentTime = videos[currentVideo].currentTime;
-                videos[videoType].currentTime = currentTime;
-                videos[videoType].play();
-
-                videos[currentVideo].classList.remove('active');
-                videos[videoType].classList.add('active');
-
-                currentVideo = videoType;
-            });
+            fromVideo.classList.remove('active');
+            toVideo.classList.add('active');
         });
     })();
     </script>
