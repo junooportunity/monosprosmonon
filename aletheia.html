@@ -1894,7 +1894,7 @@
     <!-- Intro -->
     <section class="intro-section">
         <div class="container">
-            <p class="intro-headline">A complete film emulation pipeline, in your favorite grading software.</p>
+            <p class="intro-headline">A complete film emulation pipeline.</p>
             <p class="intro-description">Aletheia is an OpenFX plugin suite that integrates with DaVinci Resolve. Going beyond LUTs and preset filters, each module exposes the underlying film parameters for precise creative control.</p>
             <p class="intro-description">Developed for professional cinematography, our color-managed workflows allow you to shape your vision with confidence across formats and delivery specifications. From SDR to HDR, your look stays faithful to your intention.</p>
             <div class="intro-compat">
@@ -2721,23 +2721,28 @@
         const videoFilm = document.getElementById('video-film');
         const toggle = document.getElementById('video-toggle-switch');
 
+        // Keep both videos playing in sync at all times
+        function syncVideos() {
+            const diff = Math.abs(videoRec709.currentTime - videoFilm.currentTime);
+            if (diff > 0.1) {
+                videoRec709.currentTime = videoFilm.currentTime;
+            }
+        }
+
+        // Start both videos, sync periodically
+        videoRec709.play();
+        videoFilm.play();
+        setInterval(syncVideos, 500);
+
         // Default to film look (toggle on)
         toggle.checked = true;
         videoRec709.classList.remove('active');
         videoFilm.classList.add('active');
-        videoFilm.play();
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            const fromVideo = showFilm ? videoRec709 : videoFilm;
-            const toVideo = showFilm ? videoFilm : videoRec709;
-
-            // Sync playback position and swap
-            toVideo.currentTime = fromVideo.currentTime;
-            toVideo.play();
-
-            fromVideo.classList.remove('active');
-            toVideo.classList.add('active');
+            videoRec709.classList.toggle('active', !showFilm);
+            videoFilm.classList.toggle('active', showFilm);
         });
     })();
     </script>
