@@ -230,13 +230,13 @@
                 vec3 band5 = blur4 - blur5;         // Very Coarse
                 vec3 band6 = blur5 - blur6;         // Ultra Coarse
 
-                // Per-band gains (matching Helix 2.5x multiplier)
-                float g1 = 1.0 + u_z1 * 2.5;
-                float g2 = 1.0 + u_z2 * 2.5;
-                float g3 = 1.0 + u_z3 * 2.5;
-                float g4 = 1.0 + u_z4 * 2.5;
-                float g5 = 1.0 + u_z5 * 2.5;
-                float g6 = 1.0 + u_z6 * 2.5;
+                // Per-band gains (reduced from 2.5x for web - fewer samples = harsher effect)
+                float g1 = 1.0 + u_z1 * 1.2;
+                float g2 = 1.0 + u_z2 * 1.2;
+                float g3 = 1.0 + u_z3 * 1.2;
+                float g4 = 1.0 + u_z4 * 1.2;
+                float g5 = 1.0 + u_z5 * 1.2;
+                float g6 = 1.0 + u_z6 * 1.2;
 
                 // Reconstruct: base (blur6) + all bands with gains
                 vec3 result = blur6 + band6 * g6 + band5 * g5 + band4 * g4 +
