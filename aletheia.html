@@ -1039,6 +1039,69 @@
             }
         }
 
+        /* ========== VIDEO DEMO ========== */
+        .video-demo-section {
+            padding: 2rem 0;
+        }
+
+        .video-demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.3);
+            background: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-top: 1rem;
+        }
+
+        .video-toggle-btn {
+            padding: 0.5rem 1.25rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .video-toggle-btn:first-child {
+            border-radius: 6px 0 0 6px;
+            border-right: none;
+        }
+
+        .video-toggle-btn:last-child {
+            border-radius: 0 6px 6px 0;
+        }
+
+        .video-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .video-toggle-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         /* ========== OMEGA DEMO ========== */
         .omega-demo-section {
             padding: 2rem 0;
@@ -1675,6 +1738,52 @@
         <p class="hero-pitch">7,980 film looks. One-time price.</p>
     </section>
 
+    <!-- The System -->
+    <section class="pipeline">
+        <div class="container">
+            <p class="pipeline-label">The System</p>
+            <div class="pipeline-grid">
+                <div class="pipeline-item">
+                    <img src="images/alpha-icon.png" alt="Alpha" class="pipeline-icon alpha-icon">
+                    <h3 class="pipeline-name">Alpha</h3>
+                    <p class="pipeline-role">Film-Negative Transform</p>
+                </div>
+                <div class="pipeline-item">
+                    <img src="images/phi-icon.webp" alt="Phi" class="pipeline-icon">
+                    <h3 class="pipeline-name">Phi</h3>
+                    <p class="pipeline-role">Core Grading Engine</p>
+                </div>
+                <div class="pipeline-item">
+                    <img src="images/helix-icon.webp" alt="Helix" class="pipeline-icon">
+                    <h3 class="pipeline-name">Helix</h3>
+                    <p class="pipeline-role">Texture & Detail</p>
+                </div>
+                <div class="pipeline-item">
+                    <img src="images/omega-icon.png" alt="Omega" class="pipeline-icon">
+                    <h3 class="pipeline-name">Omega</h3>
+                    <p class="pipeline-role">Look Development</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Modal -->
+    <section class="video-demo-section">
+        <div class="container">
+            <div class="video-demo-container">
+                <div class="video-wrapper">
+                    <video id="demo-video" autoplay loop muted playsinline>
+                        <source id="demo-video-source" src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-web.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-toggle">
+                    <button class="video-toggle-btn active" data-video="rec709">Rec 709</button>
+                    <button class="video-toggle-btn" data-video="film">5219 → 2383</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Omega Demo -->
     <section class="omega-demo-section">
         <div class="container">
@@ -2085,37 +2194,6 @@
 
     <hr class="divider">
 
-    <!-- The System -->
-    <section class="pipeline">
-        <div class="container">
-            <p class="pipeline-label">The System</p>
-            <div class="pipeline-grid">
-                <div class="pipeline-item">
-                    <img src="images/alpha-icon.png" alt="Alpha" class="pipeline-icon alpha-icon">
-                    <h3 class="pipeline-name">Alpha</h3>
-                    <p class="pipeline-role">Film-Negative Transform</p>
-                </div>
-                <div class="pipeline-item">
-                    <img src="images/phi-icon.webp" alt="Phi" class="pipeline-icon">
-                    <h3 class="pipeline-name">Phi</h3>
-                    <p class="pipeline-role">Core Grading Engine</p>
-                </div>
-                <div class="pipeline-item">
-                    <img src="images/helix-icon.webp" alt="Helix" class="pipeline-icon">
-                    <h3 class="pipeline-name">Helix</h3>
-                    <p class="pipeline-role">Texture & Detail</p>
-                </div>
-                <div class="pipeline-item">
-                    <img src="images/omega-icon.png" alt="Omega" class="pipeline-icon">
-                    <h3 class="pipeline-name">Omega</h3>
-                    <p class="pipeline-role">Look Development</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <hr class="divider">
-
     <!-- Plugin Details -->
     <section class="plugins">
         <div class="container">
@@ -2486,6 +2564,34 @@
         }
 
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
+    </script>
+
+    <!-- Video Demo Toggle -->
+    <script>
+    (function() {
+        const video = document.getElementById('demo-video');
+        const source = document.getElementById('demo-video-source');
+        const buttons = document.querySelectorAll('.video-toggle-btn');
+
+        const videos = {
+            'rec709': 'https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-web.mp4',
+            'film': 'https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/5219-2383-web.mp4'
+        };
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const videoType = btn.dataset.video;
+                if (source.src === videos[videoType]) return;
+
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                source.src = videos[videoType];
+                video.load();
+                video.play();
+            });
+        });
+    })();
     </script>
 
     <!-- Omega Demo -->
