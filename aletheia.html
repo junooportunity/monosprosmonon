@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aletheia</title>
-    <meta name="description" content="Professional color grading plugins for DaVinci Resolve. Alpha, Phi, Helix, Omega — a complete grading pipeline.">
+    <title>Aletheia — Film Emulation for DaVinci Resolve</title>
+    <meta name="description" content="A complete film emulation pipeline for DaVinci Resolve. 42 negative stocks, 19 print stocks, 10 dye processes. OpenFX plugins with full parameter control.">
 
-    <meta property="og:title" content="Aletheia">
-    <meta property="og:description" content="Professional color grading plugins for DaVinci Resolve.">
-    <meta property="og:image" content="images/og-image.png">
+    <meta property="og:title" content="Aletheia — Film Emulation for DaVinci Resolve">
+    <meta property="og:description" content="A complete film emulation pipeline. 42 negative stocks, 19 print stocks, 10 dye processes. OpenFX plugins with full parameter control.">
+    <meta property="og:image" content="https://monosprosmonon.com/images/og-image.png">
     <meta property="og:url" content="https://monosprosmonon.com/aletheia">
     <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aletheia — Film Emulation for DaVinci Resolve">
+    <meta name="twitter:description" content="A complete film emulation pipeline. 42 negative stocks, 19 print stocks, 10 dye processes.">
+    <meta name="twitter:image" content="https://monosprosmonon.com/images/og-image.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
@@ -1111,11 +1116,13 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
+            visibility: hidden;
+            opacity: 0;
         }
 
         .demo-video.active {
-            display: block;
+            visibility: visible;
+            opacity: 1;
         }
 
         .video-toggle {
@@ -1452,6 +1459,78 @@
             .demo-field, .demo-slider-field { flex-direction: column; align-items: stretch; gap: 0.3rem; }
             .demo-field-label, .demo-slider-label { flex: none; text-align: left; }
             .demo-toggles { margin-left: 0; }
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.25rem 0;
+        }
+
+        .faq-question {
+            font-size: 0.85rem;
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            font-size: 0.8rem;
+            color: #777777;
+            font-style: italic;
+        }
+
+        /* System Requirements */
+        .requirements-section {
+            padding: 3rem 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .requirements-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .requirement-item {
+            text-align: center;
+        }
+
+        .requirement-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666666;
+            margin-bottom: 0.25rem;
+        }
+
+        .requirement-value {
+            font-size: 0.8rem;
+            color: #999999;
         }
 
         /* Closing Section */
@@ -1832,6 +1911,27 @@
             .aletheia-docs {
                 margin-top: 1rem;
                 font-size: 0.7rem;
+            }
+
+            .faq-section {
+                padding: 2rem 1rem;
+            }
+
+            .faq-question {
+                font-size: 0.8rem;
+            }
+
+            .faq-answer {
+                font-size: 0.75rem;
+            }
+
+            .requirements-section {
+                padding: 2rem 1rem;
+            }
+
+            .requirements-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
             .closing {
@@ -2622,6 +2722,50 @@
 
             </div>
 
+        </div>
+    </section>
+
+    <!-- System Requirements -->
+    <section class="requirements-section">
+        <h2 class="requirements-title">System Requirements</h2>
+        <div class="requirements-grid">
+            <div class="requirement-item">
+                <p class="requirement-label">DaVinci Resolve</p>
+                <p class="requirement-value">18.0 or later</p>
+            </div>
+            <div class="requirement-item">
+                <p class="requirement-label">macOS</p>
+                <p class="requirement-value">12.0 Monterey or later</p>
+            </div>
+            <div class="requirement-item">
+                <p class="requirement-label">GPU</p>
+                <p class="requirement-value">Metal-compatible</p>
+            </div>
+            <div class="requirement-item">
+                <p class="requirement-label">Windows</p>
+                <p class="requirement-value">Coming soon</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">FAQ</h2>
+        <div class="faq-item">
+            <p class="faq-question">Does Aletheia work with Premiere Pro or Final Cut?</p>
+            <p class="faq-answer">Not currently. Aletheia is built for DaVinci Resolve's OpenFX architecture. Other NLEs may be supported in the future.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-question">Are updates included?</p>
+            <p class="faq-answer">Yes. All updates to the current major version are included with your purchase.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-question">Can I use it on multiple machines?</p>
+            <p class="faq-answer">Yes. One license covers all machines you personally own and operate.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-question">Is there a trial version?</p>
+            <p class="faq-answer">Not at this time. The interactive demo above shows the range of looks available.</p>
         </div>
     </section>
 
