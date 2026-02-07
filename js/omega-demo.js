@@ -289,7 +289,7 @@
 
         const img = new Image();
         if (gl) {
-            img.crossOrigin = 'anonymous';  // Only needed for WebGL texturing
+            img.crossOrigin = 'anonymous';  // Needed for WebGL texturing
         }
         img.onload = function() {
             currentImage = img;
@@ -308,8 +308,28 @@
             if (loading) loading.classList.remove('active');
         };
         img.onerror = function() {
-            console.error('Failed to load:', url);
-            if (loading) loading.classList.remove('active');
+            // CORS failed - fallback to non-WebGL display
+            if (gl && img.crossOrigin) {
+                console.log('CORS blocked, falling back to direct display');
+                const fallback = new Image();
+                fallback.onload = function() {
+                    if (demoImage) {
+                        demoImage.src = url;
+                        demoImage.style.opacity = '1';
+                        demoImage.style.display = 'block';
+                    }
+                    if (canvas) canvas.style.display = 'none';
+                    if (loading) loading.classList.remove('active');
+                };
+                fallback.onerror = function() {
+                    console.error('Failed to load:', url);
+                    if (loading) loading.classList.remove('active');
+                };
+                fallback.src = url;
+            } else {
+                console.error('Failed to load:', url);
+                if (loading) loading.classList.remove('active');
+            }
         };
         img.src = url;
     }
