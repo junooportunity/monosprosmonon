@@ -1142,6 +1142,43 @@
             margin: 2rem auto;
         }
 
+        /* ========== MARKETING CARDS ========== */
+        .marketing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .marketing-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .marketing-card-title {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .marketing-card-text {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .marketing-cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
         /* ========== OMEGA DEMO ========== */
         .omega-demo-section {
             padding: 2rem 0;
@@ -1827,6 +1864,22 @@
                             <input type="checkbox" id="video-toggle-switch">
                             <span class="video-slider"></span>
                         </label>
+                    </div>
+                </div>
+
+                <!-- Marketing Cards -->
+                <div class="marketing-cards">
+                    <div class="marketing-card">
+                        <h3 class="marketing-card-title">Spectral Accuracy</h3>
+                        <p class="marketing-card-text">Built on measured spectral data from real film stocks, not eyeballed approximations.</p>
+                    </div>
+                    <div class="marketing-card">
+                        <h3 class="marketing-card-title">Perceptual Color</h3>
+                        <p class="marketing-card-text">CAM16 color appearance model preserves natural skin tones across all looks.</p>
+                    </div>
+                    <div class="marketing-card">
+                        <h3 class="marketing-card-title">True Halation</h3>
+                        <p class="marketing-card-text">Physics-based light bloom from real film substrates, not a blur filter.</p>
                     </div>
                 </div>
 
