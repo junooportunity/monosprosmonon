@@ -275,10 +275,11 @@
     }
 
     function getImageUrl() {
-        // Subset mode: only print + variant (fixed neg_03, dye_00)
+        const negId = parseInt(negativeSelect?.value || '3').toString().padStart(2, '0');
         const printId = parseInt(printSelect?.value || '1').toString().padStart(2, '0');
+        const dyeId = parseInt(dyeSelect?.value || '0').toString().padStart(2, '0');
         const variant = getVariant();
-        return `${CDN_BASE}/print_${printId}_${variant}.webp`;
+        return `${CDN_BASE}/neg_${negId}_print_${printId}_dye_${dyeId}_${variant}.webp`;
     }
 
     function updateImage() {
