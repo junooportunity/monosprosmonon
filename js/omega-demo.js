@@ -32,6 +32,14 @@
     const claritySlider = document.getElementById('clarity-slider');
     const microSlider = document.getElementById('micro-slider');
 
+    // Spatial Equalizer Controls
+    const z1Slider = document.getElementById('z1-slider');
+    const z2Slider = document.getElementById('z2-slider');
+    const z3Slider = document.getElementById('z3-slider');
+    const z4Slider = document.getElementById('z4-slider');
+    const z5Slider = document.getElementById('z5-slider');
+    const z6Slider = document.getElementById('z6-slider');
+
     // WebGL state
     let gl = null;
     let program = null;
@@ -48,6 +56,7 @@
         }
     `;
 
+    // Fragment shader with Phi + Helix (Clarity, Acutance, Spatial EQ)
     const FRAGMENT_SHADER = `
         precision highp float;
         varying vec2 v_texCoord;
@@ -63,17 +72,41 @@
         uniform float u_saturation;
         uniform float u_vibrance;
 
-        // Helix uniforms
+        // Helix uniforms - Clarity & Acutance
         uniform float u_clarity;
         uniform float u_micro;
+
+        // Spatial Equalizer uniforms (6 bands)
+        uniform float u_z1;  // Ultra Fine (2px)
+        uniform float u_z2;  // Fine (6px)
+        uniform float u_z3;  // Medium (15px)
+        uniform float u_z4;  // Coarse (30px)
+        uniform float u_z5;  // Very Coarse (55px)
+        uniform float u_z6;  // Ultra Coarse (90px)
+
+        // Golden angle for spiral sampling
+        const float GOLDEN_ANGLE = 2.39996323;
 
         float luminance(vec3 rgb) {
             return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
         }
 
+        // Sample blur at given radius using golden spiral (8 samples)
+        vec3 sampleBlur(vec2 uv, vec2 px, float radius) {
+            vec3 sum = vec3(0.0);
+            for (int i = 0; i < 8; i++) {
+                float angle = GOLDEN_ANGLE * float(i);
+                float r = radius * sqrt(float(i + 1) / 8.0);
+                vec2 offset = vec2(cos(angle), sin(angle)) * r * px;
+                sum += texture2D(u_image, uv + offset).rgb;
+            }
+            return sum / 8.0;
+        }
+
         void main() {
             vec2 px = 1.0 / u_resolution;
             vec3 rgb = texture2D(u_image, v_texCoord).rgb;
+            vec3 orig = rgb;
 
             // === PHI PROCESSING ===
 
@@ -128,7 +161,7 @@
 
             lum = luminance(rgb);
 
-            // Clarity
+            // Clarity (larger radius local contrast)
             if (abs(u_clarity) > 0.01) {
                 vec3 blur = vec3(0.0);
                 float samples = 0.0;
@@ -151,18 +184,18 @@
                 rgb = clamp(rgb + detail * clarityGain, 0.0, 1.0);
             }
 
-            // Micro-contrast
+            // Acutance (fine micro-contrast)
             if (abs(u_micro) > 0.01) {
                 vec3 microBlur = vec3(0.0);
                 float samples = 0.0;
                 for (int i = 0; i < 8; i++) {
-                    float angle = 2.39996323 * float(i);
+                    float angle = GOLDEN_ANGLE * float(i);
                     vec2 offset = vec2(cos(angle), sin(angle)) * 1.5 * px;
                     microBlur += texture2D(u_image, v_texCoord + offset).rgb;
                     samples += 1.0;
                 }
                 for (int i = 0; i < 8; i++) {
-                    float angle = 2.39996323 * float(i + 8);
+                    float angle = GOLDEN_ANGLE * float(i + 8);
                     vec2 offset = vec2(cos(angle), sin(angle)) * 3.0 * px;
                     microBlur += texture2D(u_image, v_texCoord + offset).rgb;
                     samples += 1.0;
@@ -173,6 +206,43 @@
                 hlFade = hlFade * hlFade * (3.0 - 2.0 * hlFade);
                 float microGain = u_micro * 0.8 * hlFade;
                 rgb = clamp(rgb + lumDetail * microGain, 0.0, 1.0);
+            }
+
+            // === SPATIAL EQUALIZER (6-band frequency control) ===
+            bool spatialActive = abs(u_z1) > 0.001 || abs(u_z2) > 0.001 || abs(u_z3) > 0.001 ||
+                                 abs(u_z4) > 0.001 || abs(u_z5) > 0.001 || abs(u_z6) > 0.001;
+
+            if (spatialActive) {
+                // Band radii matching Helix.cpp: 2, 6, 15, 30, 55, 90
+                // Sample cumulative blurs at each radius
+                vec3 blur1 = sampleBlur(v_texCoord, px, 2.0);
+                vec3 blur2 = sampleBlur(v_texCoord, px, 6.0);
+                vec3 blur3 = sampleBlur(v_texCoord, px, 15.0);
+                vec3 blur4 = sampleBlur(v_texCoord, px, 30.0);
+                vec3 blur5 = sampleBlur(v_texCoord, px, 55.0);
+                vec3 blur6 = sampleBlur(v_texCoord, px, 90.0);
+
+                // Extract frequency bands (difference between adjacent blurs)
+                vec3 band1 = rgb - blur1;           // Ultra Fine
+                vec3 band2 = blur1 - blur2;         // Fine
+                vec3 band3 = blur2 - blur3;         // Medium
+                vec3 band4 = blur3 - blur4;         // Coarse
+                vec3 band5 = blur4 - blur5;         // Very Coarse
+                vec3 band6 = blur5 - blur6;         // Ultra Coarse
+
+                // Per-band gains (matching Helix 2.5x multiplier)
+                float g1 = 1.0 + u_z1 * 2.5;
+                float g2 = 1.0 + u_z2 * 2.5;
+                float g3 = 1.0 + u_z3 * 2.5;
+                float g4 = 1.0 + u_z4 * 2.5;
+                float g5 = 1.0 + u_z5 * 2.5;
+                float g6 = 1.0 + u_z6 * 2.5;
+
+                // Reconstruct: base (blur6) + all bands with gains
+                vec3 result = blur6 + band6 * g6 + band5 * g5 + band4 * g4 +
+                              band3 * g3 + band2 * g2 + band1 * g1;
+
+                rgb = clamp(result, 0.0, 1.0);
             }
 
             gl_FragColor = vec4(clamp(rgb, 0.0, 1.0), 1.0);
@@ -258,9 +328,17 @@
         gl.uniform1f(gl.getUniformLocation(program, 'u_saturation'), parseFloat(saturationSlider?.value || 0));
         gl.uniform1f(gl.getUniformLocation(program, 'u_vibrance'), parseFloat(vibranceSlider?.value || 0));
 
-        // Helix uniforms
+        // Helix uniforms - Clarity & Acutance
         gl.uniform1f(gl.getUniformLocation(program, 'u_clarity'), parseFloat(claritySlider?.value || 0) / 100);
         gl.uniform1f(gl.getUniformLocation(program, 'u_micro'), parseFloat(microSlider?.value || 0) / 100);
+
+        // Spatial Equalizer uniforms
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z1'), parseFloat(z1Slider?.value || 0));
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z2'), parseFloat(z2Slider?.value || 0));
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z3'), parseFloat(z3Slider?.value || 0));
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z4'), parseFloat(z4Slider?.value || 0));
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z5'), parseFloat(z5Slider?.value || 0));
+        gl.uniform1f(gl.getUniformLocation(program, 'u_z6'), parseFloat(z6Slider?.value || 0));
 
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
@@ -359,6 +437,14 @@
     // Helix controls - re-render
     claritySlider?.addEventListener('input', render);
     microSlider?.addEventListener('input', render);
+
+    // Spatial Equalizer controls - re-render
+    z1Slider?.addEventListener('input', render);
+    z2Slider?.addEventListener('input', render);
+    z3Slider?.addEventListener('input', render);
+    z4Slider?.addEventListener('input', render);
+    z5Slider?.addEventListener('input', render);
+    z6Slider?.addEventListener('input', render);
 
     // Initial load
     updateImage();
