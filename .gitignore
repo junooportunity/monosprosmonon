@@ -1,6 +1,3 @@
-# Large staging folders
-omega-demo-staging/
-
 # Python
 __pycache__/
 *.pyc
