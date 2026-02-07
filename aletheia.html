@@ -1116,11 +1116,18 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        #video-film {
+            z-index: 2;
+        }
+
+        #video-rec709 {
             z-index: 1;
         }
 
-        .demo-video.on-top {
-            z-index: 2;
+        .demo-video.hidden {
+            clip-path: inset(0 0 0 100%);
         }
 
         .video-toggle {
@@ -2030,7 +2037,7 @@
                         <video id="video-rec709" class="demo-video" autoplay loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-hq.mp4" type="video/mp4">
                         </video>
-                        <video id="video-film" class="demo-video on-top" autoplay loop muted playsinline>
+                        <video id="video-film" class="demo-video" autoplay loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/5219-2383-hq.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -2909,7 +2916,7 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (z-index swap, both videos always playing) -->
+    <!-- Video Demo Toggle (clip-path, both videos always playing) -->
     <script>
     (function() {
         const videoRec709 = document.getElementById('video-rec709');
@@ -2925,15 +2932,13 @@
             requestAnimationFrame(syncLoop);
         }
 
-        // Default to film look (toggle on, film on top)
+        // Default to film look (toggle on, film visible on top)
         toggle.checked = true;
         requestAnimationFrame(syncLoop);
 
-        // Toggle just swaps z-index - both videos always playing and visible
+        // Toggle clips film video to show/hide (rec709 is underneath)
         toggle.addEventListener('change', () => {
-            const showFilm = toggle.checked;
-            videoFilm.classList.toggle('on-top', showFilm);
-            videoRec709.classList.toggle('on-top', !showFilm);
+            videoFilm.classList.toggle('hidden', !toggle.checked);
         });
     })();
     </script>
