@@ -1109,20 +1109,13 @@
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.3);
         }
 
-        .demo-video {
+        .demo-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            visibility: hidden;
-            opacity: 0;
-        }
-
-        .demo-video.active {
-            visibility: visible;
-            opacity: 1;
         }
 
         .video-toggle {
@@ -2029,10 +2022,11 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" loop muted playsinline>
+                        <canvas id="video-canvas" class="demo-canvas"></canvas>
+                        <video id="video-rec709" style="display:none" loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-hq.mp4" type="video/mp4">
                         </video>
-                        <video id="video-film" class="demo-video active" autoplay loop muted playsinline>
+                        <video id="video-film" style="display:none" loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/5219-2383-hq.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -2911,50 +2905,48 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle -->
+    <!-- Video Demo Toggle (Canvas-based for glitch-free switching) -->
     <script>
     (function() {
+        const canvas = document.getElementById('video-canvas');
+        const ctx = canvas.getContext('2d');
         const videoRec709 = document.getElementById('video-rec709');
         const videoFilm = document.getElementById('video-film');
         const toggle = document.getElementById('video-toggle-switch');
 
-        // Master video drives timing, slave follows
-        let master = videoFilm;
-        let slave = videoRec709;
+        let activeVideo = videoFilm;
 
-        // Sync slave to master on every frame
-        function syncLoop() {
-            const diff = Math.abs(slave.currentTime - master.currentTime);
-            if (diff > 0.05) {
-                slave.currentTime = master.currentTime;
-            }
-            requestAnimationFrame(syncLoop);
+        // Set canvas size when video metadata loads
+        function setupCanvas() {
+            canvas.width = activeVideo.videoWidth || 1920;
+            canvas.height = activeVideo.videoHeight || 1080;
         }
 
-        // Start both videos
-        videoRec709.play();
-        videoFilm.play();
-        requestAnimationFrame(syncLoop);
+        // Draw active video frame to canvas continuously
+        function drawFrame() {
+            if (activeVideo.readyState >= 2) {
+                ctx.drawImage(activeVideo, 0, 0, canvas.width, canvas.height);
+            }
+            requestAnimationFrame(drawFrame);
+        }
 
         // Default to film look (toggle on)
         toggle.checked = true;
-        videoRec709.classList.remove('active');
-        videoFilm.classList.add('active');
+        videoFilm.addEventListener('loadedmetadata', setupCanvas);
+        videoFilm.play();
+        requestAnimationFrame(drawFrame);
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Force sync before switching
-            if (showFilm) {
-                videoFilm.currentTime = videoRec709.currentTime;
-                master = videoFilm;
-                slave = videoRec709;
-            } else {
-                videoRec709.currentTime = videoFilm.currentTime;
-                master = videoRec709;
-                slave = videoFilm;
-            }
-            videoRec709.classList.toggle('active', !showFilm);
-            videoFilm.classList.toggle('active', showFilm);
+            const fromVideo = showFilm ? videoRec709 : videoFilm;
+            const toVideo = showFilm ? videoFilm : videoRec709;
+
+            // Sync position and swap active video
+            toVideo.currentTime = fromVideo.currentTime;
+            toVideo.play();
+            fromVideo.pause();
+            activeVideo = toVideo;
+            setupCanvas();
         });
     })();
     </script>
