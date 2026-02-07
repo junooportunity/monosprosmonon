@@ -211,6 +211,52 @@
             color: #666666;
         }
 
+        /* Intro Section */
+        .intro-section {
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+
+        .intro-headline {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-description {
+            font-size: 0.85rem;
+            color: #777777;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 1rem;
+        }
+
+        .intro-compat {
+            margin-top: 2rem;
+        }
+
+        .intro-compat-label {
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #555555;
+            margin-bottom: 1rem;
+        }
+
+        .intro-compat-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .intro-compat-logo {
+            height: 32px;
+            opacity: 0.6;
+        }
+
         /* Pricing Section */
         .pricing {
             padding: 2rem 0;
@@ -1845,6 +1891,22 @@
         </div>
     </section>
 
+    <!-- Intro -->
+    <section class="intro-section">
+        <div class="container">
+            <p class="intro-headline">A complete film emulation pipeline, in your favorite grading software.</p>
+            <p class="intro-description">Aletheia is an OpenFX plugin suite that integrates with DaVinci Resolve. Going beyond LUTs and preset filters, each module exposes the underlying film parameters for precise creative control.</p>
+            <p class="intro-description">Developed for professional cinematography, our color-managed workflows allow you to shape your vision with confidence across formats and delivery specifications. From SDR to HDR, your look stays faithful to your intention.</p>
+            <div class="intro-compat">
+                <p class="intro-compat-label">Compatible With</p>
+                <div class="intro-compat-logos">
+                    <img src="images/davinci-logo.png" alt="DaVinci Resolve" class="intro-compat-logo">
+                    <img src="images/aces-logo.png" alt="ACES" class="intro-compat-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Demo Modal -->
     <section class="demo-modal-section">
         <div class="container">
@@ -2572,21 +2634,6 @@
                 <p class="pricing-price">$299</p>
                 <a href="#" class="btn btn-primary">Buy</a>
             </div>
-        </div>
-    </section>
-
-    <!-- Compatibility -->
-    <section class="compatibility">
-        <div class="container">
-            <p class="compatibility-label">Compatible With</p>
-            <div class="compatibility-logos">
-                <img src="images/davinci-logo.png" alt="DaVinci Resolve" class="compatibility-logo">
-                <img src="images/aces-logo.png" alt="ACES" class="compatibility-logo">
-            </div>
-            <p class="compatibility-text">
-                Built for DaVinci Resolve 18+ with full ACES pipeline support.<br>Supports all major linear, log, and display color spaces.
-            </p>
-            <p class="compatibility-requirements">macOS 11+ · Windows coming soon · DaVinci Resolve 18+</p>
         </div>
     </section>
 
