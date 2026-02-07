@@ -2918,43 +2918,39 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (clip-path, both videos play in parallel) -->
+    <!-- Video Demo Toggle (both videos play, playbackRate sync) -->
     <script>
     (function() {
         const videoRec709 = document.getElementById('video-rec709');
         const videoFilm = document.getElementById('video-film');
         const toggle = document.getElementById('video-toggle-switch');
 
-        // Start both videos together so they stay in sync naturally
-        function startBothVideos() {
-            // Sync to the same starting point
-            videoRec709.currentTime = 0;
-            videoFilm.currentTime = 0;
-            // Play both - they'll stay in sync since they play at the same rate
-            videoRec709.play();
-            videoFilm.play();
-        }
-
-        // Handle loop sync - when one video loops, sync the other
-        videoFilm.addEventListener('seeked', () => {
-            if (videoFilm.currentTime < 0.1) {
-                videoRec709.currentTime = 0;
-            }
-        });
-
-        // Default to film look (toggle on, film visible on top)
+        // Default to film look
         toggle.checked = true;
 
-        // Start videos when both are ready
-        let readyCount = 0;
-        function onReady() {
-            readyCount++;
-            if (readyCount === 2) startBothVideos();
-        }
-        videoRec709.addEventListener('canplay', onReady, { once: true });
-        videoFilm.addEventListener('canplay', onReady, { once: true });
+        // Start both videos at time 0
+        videoRec709.currentTime = 0;
+        videoFilm.currentTime = 0;
+        videoRec709.play();
+        videoFilm.play();
 
-        // Toggle clips film video to show/hide (rec709 is underneath)
+        // Soft sync using playbackRate (no seeking = no jut)
+        function softSync() {
+            const diff = videoRec709.currentTime - videoFilm.currentTime;
+            if (Math.abs(diff) > 0.5) {
+                // Too far apart, hard sync on loop
+                videoRec709.currentTime = videoFilm.currentTime;
+            } else if (Math.abs(diff) > 0.02) {
+                // Gently speed up/slow down rec709 to catch up
+                videoRec709.playbackRate = diff > 0 ? 0.95 : 1.05;
+            } else {
+                videoRec709.playbackRate = 1.0;
+            }
+            requestAnimationFrame(softSync);
+        }
+        requestAnimationFrame(softSync);
+
+        // Toggle clips film video to show/hide
         toggle.addEventListener('change', () => {
             videoFilm.classList.toggle('hidden', !toggle.checked);
         });
