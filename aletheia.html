@@ -2946,18 +2946,23 @@
         const videoFilm = document.getElementById('video-film');
         const toggle = document.getElementById('video-toggle-switch');
 
-        // Keep both videos playing in sync at all times
-        function syncVideos() {
-            const diff = Math.abs(videoRec709.currentTime - videoFilm.currentTime);
-            if (diff > 0.1) {
-                videoRec709.currentTime = videoFilm.currentTime;
+        // Master video drives timing, slave follows
+        let master = videoFilm;
+        let slave = videoRec709;
+
+        // Sync slave to master on every frame
+        function syncLoop() {
+            const diff = Math.abs(slave.currentTime - master.currentTime);
+            if (diff > 0.05) {
+                slave.currentTime = master.currentTime;
             }
+            requestAnimationFrame(syncLoop);
         }
 
-        // Start both videos, sync periodically
+        // Start both videos
         videoRec709.play();
         videoFilm.play();
-        setInterval(syncVideos, 500);
+        requestAnimationFrame(syncLoop);
 
         // Default to film look (toggle on)
         toggle.checked = true;
@@ -2966,6 +2971,16 @@
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            // Force sync before switching
+            if (showFilm) {
+                videoFilm.currentTime = videoRec709.currentTime;
+                master = videoFilm;
+                slave = videoRec709;
+            } else {
+                videoRec709.currentTime = videoFilm.currentTime;
+                master = videoRec709;
+                slave = videoFilm;
+            }
             videoRec709.classList.toggle('active', !showFilm);
             videoFilm.classList.toggle('active', showFilm);
         });
