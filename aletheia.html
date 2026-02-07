@@ -2905,7 +2905,7 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (Canvas-based for glitch-free switching) -->
+    <!-- Video Demo Toggle (Canvas-based, both videos always playing) -->
     <script>
     (function() {
         const canvas = document.getElementById('video-canvas');
@@ -2916,37 +2916,41 @@
 
         let activeVideo = videoFilm;
 
-        // Set canvas size when video metadata loads
+        // Set canvas size
         function setupCanvas() {
-            canvas.width = activeVideo.videoWidth || 1920;
-            canvas.height = activeVideo.videoHeight || 1080;
+            canvas.width = videoFilm.videoWidth || 1920;
+            canvas.height = videoFilm.videoHeight || 1080;
         }
 
-        // Draw active video frame to canvas continuously
+        // Keep videos synced - film is master
+        function syncVideos() {
+            const diff = Math.abs(videoRec709.currentTime - videoFilm.currentTime);
+            if (diff > 0.1) {
+                videoRec709.currentTime = videoFilm.currentTime;
+            }
+        }
+
+        // Draw active video frame to canvas
         function drawFrame() {
+            syncVideos();
             if (activeVideo.readyState >= 2) {
                 ctx.drawImage(activeVideo, 0, 0, canvas.width, canvas.height);
             }
             requestAnimationFrame(drawFrame);
         }
 
-        // Default to film look (toggle on)
+        // Start both videos playing
         toggle.checked = true;
-        videoFilm.addEventListener('loadedmetadata', setupCanvas);
+        videoFilm.addEventListener('loadedmetadata', () => {
+            setupCanvas();
+            videoRec709.play();
+        });
         videoFilm.play();
         requestAnimationFrame(drawFrame);
 
+        // Toggle just changes which video is drawn - no seeking
         toggle.addEventListener('change', () => {
-            const showFilm = toggle.checked;
-            const fromVideo = showFilm ? videoRec709 : videoFilm;
-            const toVideo = showFilm ? videoFilm : videoRec709;
-
-            // Sync position and swap active video
-            toVideo.currentTime = fromVideo.currentTime;
-            toVideo.play();
-            fromVideo.pause();
-            activeVideo = toVideo;
-            setupCanvas();
+            activeVideo = toggle.checked ? videoFilm : videoRec709;
         });
     })();
     </script>
