@@ -2300,6 +2300,57 @@
                     </div>
                 </div>
 
+                <!-- Omega Interface Panel -->
+                <div class="interface-panel">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Input Space</h4>
+                                <p class="explainer-text">Declares camera color space and transfer function. Supports ARRI LogC3/4, Sony S-Log3, RED Log3G10, Blackmagic Film Gen5, DaVinci Wide Gamut, ACES AP1/cct, and Rec.709. Linearization and gamut conversion happen before any film math.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Negative Stock</h4>
+                                <p class="explainer-text">42 motion picture and still negative stocks with per-stock H&D curves derived from Kodak and Fuji datasheets. Each stock has unique gamma, density range, dye spectral response, and color separation behavior.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Dye Process</h4>
+                                <p class="explainer-text">10 dye coupling processes—Kodak Dye Transfer, Technicolor 3-Strip and Monopack, Ilford Ilfochrome. Models how silver halide converts to dye during development. Each process has distinct saturation curves and color crosstalk.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Push/Pull</h4>
+                                <p class="explainer-text">Simulates over or under-development in stops. Push increases contrast and grain, pull softens. Adjusts exposure compensation to maintain mid-gray while changing shoulder and toe behavior.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Bleach Bypass</h4>
+                                <p class="explainer-text">Skips the bleach step—retained silver produces desaturation and increased contrast. The look made famous by Saving Private Ryan and Se7en.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Interlayer Effect</h4>
+                                <p class="explainer-text">Authentic emulsion layer interactions. In real film, red/green/blue sensitive layers affect each other during exposure and development. This models that chemical crosstalk.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Print Stock</h4>
+                                <p class="explainer-text">19 print stocks from Kodak Vision, ECP, Fuji Eterna-RDI, and Crystal Archive families. Each has its own gamma, color timing response, and density range that shapes the final look.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Printer Points</h4>
+                                <p class="explainer-text">RGB timing light controls—0-50 scale where 25 is neutral. Emulates the light valves on an optical printer. One point equals roughly 1/12 stop. Industry-standard color balancing method.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Physical Halation</h4>
+                                <p class="explainer-text">Light passes through emulsion, bounces off the film base, and re-exposes from behind. Creates the organic red glow around bright sources. Film gauge controls scatter size—16mm spreads wider, 65mm stays tighter.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Film Grain</h4>
+                                <p class="explainer-text">Density-dependent grain that responds to exposure like real silver halide crystals. Coarser in shadows, finer in highlights. Film gauge scales particle size—16mm is grittier, 65mm is smoother.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview">
+                            <img src="images/Omega UI Interface.png" alt="Omega Interface">
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Helix -->
