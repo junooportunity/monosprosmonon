@@ -2660,15 +2660,15 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Clarity</h4>
-                                <p class="explainer-text">Midtone local contrast. Adds dimensionality to surfaces without clipping highlights or crushing shadows. Operates on a masked luminance range to preserve image balance.</p>
+                                <p class="explainer-text">Local contrast via adaptive unsharp mask. A large-radius kernel isolates tonal structure from texture. The difference is scaled and added back, weighted by a luminance mask that attenuates in highlights and shadows to prevent clipping.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Acutance</h4>
-                                <p class="explainer-text">Edge contrast enhancement. Increases perceived sharpness by boosting contrast at tonal boundaries. No ringing artifacts—transitions stay clean.</p>
+                                <p class="explainer-text">Edge slope enhancement. Computed as the first derivative of luminance, amplified at tonal boundaries. Unlike resolution-based sharpening, acutance affects perceived crispness without adding high-frequency content or halo artifacts.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Spatial Equalizer</h4>
-                                <p class="explainer-text">Multi-band frequency separation. Isolates low, mid, and high spatial frequencies for independent control. Shape texture at each scale—soften skin while preserving fabric detail.</p>
+                                <p class="explainer-text">Laplacian pyramid decomposition into discrete frequency bands. Each octave is gain-adjusted independently—attenuate high frequencies to reduce skin texture, boost mid frequencies to define form. Reconstruction preserves DC and avoids phase shift.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
