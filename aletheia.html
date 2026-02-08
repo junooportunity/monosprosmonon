@@ -1170,8 +1170,14 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
+        .video-stock-caption {
+            max-width: 1100px;
+            margin: 1.5rem auto 0;
+            padding: 0 1.5rem;
+            text-align: center;
+        }
+
         .video-stock-info {
-            margin-top: 1rem;
             text-align: center;
         }
 
@@ -2081,10 +2087,10 @@
                 <div class="video-demo-container">
                     <div class="video-wrapper">
                         <video id="video-rec709" class="demo-video" autoplay loop muted playsinline>
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-hq-v5.mp4" type="video/mp4">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-hevc.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video" autoplay loop muted playsinline>
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hq-v5.mp4" type="video/mp4">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hevc.mp4" type="video/mp4">
                         </video>
                         <div class="video-toggle">
                             <div class="video-toggle-row">
@@ -2097,18 +2103,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="video-stock-info" id="toggle-info-film">
-                        <p class="video-stock-line"><span class="stock-label">Negative Stock:</span> Kodak EXR 5293 200T (1992)</p>
-                        <p class="video-stock-line"><span class="stock-label">Print Stock:</span> Kodak Vision 2383 (1998)</p>
-                    </div>
-                    <div class="video-stock-info hidden" id="toggle-info-rec709">
-                        <p class="video-stock-line">Rec. 709 — Standard video transform</p>
-                    </div>
                 </div>
 
             </div>
         </div>
     </section>
+
+    <div class="video-stock-caption">
+        <div class="video-stock-info" id="toggle-info-film">
+            <p class="video-stock-line"><span class="stock-label">Negative Stock:</span> Kodak EXR 5293 200T (1992)</p>
+            <p class="video-stock-line"><span class="stock-label">Print Stock:</span> Kodak Vision 2383 (1998)</p>
+        </div>
+        <div class="video-stock-info hidden" id="toggle-info-rec709">
+            <p class="video-stock-line">Rec. 709 — Standard video transform</p>
+        </div>
+    </div>
 
     <!-- Feature Buffer 1 -->
     <section class="feature-highlights">
