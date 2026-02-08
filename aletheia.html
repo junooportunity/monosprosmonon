@@ -646,6 +646,32 @@
             opacity: 0.95;
         }
 
+        /* Alpha dual interface layout */
+        .alpha-interface-dual {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .alpha-interface-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alpha-interface-item img {
+            max-width: 280px;
+        }
+
+        .alpha-interface-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.05em;
+        }
+
         @media (max-width: 768px) {
             .interface-panel-inner {
                 grid-template-columns: 1fr;
@@ -658,6 +684,15 @@
 
             .interface-preview img {
                 position: static;
+                max-width: 100%;
+            }
+
+            .alpha-interface-dual {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .alpha-interface-item img {
                 max-width: 100%;
             }
         }
@@ -2424,6 +2459,48 @@
                 <p class="plugin-description">
                     Alpha defines the working space. It moves images into and out of film-negative domains, enabling printer-light style balancing and exposure-driven shot control.
                 </p>
+
+                <!-- Alpha Interface Panel -->
+                <div class="interface-panel">
+                    <div class="interface-content">
+                        <div class="explainer-grid">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Direction</h4>
+                                <p class="explainer-text">Two modes: Digital → Negative converts camera footage into film-negative density space. Negative → Digital inverts the transform for output. Chain two instances to work entirely in negative domain.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Source Color Space</h4>
+                                <p class="explainer-text">Declares camera input gamut—ARRI AWG4/AWG3, Sony SGamut3, Panasonic VGamut, RED RWG, DaVinci Wide Gamut, ACES AP0/AP1, Canon Cinema, Blackmagic Wide Gamut, Rec.709, or Rec.2020. All conversions route through AP1 as a clean interchange space.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Source Gamma</h4>
+                                <p class="explainer-text">Specifies camera log curve—LogC4, LogC3, S-Log3, V-Log, Log3G10, Canon Log 2/3, BMD Film Gen5, N-Log, F-Log, F-Log2, ACEScct, DaVinci Intermediate, or Rec.709. Linearization happens before any gamut math.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Color Space</h4>
+                                <p class="explainer-text">The working gamut for grading. Typically matches timeline color science. Same options as Source—pick once, keep consistent across the session.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Gamma</h4>
+                                <p class="explainer-text">Working transfer function. ACEScct and DaVinci Intermediate provide grading-friendly midtone density. Linear for compositing. Rec.709 for legacy workflows.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Negative Gamma</h4>
+                                <p class="explainer-text">Film stock density curves—Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, Contrast for punchier shadows, or ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview alpha-interface-dual">
+                            <div class="alpha-interface-item">
+                                <img src="images/Alpha UI-Interface D to N.png" alt="Alpha Interface - Digital to Negative">
+                                <span class="alpha-interface-label">Digital → Negative</span>
+                            </div>
+                            <div class="alpha-interface-item">
+                                <img src="images/Alpha UI-Interface N to D.png" alt="Alpha Interface - Negative to Digital">
+                                <span class="alpha-interface-label">Negative → Digital</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
