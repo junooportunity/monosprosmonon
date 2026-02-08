@@ -646,29 +646,30 @@
             opacity: 0.95;
         }
 
-        /* Alpha dual interface layout */
-        .alpha-interface-dual {
+        /* Alpha stacked interface layout */
+        .alpha-interface-stacked {
             display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
         }
 
         .alpha-interface-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .alpha-interface-item img {
-            max-width: 280px;
+            max-width: 100%;
+            width: 320px;
         }
 
         .alpha-interface-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
             letter-spacing: 0.05em;
         }
 
@@ -687,12 +688,12 @@
                 max-width: 100%;
             }
 
-            .alpha-interface-dual {
-                flex-direction: column;
-                gap: 1.5rem;
+            .alpha-interface-stacked {
+                gap: 1rem;
             }
 
             .alpha-interface-item img {
+                width: 100%;
                 max-width: 100%;
             }
         }
@@ -2462,8 +2463,8 @@
 
                 <!-- Alpha Interface Panel -->
                 <div class="interface-panel">
-                    <div class="interface-content">
-                        <div class="explainer-grid">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Direction</h4>
                                 <p class="explainer-text">Two modes: Digital → Negative converts camera footage into film-negative density space. Negative → Digital inverts the transform for output. Chain two instances to work entirely in negative domain.</p>
@@ -2489,7 +2490,7 @@
                                 <p class="explainer-text">Film stock density curves—Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, Contrast for punchier shadows, or ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
                             </div>
                         </div>
-                        <div class="interface-preview alpha-interface-dual">
+                        <div class="interface-preview alpha-interface-stacked">
                             <div class="alpha-interface-item">
                                 <img src="images/Alpha UI-Interface D to N.png" alt="Alpha Interface - Digital to Negative">
                                 <span class="alpha-interface-label">Digital → Negative</span>
