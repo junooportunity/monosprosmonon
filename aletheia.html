@@ -2980,7 +2980,7 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (both play, z-index swap for instant switch) -->
+    <!-- Video Demo Toggle (both play synced, z-index swap for instant switch) -->
     <script>
     (function() {
         const videoFilm = document.getElementById('video-film');
@@ -2994,8 +2994,35 @@
         // Set initial state
         videoFilm.classList.add('active');
 
+        // Sync both videos to same timestamp
+        function syncVideos() {
+            const timeDiff = Math.abs(videoFilm.currentTime - videoRec.currentTime);
+            if (timeDiff > 0.1) {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+        }
+
+        // Seamless loop - reset slightly before end to avoid gap
+        function seamlessLoop(video) {
+            if (video.duration && video.currentTime > video.duration - 0.1) {
+                video.currentTime = 0;
+                video.play();
+            }
+        }
+
+        videoFilm.addEventListener('timeupdate', () => {
+            syncVideos();
+            seamlessLoop(videoFilm);
+            seamlessLoop(videoRec);
+        });
+
+        // Ensure both start playing together
+        Promise.all([videoFilm.play(), videoRec.play()]).catch(() => {});
+
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            // Sync before switch
+            videoRec.currentTime = videoFilm.currentTime;
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
