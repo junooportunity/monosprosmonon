@@ -1136,19 +1136,19 @@
         }
 
         .video-toggle {
-            position: absolute;
-            bottom: 1.25rem;
-            left: 1.25rem;
-            z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             padding: 0.875rem 1rem;
             border-radius: 6px;
+            margin: -1.5rem auto 0;
+            position: relative;
+            z-index: 10;
         }
 
         .video-toggle-row {
@@ -2088,20 +2088,20 @@
                 <div class="video-demo-container">
                     <div class="video-wrapper">
                         <video id="video-rec709" class="demo-video" autoplay loop muted playsinline>
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/rec709-hevc.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video" autoplay loop muted playsinline>
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20Graded.mp4" type="video/mp4">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hevc.mp4" type="video/mp4">
                         </video>
-                        <div class="video-toggle">
-                            <div class="video-toggle-row">
-                                <span class="video-toggle-label" id="label-off">Off</span>
-                                <label class="video-switch">
-                                    <input type="checkbox" id="video-toggle-switch" checked>
-                                    <span class="video-slider"></span>
-                                </label>
-                                <span class="video-toggle-label active" id="label-on">On</span>
-                            </div>
+                    </div>
+                    <div class="video-toggle">
+                        <div class="video-toggle-row">
+                            <span class="video-toggle-label" id="label-off">Off</span>
+                            <label class="video-switch">
+                                <input type="checkbox" id="video-toggle-switch" checked>
+                                <span class="video-slider"></span>
+                            </label>
+                            <span class="video-toggle-label active" id="label-on">On</span>
                         </div>
                     </div>
                 </div>
