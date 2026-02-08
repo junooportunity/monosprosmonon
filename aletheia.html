@@ -2054,7 +2054,7 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="auto">
+                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="metadata">
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
@@ -2230,25 +2230,6 @@
                     </div>
                 </div>
 
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <p class="feature-name">Per-Stock Curves</p>
-                        <p class="feature-detail">Toe, shoulder, contrast, and saturation parameters per stock. Push/pull processing affects contrast and desaturation.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Grain Synthesis</p>
-                        <p class="feature-detail">Gaussian-distributed grain with overlay blend. Density-dependent response—heavier in midtones, lighter in shadows and highlights.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Halation Model</p>
-                        <p class="feature-detail">Exponential falloff blur around bright areas. Size, strength, and color tint controls.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">HDR Output</p>
-                        <p class="feature-detail">SDR, 400, 600, 1000, 2000, 4000, or 10000 nits. Same look, scaled to target display.</p>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Helix -->
@@ -2266,26 +2247,6 @@
                 <p class="plugin-description">
                     It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. The result is depth and tactility that reads naturally across formats and delivery specs.
                 </p>
-
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <p class="feature-name">Frequency Separation</p>
-                        <p class="feature-detail">Isolate and adjust detail at different spatial scales. Skin texture, fabric weave, architectural detail—each controllable independently.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Micro-Contrast</p>
-                        <p class="feature-detail">Local contrast adjustments that add depth without haloing. Edges stay clean, surfaces gain dimension.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Surface Character</p>
-                        <p class="feature-detail">Shape how materials render. Matte vs. glossy, rough vs. smooth—texture defines the look as much as color.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Detail Redistribution</p>
-                        <p class="feature-detail">Move detail between frequency bands. Soften skin while retaining hair detail. Sharpen eyes without sharpening pores.</p>
-                    </div>
-                </div>
-
 
                 <div class="interface-panel">
                     <div class="interface-panel-inner">
@@ -2358,26 +2319,6 @@
                     It consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions, Phi lets you shape an image holistically—one pass, one intent, one result.
                 </p>
 
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <p class="feature-name">Exposure & Density</p>
-                        <p class="feature-detail">Scene-referred exposure control with density adjustments that preserve highlight and shadow detail.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Contrast Shaping</p>
-                        <p class="feature-detail">Pivot-based contrast with separate highlight and shadow controls. No clipping, no crushing.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">OKLAB Saturation</p>
-                        <p class="feature-detail">Perceptually uniform saturation and vibrance. Colors shift in hue less as saturation increases.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Tetrahedral Interpolation</p>
-                        <p class="feature-detail">Secondary color adjustments that maintain smooth gradients and avoid color banding.</p>
-                    </div>
-                </div>
-
-
                 <div class="interface-panel">
                     <div class="interface-panel-inner">
                         <div class="interface-explainer">
@@ -2421,17 +2362,6 @@
                 <p class="plugin-description">
                     Alpha defines the working space. It moves images into and out of film-negative domains, enabling printer-light style balancing and exposure-driven shot control.
                 </p>
-
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <p class="feature-name">Transform Modes</p>
-                        <p class="feature-detail">Multiple film-negative encodings available. Match the working space to the source or creative intent.</p>
-                    </div>
-                    <div class="feature-item">
-                        <p class="feature-name">Bidirectional</p>
-                        <p class="feature-detail">Enter and exit negative space freely. Use as input transform, output transform, or creative tool.</p>
-                    </div>
-                </div>
 
             </div>
 
@@ -2585,6 +2515,7 @@
         const labelOn = document.getElementById('label-on');
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
+        let recLoaded = false;
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
@@ -2595,6 +2526,11 @@
                 videoFilm.play();
                 videoRec.pause();
             } else {
+                // First time switching to rec709 - need to load it
+                if (!recLoaded) {
+                    videoRec.load();
+                    recLoaded = true;
+                }
                 videoFilm.currentTime = videoRec.currentTime;
                 videoRec.classList.add('active');
                 videoFilm.classList.remove('active');
