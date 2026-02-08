@@ -1117,19 +1117,22 @@
             height: 100%;
             object-fit: cover;
             transform: translateZ(0);
-            will-change: clip-path;
         }
 
         #video-film {
-            z-index: 2;
+            z-index: 1;
         }
 
         #video-rec709 {
             z-index: 1;
         }
 
-        .demo-video.hidden {
-            clip-path: inset(0 0 0 100%);
+        #video-film.active {
+            z-index: 2;
+        }
+
+        #video-rec709.active {
+            z-index: 2;
         }
 
         .video-toggle {
@@ -2952,17 +2955,22 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (both play, instant toggle, no sync) -->
+    <!-- Video Demo Toggle (both play, z-index swap for instant switch) -->
     <script>
     (function() {
         const videoFilm = document.getElementById('video-film');
+        const videoRec = document.getElementById('video-rec709');
         const toggle = document.getElementById('video-toggle-switch');
         const labelOff = document.getElementById('label-off');
         const labelOn = document.getElementById('label-on');
 
+        // Set initial state
+        videoFilm.classList.add('active');
+
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            videoFilm.classList.toggle('hidden', !showFilm);
+            videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
         });
