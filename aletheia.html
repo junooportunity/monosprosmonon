@@ -1116,6 +1116,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: 1;
+        }
+
+        .demo-video.active {
+            z-index: 2;
         }
 
         .video-toggle {
@@ -2070,7 +2075,10 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="demo-video" class="demo-video" autoplay loop muted playsinline>
+                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="auto">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
+                        </video>
+                        <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20Graded.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -2955,22 +2963,29 @@
     <!-- Video Demo Toggle -->
     <script>
     (function() {
-        const video = document.getElementById('demo-video');
+        const videoFilm = document.getElementById('video-film');
+        const videoRec = document.getElementById('video-rec709');
         const toggle = document.getElementById('video-toggle-switch');
         const labelOff = document.getElementById('label-off');
         const labelOn = document.getElementById('label-on');
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        const gradedUrl = 'https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20Graded.mp4';
-        const rec709Url = 'https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4';
-
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            const currentTime = video.currentTime;
-            video.src = showFilm ? gradedUrl : rec709Url;
-            video.currentTime = currentTime;
-            video.play();
+            if (showFilm) {
+                videoRec.currentTime = videoFilm.currentTime;
+                videoFilm.classList.add('active');
+                videoRec.classList.remove('active');
+                videoFilm.play();
+                videoRec.pause();
+            } else {
+                videoFilm.currentTime = videoRec.currentTime;
+                videoRec.classList.add('active');
+                videoFilm.classList.remove('active');
+                videoRec.play();
+                videoFilm.pause();
+            }
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
