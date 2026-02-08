@@ -1170,11 +1170,26 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        .video-toggle-stock {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-size: 0.8rem;
+        .video-toggle-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .video-toggle-info.hidden {
+            display: none;
+        }
+
+        .video-toggle-stock-line {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.7rem;
             color: rgba(255, 255, 255, 0.7);
+            line-height: 1.3;
+        }
+
+        .stock-label {
+            color: rgba(255, 255, 255, 0.5);
+            margin-right: 0.25rem;
         }
 
         .video-switch {
@@ -2081,7 +2096,13 @@
                                 </label>
                                 <span class="video-toggle-label active" id="label-on">On</span>
                             </div>
-                            <span class="video-toggle-stock">Kodak EXR 5293 200T (1992) &rarr; Kodak Vision 2383 (1998)</span>
+                            <div class="video-toggle-info" id="toggle-info-film">
+                                <span class="video-toggle-stock-line"><span class="stock-label">Negative Stock:</span> Kodak EXR 5293 200T (1992)</span>
+                                <span class="video-toggle-stock-line"><span class="stock-label">Print Stock:</span> Kodak Vision 2383 (1998)</span>
+                            </div>
+                            <div class="video-toggle-info hidden" id="toggle-info-rec709">
+                                <span class="video-toggle-stock-line">Rec. 709 — Standard video transform</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2963,6 +2984,8 @@
         const toggle = document.getElementById('video-toggle-switch');
         const labelOff = document.getElementById('label-off');
         const labelOn = document.getElementById('label-on');
+        const infoFilm = document.getElementById('toggle-info-film');
+        const infoRec = document.getElementById('toggle-info-rec709');
 
         // Set initial state
         videoFilm.classList.add('active');
@@ -2973,6 +2996,8 @@
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
+            infoFilm.classList.toggle('hidden', !showFilm);
+            infoRec.classList.toggle('hidden', showFilm);
         });
     })();
     </script>
