@@ -2087,10 +2087,10 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" autoplay muted playsinline>
+                        <video id="video-rec709" class="demo-video" autoplay loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
-                        <video id="video-film" class="demo-video" autoplay muted playsinline>
+                        <video id="video-film" class="demo-video" autoplay loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20Graded.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -2972,59 +2972,21 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (both play synced, z-index swap for instant switch) -->
+    <!-- Video Demo Toggle -->
     <script>
     (function() {
         const videoFilm = document.getElementById('video-film');
-        const videoRec = document.getElementById('video-rec709');
         const toggle = document.getElementById('video-toggle-switch');
         const labelOff = document.getElementById('label-off');
         const labelOn = document.getElementById('label-on');
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Set initial state
         videoFilm.classList.add('active');
-
-        // Seamless loop using ended event + immediate restart
-        function setupSeamlessLoop(video) {
-            video.addEventListener('ended', () => {
-                video.currentTime = 0;
-                video.play();
-            });
-
-            // Also prevent any pause states
-            video.addEventListener('pause', () => {
-                if (!video.ended) video.play();
-            });
-        }
-
-        setupSeamlessLoop(videoFilm);
-        setupSeamlessLoop(videoRec);
-
-        // Keep videos synced with requestAnimationFrame
-        function syncVideos() {
-            const timeDiff = Math.abs(videoFilm.currentTime - videoRec.currentTime);
-            if (timeDiff > 0.1) {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
-            requestAnimationFrame(syncVideos);
-        }
-        requestAnimationFrame(syncVideos);
-
-        // Ensure both start playing
-        videoFilm.play().catch(() => {});
-        videoRec.play().catch(() => {});
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Sync both videos to exact same time before switch
-            const currentTime = showFilm ? videoRec.currentTime : videoFilm.currentTime;
-            videoFilm.currentTime = currentTime;
-            videoRec.currentTime = currentTime;
-
             videoFilm.classList.toggle('active', showFilm);
-            videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
