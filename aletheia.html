@@ -2070,7 +2070,7 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="auto">
+                        <video id="video-rec709" class="demo-video" autoplay muted loop playsinline preload="auto">
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
@@ -2659,21 +2659,23 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
+        // Keep both videos in sync - sync on load and periodically
+        videoFilm.addEventListener('loadedmetadata', () => {
+            videoRec.currentTime = videoFilm.currentTime;
+        });
+
+        // Sync videos periodically to prevent drift
+        setInterval(() => {
+            if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+        }, 1000);
+
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            if (showFilm) {
-                videoRec.currentTime = videoFilm.currentTime;
-                videoFilm.classList.add('active');
-                videoRec.classList.remove('active');
-                videoFilm.play();
-                videoRec.pause();
-            } else {
-                videoFilm.currentTime = videoRec.currentTime;
-                videoRec.classList.add('active');
-                videoFilm.classList.remove('active');
-                videoRec.play();
-                videoFilm.pause();
-            }
+            // Just toggle visibility - both videos keep playing
+            videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
