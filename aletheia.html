@@ -2976,6 +2976,7 @@
     <script>
     (function() {
         const videoFilm = document.getElementById('video-film');
+        const videoRec = document.getElementById('video-rec709');
         const toggle = document.getElementById('video-toggle-switch');
         const labelOff = document.getElementById('label-off');
         const labelOn = document.getElementById('label-on');
@@ -2987,6 +2988,7 @@
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
             videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
