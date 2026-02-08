@@ -602,27 +602,8 @@
         .interface-panel-inner {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            max-height: 400px;
-            overflow-y: auto;
             position: relative;
             z-index: 1;
-        }
-
-        .interface-panel-inner::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .interface-panel-inner::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .interface-panel-inner::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .interface-panel-inner::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.15);
         }
 
         .interface-explainer {
@@ -663,8 +644,6 @@
             max-width: 350px;
             border-radius: 8px;
             opacity: 0.95;
-            position: sticky;
-            top: 1.5rem;
         }
 
         @media (max-width: 768px) {
