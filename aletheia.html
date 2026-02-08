@@ -2087,10 +2087,10 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" autoplay loop muted playsinline>
+                        <video id="video-rec709" class="demo-video" autoplay muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
-                        <video id="video-film" class="demo-video" autoplay loop muted playsinline>
+                        <video id="video-film" class="demo-video" autoplay muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20Graded.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -2986,26 +2986,28 @@
         // Set initial state
         videoFilm.classList.add('active');
 
-        // Sync both videos to same timestamp
-        function syncVideos() {
+        // Use requestAnimationFrame for precise loop detection
+        function loopCheck() {
+            const loopBuffer = 0.15; // Reset 150ms before end
+
+            // Seamless loop for both videos
+            if (videoFilm.duration && videoFilm.currentTime > videoFilm.duration - loopBuffer) {
+                videoFilm.currentTime = 0;
+                videoRec.currentTime = 0;
+            }
+
+            // Keep videos synced
             const timeDiff = Math.abs(videoFilm.currentTime - videoRec.currentTime);
-            if (timeDiff > 0.1) {
+            if (timeDiff > 0.05) {
                 videoRec.currentTime = videoFilm.currentTime;
             }
+
+            requestAnimationFrame(loopCheck);
         }
 
-        // Seamless loop - reset slightly before end to avoid gap
-        function seamlessLoop(video) {
-            if (video.duration && video.currentTime > video.duration - 0.1) {
-                video.currentTime = 0;
-                video.play();
-            }
-        }
-
-        videoFilm.addEventListener('timeupdate', () => {
-            syncVideos();
-            seamlessLoop(videoFilm);
-            seamlessLoop(videoRec);
+        // Start loop check after videos are ready
+        videoFilm.addEventListener('loadedmetadata', () => {
+            requestAnimationFrame(loopCheck);
         });
 
         // Ensure both start playing together
