@@ -1303,6 +1303,36 @@
             display: none;
         }
 
+        .demo-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .demo-loading.active {
+            display: flex;
+        }
+
+        .demo-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .demo-controls {
             margin-top: 1.5rem;
             max-width: 520px;
@@ -1446,6 +1476,7 @@
         .demo-toggle-row {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.75rem;
             margin-bottom: 0.5rem;
         }
@@ -2106,7 +2137,9 @@
                     <div class="demo-modal">
                         <div class="omega-demo-content">
                             <div class="demo-image-container">
+                                <canvas id="helix-canvas" class="demo-canvas" style="display:none;"></canvas>
                                 <img id="omega-demo-image" src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/neg_03_print_01_dye_00_none.webp" alt="Film Stock Preview" class="demo-image" crossorigin="anonymous">
+                                <div id="demo-loading" class="demo-loading"><div class="demo-spinner"></div></div>
                             </div>
                             <div class="demo-controls">
                                 <div class="demo-panel active" id="panel-omega">
