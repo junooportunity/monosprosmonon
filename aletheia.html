@@ -2986,37 +2986,43 @@
         // Set initial state
         videoFilm.classList.add('active');
 
-        // Use requestAnimationFrame for precise loop detection
-        function loopCheck() {
-            const loopBuffer = 0.15; // Reset 150ms before end
+        // Seamless loop using ended event + immediate restart
+        function setupSeamlessLoop(video) {
+            video.addEventListener('ended', () => {
+                video.currentTime = 0;
+                video.play();
+            });
 
-            // Seamless loop for both videos
-            if (videoFilm.duration && videoFilm.currentTime > videoFilm.duration - loopBuffer) {
-                videoFilm.currentTime = 0;
-                videoRec.currentTime = 0;
-            }
-
-            // Keep videos synced
-            const timeDiff = Math.abs(videoFilm.currentTime - videoRec.currentTime);
-            if (timeDiff > 0.05) {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
-
-            requestAnimationFrame(loopCheck);
+            // Also prevent any pause states
+            video.addEventListener('pause', () => {
+                if (!video.ended) video.play();
+            });
         }
 
-        // Start loop check after videos are ready
-        videoFilm.addEventListener('loadedmetadata', () => {
-            requestAnimationFrame(loopCheck);
-        });
+        setupSeamlessLoop(videoFilm);
+        setupSeamlessLoop(videoRec);
 
-        // Ensure both start playing together
-        Promise.all([videoFilm.play(), videoRec.play()]).catch(() => {});
+        // Keep videos synced with requestAnimationFrame
+        function syncVideos() {
+            const timeDiff = Math.abs(videoFilm.currentTime - videoRec.currentTime);
+            if (timeDiff > 0.1) {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+            requestAnimationFrame(syncVideos);
+        }
+        requestAnimationFrame(syncVideos);
+
+        // Ensure both start playing
+        videoFilm.play().catch(() => {});
+        videoRec.play().catch(() => {});
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Sync before switch
-            videoRec.currentTime = videoFilm.currentTime;
+            // Sync both videos to exact same time before switch
+            const currentTime = showFilm ? videoRec.currentTime : videoFilm.currentTime;
+            videoFilm.currentTime = currentTime;
+            videoRec.currentTime = currentTime;
+
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
