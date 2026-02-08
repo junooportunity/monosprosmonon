@@ -1135,31 +1135,55 @@
         .video-toggle {
             position: absolute;
             bottom: 1.5rem;
-            right: 1.5rem;
+            left: 1.5rem;
             z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 1rem 1.25rem;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1.25rem 1.5rem;
             border-radius: 8px;
         }
 
-        .video-toggle-row {
+        .video-toggle-option {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .video-toggle-radio {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .video-toggle-radio.active {
+            border-color: #fff;
+        }
+
+        .video-toggle-radio.active::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
         }
 
         .video-toggle-label {
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-            white-space: nowrap;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .video-toggle-label.active {
@@ -2062,15 +2086,14 @@
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hq-v3.mp4" type="video/mp4">
                         </video>
                         <div class="video-toggle">
-                            <div class="video-toggle-row">
+                            <div class="video-toggle-option" id="option-rec709">
+                                <div class="video-toggle-radio" id="radio-rec709"></div>
                                 <span class="video-toggle-label" id="label-rec709">Rec. 709</span>
-                                <label class="video-switch">
-                                    <input type="checkbox" id="video-toggle-switch" checked>
-                                    <span class="video-slider"></span>
-                                </label>
-                                <span class="video-toggle-label active" id="label-film">Film</span>
                             </div>
-                            <span class="video-toggle-label" id="label-stock">5293 200T / 2383</span>
+                            <div class="video-toggle-option" id="option-film">
+                                <div class="video-toggle-radio active" id="radio-film"></div>
+                                <span class="video-toggle-label active" id="label-film">Kodak 5293 200T &rarr; Kodak 2383</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2936,19 +2959,24 @@
     <!-- Video Demo Toggle (both play, instant toggle, no sync) -->
     <script>
     (function() {
-        const videoRec709 = document.getElementById('video-rec709');
         const videoFilm = document.getElementById('video-film');
-        const toggle = document.getElementById('video-toggle-switch');
+        const optionRec709 = document.getElementById('option-rec709');
+        const optionFilm = document.getElementById('option-film');
+        const radioRec709 = document.getElementById('radio-rec709');
+        const radioFilm = document.getElementById('radio-film');
         const labelRec709 = document.getElementById('label-rec709');
         const labelFilm = document.getElementById('label-film');
 
-        // Toggle swaps visibility and updates label styling
-        toggle.addEventListener('change', () => {
-            const showFilm = toggle.checked;
+        function setActive(showFilm) {
             videoFilm.classList.toggle('hidden', !showFilm);
+            radioFilm.classList.toggle('active', showFilm);
+            radioRec709.classList.toggle('active', !showFilm);
             labelFilm.classList.toggle('active', showFilm);
             labelRec709.classList.toggle('active', !showFilm);
-        });
+        }
+
+        optionRec709.addEventListener('click', () => setActive(false));
+        optionFilm.addEventListener('click', () => setActive(true));
     })();
     </script>
 
