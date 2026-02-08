@@ -2773,6 +2773,13 @@
                 videosStarted = true;
             }
 
+            // Sync times - incoming video matches outgoing video's position
+            if (showFilm) {
+                videoFilm.currentTime = videoRec.currentTime;
+            } else {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+
             // Swap active states
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
