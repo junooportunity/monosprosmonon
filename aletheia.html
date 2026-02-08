@@ -1133,18 +1133,37 @@
         }
 
         .video-toggle {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+        }
+
+        .video-toggle-row {
+            display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-top: 1rem;
         }
 
         .video-toggle-label {
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+        }
+
+        .video-toggle-label.active {
+            color: rgba(255, 255, 255, 1);
         }
 
         .video-switch {
@@ -2042,14 +2061,17 @@
                         <video id="video-film" class="demo-video" autoplay loop muted playsinline>
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hq-v3.mp4" type="video/mp4">
                         </video>
-                    </div>
-                    <div class="video-toggle">
-                        <span class="video-toggle-label">Rec. 709</span>
-                        <label class="video-switch">
-                            <input type="checkbox" id="video-toggle-switch">
-                            <span class="video-slider"></span>
-                        </label>
-                        <span class="video-toggle-label">Kodak EXR 5293 200T (1992) / Kodak Vision 2383 (1998)</span>
+                        <div class="video-toggle">
+                            <div class="video-toggle-row">
+                                <span class="video-toggle-label" id="label-rec709">Rec. 709</span>
+                                <label class="video-switch">
+                                    <input type="checkbox" id="video-toggle-switch" checked>
+                                    <span class="video-slider"></span>
+                                </label>
+                                <span class="video-toggle-label active" id="label-film">Film</span>
+                            </div>
+                            <span class="video-toggle-label" id="label-stock">5293 200T / 2383</span>
+                        </div>
                     </div>
                 </div>
 
@@ -2917,13 +2939,15 @@
         const videoRec709 = document.getElementById('video-rec709');
         const videoFilm = document.getElementById('video-film');
         const toggle = document.getElementById('video-toggle-switch');
+        const labelRec709 = document.getElementById('label-rec709');
+        const labelFilm = document.getElementById('label-film');
 
-        // Both videos play continuously - they'll stay close since they start together
-        toggle.checked = true;
-
-        // Toggle just swaps visibility instantly
+        // Toggle swaps visibility and updates label styling
         toggle.addEventListener('change', () => {
-            videoFilm.classList.toggle('hidden', !toggle.checked);
+            const showFilm = toggle.checked;
+            videoFilm.classList.toggle('hidden', !showFilm);
+            labelFilm.classList.toggle('active', showFilm);
+            labelRec709.classList.toggle('active', !showFilm);
         });
     })();
     </script>
