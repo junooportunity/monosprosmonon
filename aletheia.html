@@ -2357,28 +2357,74 @@
                     <div class="interface-panel-inner">
                         <div class="interface-explainer">
                             <div class="explainer-section">
+                                <h4 class="explainer-title">Printer Lights</h4>
+                                <p class="explainer-text">RGB offset controls that emulate timing light adjustments on an optical printer. Balances the image before any other processing occurs.</p>
+                            </div>
+                            <div class="explainer-section">
                                 <h4 class="explainer-title">Exposure</h4>
-                                <p class="explainer-text">Scene-referred exposure in stops. Adjusts the image before contrast is applied, preserving the full dynamic range of your source.</p>
+                                <p class="explainer-text">Stop-based gain applied in linear light. Converts to linear, multiplies by 2^exposure, then back to log—preserving highlight and shadow detail through the transform.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Contrast & Pivot</h4>
-                                <p class="explainer-text">Pivot sets where contrast hinges. Raise it to protect highlights, lower it to protect shadows. Contrast expands or compresses around that point.</p>
+                                <h4 class="explainer-title">Contrast</h4>
+                                <p class="explainer-text">Piecewise-power sigmoid centered on ACEScct mid-gray (0.414). Anchors black and white endpoints while expanding or compressing everything in between.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Density</h4>
-                                <p class="explainer-text">Controls how much light passes through the image. Increase for richer blacks, decrease for a lifted, faded look. Works independently of exposure.</p>
-                            </div>
-                            <div class="explainer-section">
-                                <h4 class="explainer-title">Saturation & Vibrance</h4>
-                                <p class="explainer-text">OKLAB-based saturation for perceptually uniform adjustments. Vibrance targets less-saturated areas, leaving already-vivid colors alone.</p>
-                            </div>
-                            <div class="explainer-section">
-                                <h4 class="explainer-title">Secondary Colors</h4>
-                                <p class="explainer-text">Tetrahedral interpolation for targeting specific hues. Adjust individual color ranges without artifacts or banding at the boundaries.</p>
+                                <h4 class="explainer-title">Shadows / Midtones / Highlights</h4>
+                                <p class="explainer-text">Zone-weighted offsets in log space. Shadows use smoothstep falloff below 0.25, midtones use a Gaussian bell at mid-gray, highlights ramp above 0.55.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
                             <img src="images/Phi Interface.png" alt="Phi Interface">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interface-panel" style="margin-top: 2rem;">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Black Point / White Point</h4>
+                                <p class="explainer-text">Toe and shoulder curves with flat plateaus. Black point lifts shadows to a new floor with power-curve blending. White point compresses highlights down with the same math mirrored.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Toe & Shoulder</h4>
+                                <p class="explainer-text">Explicit curve shaping below toe pivot and above shoulder pivot. Strength and length parameters give independent control of roll-off steepness and range.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Saturation</h4>
+                                <p class="explainer-text">OKLab-based chroma scaling. Converts to perceptually uniform space, scales the a/b chromatic channels, converts back. Uniform perceived intensity change across all hues.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Vibrance</h4>
+                                <p class="explainer-text">Selective saturation that protects skin tones and already-saturated colors. Detects skin by positive OKLab 'a' values, weights boost inversely to existing chroma.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview" style="background: transparent;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interface-panel" style="margin-top: 2rem;">
+                    <div class="interface-panel-inner">
+                        <div class="interface-explainer">
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Skin: Melanin & Hemoglobin</h4>
+                                <p class="explainer-text">Signed-quadratic response curves. Melanin shifts toward yellow-brown (more) or away (less). Hemoglobin controls the red-green axis—more for ruddier skin, less for golden tones.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Skin: Richness & Density</h4>
+                                <p class="explainer-text">Richness is skin-isolated saturation with a soft S-curve. Density is luminance shift localized to warm pixels. Both auto-mask based on r > g > b warmth detection.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Skin Texture</h4>
+                                <p class="explainer-text">Clarity-style local contrast applied only to skin tones. 16-sample blur at two radii extracts detail, then midtone-weighted gain enhances or softens texture without affecting the rest of the image.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Tetrahedral Secondaries</h4>
+                                <p class="explainer-text">Per-hue HSV adjustment for red, green, blue, cyan, magenta, and yellow. Tetrahedral interpolation blends smoothly between adjacent vertices—no banding at hue boundaries.</p>
+                            </div>
+                        </div>
+                        <div class="interface-preview" style="background: transparent;">
                         </div>
                     </div>
                 </div>
