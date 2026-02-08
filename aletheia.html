@@ -2725,19 +2725,23 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Start both videos playing (muted) for instant switching
+        // Start both videos on any interaction (mobile requires user gesture)
+        function startVideos() {
+            videoFilm.play().catch(() => {});
+            videoRec.play().catch(() => {});
+            document.removeEventListener('touchstart', startVideos);
+            document.removeEventListener('click', startVideos);
+        }
+        document.addEventListener('touchstart', startVideos, { once: true });
+        document.addEventListener('click', startVideos, { once: true });
+
+        // Also try to start immediately (works on desktop)
         videoFilm.play().catch(() => {});
         videoRec.play().catch(() => {});
 
-        // Toggle swaps visibility and syncs time
+        // Toggle just swaps opacity - no time sync needed, crossfade hides any drift
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Sync times on toggle for smooth transition
-            if (showFilm) {
-                videoFilm.currentTime = videoRec.currentTime;
-            } else {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
