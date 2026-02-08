@@ -1133,15 +1133,15 @@
             object-fit: cover;
             object-position: center center;
             opacity: 0;
-            z-index: 1;
-            transition: opacity 0.4s ease;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
             /* Correct limited range (16-235) to full range display */
             filter: contrast(1.17) brightness(0.93);
         }
 
         .demo-video.active {
             opacity: 1;
-            z-index: 2;
+            pointer-events: auto;
         }
 
         .video-toggle {
@@ -2727,20 +2727,50 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Play both videos
-        function playVideos() {
-            videoFilm.play().catch(() => {});
-            videoRec.play().catch(() => {});
+        let videosStarted = false;
+
+        // Start both videos playing
+        async function startVideos() {
+            if (videosStarted) return;
+            try {
+                await Promise.all([
+                    videoFilm.play(),
+                    videoRec.play()
+                ]);
+                videosStarted = true;
+            } catch (e) {
+                // Autoplay blocked - will retry on user interaction
+            }
         }
 
-        // Start immediately
-        playVideos();
+        // Handle user interaction (required for mobile)
+        function onInteraction() {
+            if (!videosStarted) {
+                videoFilm.play().catch(() => {});
+                videoRec.play().catch(() => {});
+                videosStarted = true;
+            }
+            document.removeEventListener('touchstart', onInteraction);
+            document.removeEventListener('click', onInteraction);
+        }
+
+        document.addEventListener('touchstart', onInteraction, { passive: true });
+        document.addEventListener('click', onInteraction);
+
+        // Try to start immediately (works on desktop)
+        startVideos();
 
         // Toggle handler
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Ensure videos are playing
-            playVideos();
+
+            // Ensure videos are playing (in case toggle is first interaction)
+            if (!videosStarted) {
+                videoFilm.play().catch(() => {});
+                videoRec.play().catch(() => {});
+                videosStarted = true;
+            }
+
             // Swap active states
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
