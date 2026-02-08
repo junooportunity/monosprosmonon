@@ -1095,11 +1095,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            /* Correct limited range (16-235) to full range display */
+            filter: contrast(1.17) brightness(0.93);
         }
 
         .demo-video.active {
-            z-index: 2;
+            opacity: 1;
         }
 
         .video-toggle {
@@ -2549,27 +2552,24 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Keep rec709 paused but synced to film's time
+        // Start both videos playing (muted) for instant switching
+        videoRec.play().catch(() => {});
+
+        // Keep videos in sync - use the film video as master
+        let syncing = false;
         videoFilm.addEventListener('timeupdate', () => {
-            if (videoRec.paused) {
+            if (!syncing && Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
+                syncing = true;
                 videoRec.currentTime = videoFilm.currentTime;
+                setTimeout(() => syncing = false, 100);
             }
         });
 
+        // Toggle just swaps visibility - both videos always playing
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Swap visibility
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
-            // Play/pause
-            if (showFilm) {
-                videoFilm.play();
-                videoRec.pause();
-            } else {
-                videoRec.play();
-                videoFilm.pause();
-            }
-            // Update labels
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
