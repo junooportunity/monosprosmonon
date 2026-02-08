@@ -2726,21 +2726,18 @@
         const infoRec = document.getElementById('toggle-info-rec709');
 
         // Start both videos playing (muted) for instant switching
+        videoFilm.play().catch(() => {});
         videoRec.play().catch(() => {});
 
-        // Keep videos in sync - use the film video as master
-        let syncing = false;
-        videoFilm.addEventListener('timeupdate', () => {
-            if (!syncing && Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
-                syncing = true;
-                videoRec.currentTime = videoFilm.currentTime;
-                setTimeout(() => syncing = false, 100);
-            }
-        });
-
-        // Toggle just swaps visibility - both videos always playing
+        // Toggle swaps visibility and syncs time
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            // Sync times on toggle for smooth transition
+            if (showFilm) {
+                videoFilm.currentTime = videoRec.currentTime;
+            } else {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
