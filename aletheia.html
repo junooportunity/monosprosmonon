@@ -1274,24 +1274,8 @@
         }
 
         /* ========== OMEGA DEMO ========== */
-        .omega-demo-inline {
+        .omega-demo-embedded {
             margin: 2rem 0;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 1.5rem;
-            align-items: start;
-        }
-
-        .demo-controls-inline {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        @media (max-width: 900px) {
-            .omega-demo-inline {
-                grid-template-columns: 1fr;
-            }
         }
 
         .demo-image-container {
@@ -2070,7 +2054,7 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" autoplay muted loop playsinline preload="auto">
+                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="auto">
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
@@ -2171,107 +2155,116 @@
                     Omega renders the final look. 42 negative stocks, 19 print stocks, and 10 dye processes—each with per-stock curve parameters from manufacturer data. Print gamma with optical density simulation and printer lights. Density-dependent grain. Halation computed with exponential falloff blur.
                 </p>
 
-                <!-- Omega Demo Inline -->
-                <div class="omega-demo-inline">
-                    <div class="demo-image-container">
-                        <img id="omega-demo-image" src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/neg_03_print_01_dye_00_none.webp" alt="Film Stock Preview" class="demo-image" crossorigin="anonymous">
-                    </div>
-                    <div class="demo-controls-inline">
-                        <div class="demo-field">
-                            <span class="demo-field-label">Negative Stock</span>
-                            <select id="negative-select" class="demo-dropdown">
-                                <option value="0">Kodak Vision3 5203 50D (2011)</option>
-                                <option value="1">Kodak Vision3 5207 250D (2009)</option>
-                                <option value="2">Kodak Vision3 5213 200T (2010)</option>
-                                <option value="3" selected>Kodak Vision3 5219 500T (2007)</option>
-                                <option value="4">Kodak ECN-I 5247 100T (1950)</option>
-                                <option value="5">Kodak ECN-I 5248 50T (1952)</option>
-                                <option value="6">Kodak ECN-II 5247 100T (1974)</option>
-                                <option value="7">Kodak ECN-II 5250 50D (1959)</option>
-                                <option value="8">Kodak Vision 5277 320T (1996)</option>
-                                <option value="9">Kodak EXR 5293 200T (1992)</option>
-                                <option value="10">Kodak EXR 5248 100T (1990)</option>
-                                <option value="11">Kodak B&W 5222 Double-X (1959)</option>
-                                <option value="12">Kodak Portra 160D (2010)</option>
-                                <option value="13">Kodak Portra 400D (2010)</option>
-                                <option value="14">Kodak Portra 800D (2001)</option>
-                                <option value="15">Kodak Ektar 100D (2008)</option>
-                                <option value="16">Kodak Gold 200D (1988)</option>
-                                <option value="17">Kodak Ultramax 400D (1997)</option>
-                                <option value="18">Kodak Vericolor III 160D (1980)</option>
-                                <option value="19">Kodak Aerocolor IV 125D (1995)</option>
-                                <option value="20">Kodak Kodachrome 64D (1974)</option>
-                                <option value="21">Kodak Ektachrome E100D (2018)</option>
-                                <option value="22">Kodak Ektachrome 100D (2002)</option>
-                                <option value="23">Kodak Tri-X 400 B&W (1954)</option>
-                                <option value="24">Kodak Plus-X 125 B&W (1954)</option>
-                                <option value="25">Fuji Eterna 500T (2006)</option>
-                                <option value="26">Fuji Eterna 500T Vivid (2006)</option>
-                                <option value="27">Fuji Pro 400H 400D (2004)</option>
-                                <option value="28">Fuji Pro 160C 160D (2004)</option>
-                                <option value="29">Fuji Pro 160S 160D (2004)</option>
-                                <option value="30">Fuji C200 200D (1998)</option>
-                                <option value="31">Fuji Superia 400D (1998)</option>
-                                <option value="32">Fuji Superia X-tra 400D (2000)</option>
-                                <option value="33">Fuji Reala 100D (1998)</option>
-                                <option value="34">Fuji Natura 1600T (2005)</option>
-                                <option value="35">Fuji Provia 100F 100D (2000)</option>
-                                <option value="36">Fuji Velvia 50D (1990)</option>
-                                <option value="37">Fuji FP-100C 100D (1980)</option>
-                                <option value="38">Fuji Instax 800D (1998)</option>
-                                <option value="39">Agfa Vista 100D (1999)</option>
-                                <option value="40">Agfa Optima 100D (2000)</option>
-                                <option value="41">Agfa Ultra 100D (1999)</option>
-                            </select>
-                        </div>
-                        <div class="demo-field">
-                            <span class="demo-field-label">Print Stock</span>
-                            <select id="print-select" class="demo-dropdown">
-                                <option value="1" selected>Kodak Vision 2383 (1998)</option>
-                                <option value="2">Kodak Vision Premier 2393 (1998)</option>
-                                <option value="3">Kodak Intermediate 5383 (1979)</option>
-                                <option value="4">Kodak ECP 5381 (1972)</option>
-                                <option value="5">Kodak ECP 5384 (1982)</option>
-                                <option value="6">Kodak EXR 5386 (1989)</option>
-                                <option value="7">Kodak 2303 B&W (1979)</option>
-                                <option value="8">Kodak Duraflex Plus (1995)</option>
-                                <option value="9">Kodak Endura Premier (2005)</option>
-                                <option value="10">Kodak Portra Endura (2003)</option>
-                                <option value="11">Kodak Supra Endura (2002)</option>
-                                <option value="12">Kodak Polymax Fine Art B&W (1990)</option>
-                                <option value="13">Fuji Eterna-RDI 3513DI (2005)</option>
-                                <option value="14">Fuji Fujiflex SFA3 (1988)</option>
-                                <option value="15">Fuji Fujiflex Crystal (2001)</option>
-                                <option value="16">Fuji Crystal Archive Super C (1998)</option>
-                                <option value="17">Fuji Crystal Archive DP II (2002)</option>
-                                <option value="18">Fuji Crystal Archive Maxima (2005)</option>
-                                <option value="19">Fuji Crystal Archive Pro PD II (2008)</option>
-                            </select>
-                        </div>
-                        <div class="demo-field">
-                            <span class="demo-field-label">Dye Process</span>
-                            <select id="dye-select" class="demo-dropdown">
-                                <option value="0" selected>None</option>
-                                <option value="1">Kodak Dye Transfer Neg Matrix (1946)</option>
-                                <option value="2">Kodak Dye Transfer Kodachrome (1935)</option>
-                                <option value="3">Kodak Dye Transfer Slide Matrix (1946)</option>
-                                <option value="4">Kodak Ektachrome Radiance III (1989)</option>
-                                <option value="5">Technicolor Dye Transfer 3-Strip (1932)</option>
-                                <option value="6">Technicolor Process IV 3-Strip (1932)</option>
-                                <option value="7">Technicolor Process V Monopack (1954)</option>
-                                <option value="8">Ilford Ilfochrome Micrographic M (1963)</option>
-                                <option value="9">Ilford Ilfochrome Micrographic P (1991)</option>
-                            </select>
-                        </div>
-                        <div class="demo-toggle-row">
-                            <label class="demo-toggle-label">
-                                <input type="checkbox" id="halation-check">
-                                <span class="demo-toggle-pill">Halation</span>
-                            </label>
-                            <label class="demo-toggle-label">
-                                <input type="checkbox" id="grain-check">
-                                <span class="demo-toggle-pill">Grain</span>
-                            </label>
+                <!-- Omega Demo -->
+                <div class="omega-demo-embedded">
+                    <div class="demo-modal">
+                        <div class="omega-demo-content">
+                            <div class="demo-image-container">
+                                <img id="omega-demo-image" src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/neg_03_print_01_dye_00_none.webp" alt="Film Stock Preview" class="demo-image" crossorigin="anonymous">
+                            </div>
+                            <div class="demo-controls">
+                                <div class="demo-panel active" id="panel-omega">
+                                    <div class="demo-field">
+                                        <span class="demo-field-label">Negative Stock</span>
+                                        <select id="negative-select" class="demo-dropdown">
+                                            <option value="0">Kodak Vision3 5203 50D (2011)</option>
+                                            <option value="1">Kodak Vision3 5207 250D (2009)</option>
+                                            <option value="2">Kodak Vision3 5213 200T (2010)</option>
+                                            <option value="3" selected>Kodak Vision3 5219 500T (2007)</option>
+                                            <option value="4">Kodak ECN-I 5247 100T (1950)</option>
+                                            <option value="5">Kodak ECN-I 5248 50T (1952)</option>
+                                            <option value="6">Kodak ECN-II 5247 100T (1974)</option>
+                                            <option value="7">Kodak ECN-II 5250 50D (1959)</option>
+                                            <option value="8">Kodak Vision 5277 320T (1996)</option>
+                                            <option value="9">Kodak EXR 5293 200T (1992)</option>
+                                            <option value="10">Kodak EXR 5248 100T (1990)</option>
+                                            <option value="11">Kodak B&W 5222 Double-X (1959)</option>
+                                            <option value="12">Kodak Portra 160D (2010)</option>
+                                            <option value="13">Kodak Portra 400D (2010)</option>
+                                            <option value="14">Kodak Portra 800D (2001)</option>
+                                            <option value="15">Kodak Ektar 100D (2008)</option>
+                                            <option value="16">Kodak Gold 200D (1988)</option>
+                                            <option value="17">Kodak Ultramax 400D (1997)</option>
+                                            <option value="18">Kodak Vericolor III 160D (1980)</option>
+                                            <option value="19">Kodak Aerocolor IV 125D (1995)</option>
+                                            <option value="20">Kodak Kodachrome 64D (1974)</option>
+                                            <option value="21">Kodak Ektachrome E100D (2018)</option>
+                                            <option value="22">Kodak Ektachrome 100D (2002)</option>
+                                            <option value="23">Kodak Tri-X 400 B&W (1954)</option>
+                                            <option value="24">Kodak Plus-X 125 B&W (1954)</option>
+                                            <option value="25">Fuji Eterna 500T (2006)</option>
+                                            <option value="26">Fuji Eterna 500T Vivid (2006)</option>
+                                            <option value="27">Fuji Pro 400H 400D (2004)</option>
+                                            <option value="28">Fuji Pro 160C 160D (2004)</option>
+                                            <option value="29">Fuji Pro 160S 160D (2004)</option>
+                                            <option value="30">Fuji C200 200D (1998)</option>
+                                            <option value="31">Fuji Superia 400D (1998)</option>
+                                            <option value="32">Fuji Superia X-tra 400D (2000)</option>
+                                            <option value="33">Fuji Reala 100D (1998)</option>
+                                            <option value="34">Fuji Natura 1600T (2005)</option>
+                                            <option value="35">Fuji Provia 100F 100D (2000)</option>
+                                            <option value="36">Fuji Velvia 50D (1990)</option>
+                                            <option value="37">Fuji FP-100C 100D (1980)</option>
+                                            <option value="38">Fuji Instax 800D (1998)</option>
+                                            <option value="39">Agfa Vista 100D (1999)</option>
+                                            <option value="40">Agfa Optima 100D (2000)</option>
+                                            <option value="41">Agfa Ultra 100D (1999)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="demo-field">
+                                        <span class="demo-field-label">Dye Process</span>
+                                        <select id="dye-select" class="demo-dropdown">
+                                            <option value="0" selected>None</option>
+                                            <option value="1">Kodak Dye Transfer Neg Matrix (1946)</option>
+                                            <option value="2">Kodak Dye Transfer Kodachrome (1935)</option>
+                                            <option value="3">Kodak Dye Transfer Slide Matrix (1946)</option>
+                                            <option value="4">Kodak Ektachrome Radiance III (1989)</option>
+                                            <option value="5">Technicolor Dye Transfer 3-Strip (1932)</option>
+                                            <option value="6">Technicolor Process IV 3-Strip (1932)</option>
+                                            <option value="7">Technicolor Process V Monopack (1954)</option>
+                                            <option value="8">Ilford Ilfochrome Micrographic M (1963)</option>
+                                            <option value="9">Ilford Ilfochrome Micrographic P (1991)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="demo-field">
+                                        <span class="demo-field-label">Print Stock</span>
+                                        <select id="print-select" class="demo-dropdown">
+                                            <option value="1" selected>Kodak Vision 2383 (1998)</option>
+                                            <option value="2">Kodak Vision Premier 2393 (1998)</option>
+                                            <option value="3">Kodak Intermediate 5383 (1979)</option>
+                                            <option value="4">Kodak ECP 5381 (1972)</option>
+                                            <option value="5">Kodak ECP 5384 (1982)</option>
+                                            <option value="6">Kodak EXR 5386 (1989)</option>
+                                            <option value="7">Kodak 2303 B&W (1979)</option>
+                                            <option value="8">Kodak Duraflex Plus (1995)</option>
+                                            <option value="9">Kodak Endura Premier (2005)</option>
+                                            <option value="10">Kodak Portra Endura (2003)</option>
+                                            <option value="11">Kodak Supra Endura (2002)</option>
+                                            <option value="12">Kodak Polymax Fine Art B&W (1990)</option>
+                                            <option value="13">Fuji Eterna-RDI 3513DI (2005)</option>
+                                            <option value="14">Fuji Fujiflex SFA3 (1988)</option>
+                                            <option value="15">Fuji Fujiflex Crystal (2001)</option>
+                                            <option value="16">Fuji Crystal Archive Super C (1998)</option>
+                                            <option value="17">Fuji Crystal Archive DP II (2002)</option>
+                                            <option value="18">Fuji Crystal Archive Maxima (2005)</option>
+                                            <option value="19">Fuji Crystal Archive Pro PD II (2008)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="demo-toggle-row" style="margin-top: 1rem;">
+                                        <label class="demo-toggle-label">
+                                            <input type="checkbox" id="halation-check">
+                                            <span class="demo-toggle-pill">Halation</span>
+                                        </label>
+                                        <label class="demo-toggle-label">
+                                            <input type="checkbox" id="grain-check">
+                                            <span class="demo-toggle-pill">Grain</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2659,23 +2652,21 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Keep both videos in sync - sync on load and periodically
-        videoFilm.addEventListener('loadedmetadata', () => {
-            videoRec.currentTime = videoFilm.currentTime;
-        });
-
-        // Sync videos periodically to prevent drift
-        setInterval(() => {
-            if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
-        }, 1000);
-
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            // Just toggle visibility - both videos keep playing
-            videoFilm.classList.toggle('active', showFilm);
-            videoRec.classList.toggle('active', !showFilm);
+            if (showFilm) {
+                videoRec.currentTime = videoFilm.currentTime;
+                videoFilm.classList.add('active');
+                videoRec.classList.remove('active');
+                videoFilm.play();
+                videoRec.pause();
+            } else {
+                videoFilm.currentTime = videoRec.currentTime;
+                videoRec.classList.add('active');
+                videoFilm.classList.remove('active');
+                videoRec.play();
+                videoFilm.pause();
+            }
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
