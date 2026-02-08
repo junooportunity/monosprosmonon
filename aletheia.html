@@ -1134,60 +1134,44 @@
 
         .video-toggle {
             position: absolute;
-            bottom: 1.5rem;
-            left: 1.5rem;
+            bottom: 1.25rem;
+            left: 1.25rem;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 0.75rem;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.25rem 1.5rem;
-            border-radius: 8px;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.875rem 1rem;
+            border-radius: 6px;
         }
 
-        .video-toggle-option {
+        .video-toggle-row {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
-
-        .video-toggle-radio {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .video-toggle-radio.active {
-            border-color: #fff;
-        }
-
-        .video-toggle-radio.active::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 6px;
-            height: 6px;
-            background: #fff;
-            border-radius: 50%;
+            gap: 0.625rem;
         }
 
         .video-toggle-label {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
         }
 
         .video-toggle-label.active {
-            color: rgba(255, 255, 255, 1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .video-toggle-stock {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .video-switch {
@@ -2086,14 +2070,15 @@
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/graded-hq-v3.mp4" type="video/mp4">
                         </video>
                         <div class="video-toggle">
-                            <div class="video-toggle-option" id="option-rec709">
-                                <div class="video-toggle-radio" id="radio-rec709"></div>
-                                <span class="video-toggle-label" id="label-rec709">Rec. 709</span>
+                            <div class="video-toggle-row">
+                                <span class="video-toggle-label" id="label-off">Off</span>
+                                <label class="video-switch">
+                                    <input type="checkbox" id="video-toggle-switch" checked>
+                                    <span class="video-slider"></span>
+                                </label>
+                                <span class="video-toggle-label active" id="label-on">On</span>
                             </div>
-                            <div class="video-toggle-option" id="option-film">
-                                <div class="video-toggle-radio active" id="radio-film"></div>
-                                <span class="video-toggle-label active" id="label-film">Kodak 5293 200T &rarr; Kodak 2383</span>
-                            </div>
+                            <span class="video-toggle-stock">Kodak 5293 200T &rarr; Kodak 2383</span>
                         </div>
                     </div>
                 </div>
@@ -2960,23 +2945,16 @@
     <script>
     (function() {
         const videoFilm = document.getElementById('video-film');
-        const optionRec709 = document.getElementById('option-rec709');
-        const optionFilm = document.getElementById('option-film');
-        const radioRec709 = document.getElementById('radio-rec709');
-        const radioFilm = document.getElementById('radio-film');
-        const labelRec709 = document.getElementById('label-rec709');
-        const labelFilm = document.getElementById('label-film');
+        const toggle = document.getElementById('video-toggle-switch');
+        const labelOff = document.getElementById('label-off');
+        const labelOn = document.getElementById('label-on');
 
-        function setActive(showFilm) {
+        toggle.addEventListener('change', () => {
+            const showFilm = toggle.checked;
             videoFilm.classList.toggle('hidden', !showFilm);
-            radioFilm.classList.toggle('active', showFilm);
-            radioRec709.classList.toggle('active', !showFilm);
-            labelFilm.classList.toggle('active', showFilm);
-            labelRec709.classList.toggle('active', !showFilm);
-        }
-
-        optionRec709.addEventListener('click', () => setActive(false));
-        optionFilm.addEventListener('click', () => setActive(true));
+            labelOn.classList.toggle('active', showFilm);
+            labelOff.classList.toggle('active', !showFilm);
+        });
     })();
     </script>
 
