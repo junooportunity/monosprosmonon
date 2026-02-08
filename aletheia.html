@@ -2355,7 +2355,7 @@
 
                 <div class="interface-panel">
                     <div class="interface-panel-inner">
-                        <div class="interface-explainer">
+                        <div class="interface-explainer" style="max-height: 600px; overflow-y: auto;">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Printer Lights</h4>
                                 <p class="explainer-text">RGB offset controls that emulate timing light adjustments on an optical printer. Balances the image before any other processing occurs.</p>
@@ -2372,16 +2372,6 @@
                                 <h4 class="explainer-title">Shadows / Midtones / Highlights</h4>
                                 <p class="explainer-text">Zone-weighted offsets in log space. Shadows use smoothstep falloff below 0.25, midtones use a Gaussian bell at mid-gray, highlights ramp above 0.55.</p>
                             </div>
-                        </div>
-                        <div class="interface-preview">
-                            <img src="images/Phi Interface.png" alt="Phi Interface">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="interface-panel" style="margin-top: 2rem;">
-                    <div class="interface-panel-inner">
-                        <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Black Point / White Point</h4>
                                 <p class="explainer-text">Toe and shoulder curves with flat plateaus. Black point lifts shadows to a new floor with power-curve blending. White point compresses highlights down with the same math mirrored.</p>
@@ -2398,15 +2388,6 @@
                                 <h4 class="explainer-title">Vibrance</h4>
                                 <p class="explainer-text">Selective saturation that protects skin tones and already-saturated colors. Detects skin by positive OKLab 'a' values, weights boost inversely to existing chroma.</p>
                             </div>
-                        </div>
-                        <div class="interface-preview" style="background: transparent;">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="interface-panel" style="margin-top: 2rem;">
-                    <div class="interface-panel-inner">
-                        <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin: Melanin & Hemoglobin</h4>
                                 <p class="explainer-text">Signed-quadratic response curves. Melanin shifts toward yellow-brown (more) or away (less). Hemoglobin controls the red-green axis—more for ruddier skin, less for golden tones.</p>
@@ -2424,7 +2405,8 @@
                                 <p class="explainer-text">Per-hue HSV adjustment for red, green, blue, cyan, magenta, and yellow. Tetrahedral interpolation blends smoothly between adjacent vertices—no banding at hue boundaries.</p>
                             </div>
                         </div>
-                        <div class="interface-preview" style="background: transparent;">
+                        <div class="interface-preview">
+                            <img src="images/Phi Interface.png" alt="Phi Interface">
                         </div>
                     </div>
                 </div>
