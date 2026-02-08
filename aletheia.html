@@ -2054,7 +2054,7 @@
                 <!-- Video Demo -->
                 <div class="video-demo-container">
                     <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="metadata">
+                        <video id="video-rec709" class="demo-video" muted loop playsinline preload="auto">
                             <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Aletheia%20-%20Demo%20-%20709.mp4" type="video/mp4">
                         </video>
                         <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
@@ -2515,28 +2515,28 @@
         const labelOn = document.getElementById('label-on');
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
-        let recLoaded = false;
+
+        // Keep rec709 paused but synced to film's time
+        videoFilm.addEventListener('timeupdate', () => {
+            if (videoRec.paused) {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+        });
 
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            // Swap visibility
+            videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
+            // Play/pause
             if (showFilm) {
-                videoRec.currentTime = videoFilm.currentTime;
-                videoFilm.classList.add('active');
-                videoRec.classList.remove('active');
                 videoFilm.play();
                 videoRec.pause();
             } else {
-                // First time switching to rec709 - need to load it
-                if (!recLoaded) {
-                    videoRec.load();
-                    recLoaded = true;
-                }
-                videoFilm.currentTime = videoRec.currentTime;
-                videoRec.classList.add('active');
-                videoFilm.classList.remove('active');
                 videoRec.play();
                 videoFilm.pause();
             }
+            // Update labels
             labelOn.classList.toggle('active', showFilm);
             labelOff.classList.toggle('active', !showFilm);
             infoFilm.classList.toggle('hidden', !showFilm);
