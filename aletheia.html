@@ -2359,6 +2359,18 @@
                                 <p class="explainer-text">RGB timing light controls—0-50 scale where 25 is neutral. Emulates the light valves on an optical printer. One point equals roughly 1/12 stop. Industry-standard color balancing method.</p>
                             </div>
                             <div class="explainer-section">
+                                <h4 class="explainer-title">Display Target</h4>
+                                <p class="explainer-text">Output color space and transfer function. SDR options use Rec.709 or P3 primaries with gamma encoding. HDR options output to PQ (ST.2084) for Rec.2020 or P3 containers—enables the HDR luminance controls below.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">HDR Peak Luminance</h4>
+                                <p class="explainer-text">Sets the nit level where 1.0 linear maps in PQ output. Range 100-1000 nits, default 120. Lower values leave headroom for specular highlights, higher values use more of the display's dynamic range. Only active when HDR output is selected.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">HDR Preserve Color</h4>
+                                <p class="explainer-text">Controls color saturation rolloff in HDR highlights. At 0, colors can oversaturate when one channel clips before others. Higher values desaturate toward luminance-preserving gray, maintaining detail and preventing color shifts in bright areas.</p>
+                            </div>
+                            <div class="explainer-section">
                                 <h4 class="explainer-title">Physical Halation</h4>
                                 <p class="explainer-text">Light passes through emulsion, bounces off the film base, and re-exposes from behind. Creates the organic red glow around bright sources. Film gauge controls scatter size—16mm spreads wider, 65mm stays tighter.</p>
                             </div>
