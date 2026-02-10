@@ -2517,16 +2517,28 @@
                     <div class="interface-panel-inner">
                         <div class="interface-explainer">
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Source Gamut & Gamma</h4>
-                                <p class="explainer-text">Camera input color space and transfer function. Supports ARRI AWG4/AWG3, Sony SGamut3, RED RWG, DaVinci Wide Gamut, ACES, Blackmagic, Canon, and Rec.709/2020 gamuts with matching log curves. Linearization and gamut conversion happen before any math.</p>
+                                <h4 class="explainer-title">Direction</h4>
+                                <p class="explainer-text">Two modes: Digital → Negative converts camera footage into film-negative density space. Negative → Digital inverts the transform for output. Chain two instances to work entirely in negative domain.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Digital Gamut & Gamma</h4>
-                                <p class="explainer-text">Working color space for grading. Typically matches timeline color science. ACEScct and DaVinci Intermediate provide grading-friendly midtone density. Linear for compositing.</p>
+                                <h4 class="explainer-title">Source Color Space</h4>
+                                <p class="explainer-text">Declares camera input gamut—ARRI AWG4/AWG3, Sony SGamut3, Panasonic VGamut, RED RWG, DaVinci Wide Gamut, ACES AP0/AP1, Canon Cinema, Blackmagic Wide Gamut, Rec.709, or Rec.2020. All conversions route through AP1 as a clean interchange space.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Negative Gamut & Gamma</h4>
-                                <p class="explainer-text">Film-negative density space. Gamma curves include Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, and ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
+                                <h4 class="explainer-title">Source Gamma</h4>
+                                <p class="explainer-text">Specifies camera log curve—LogC4, LogC3, S-Log3, V-Log, Log3G10, Canon Log 2/3, BMD Film Gen5, N-Log, F-Log, F-Log2, ACEScct, DaVinci Intermediate, or Rec.709. Linearization happens before any gamut math.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Color Space</h4>
+                                <p class="explainer-text">The working gamut for grading. Typically matches timeline color science. Same options as Source—pick once, keep consistent across the session.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Gamma</h4>
+                                <p class="explainer-text">Working transfer function. ACEScct and DaVinci Intermediate provide grading-friendly midtone density. Linear for compositing. Rec.709 for legacy workflows.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Negative Gamma</h4>
+                                <p class="explainer-text">Film stock density curves—Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, Contrast for punchier shadows, or ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
                             </div>
                         </div>
                         <div class="interface-preview alpha-interface-stacked">
