@@ -2776,6 +2776,17 @@
         // Try to start immediately (works on desktop)
         startVideos();
 
+        // Seamless loop - reset before native loop delay kicks in
+        function setupSeamlessLoop(video) {
+            video.addEventListener('timeupdate', () => {
+                if (video.duration && video.duration - video.currentTime < 0.3) {
+                    video.currentTime = 0;
+                }
+            });
+        }
+        setupSeamlessLoop(videoFilm);
+        setupSeamlessLoop(videoRec);
+
         // Toggle handler
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
