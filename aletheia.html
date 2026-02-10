@@ -1133,21 +1133,34 @@
             height: 100%;
             object-fit: cover;
             object-position: center center;
+            visibility: hidden;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.35s ease;
-            filter: brightness(0.93);
-            will-change: opacity;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
         }
 
         .demo-video.active {
+            visibility: visible;
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* Same transition on all devices */
+        /* Desktop: smooth fade with filter */
+        @media (min-width: 769px) {
+            .demo-video {
+                filter: brightness(0.93);
+                transition: opacity 0.35s ease, visibility 0s 0.35s;
+            }
+            .demo-video.active {
+                transition: opacity 0.35s ease, visibility 0s 0s;
+            }
+        }
+
+        /* Mobile: instant switch, no filter, no transition */
+        @media (max-width: 768px) {
+            .demo-video {
+                transition: none;
+            }
+        }
 
         .video-toggle {
             display: flex;
