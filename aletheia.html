@@ -1162,11 +1162,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.6);
+            gap: 0.375rem;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 0.875rem 1rem;
+            padding: 0.5rem 0.75rem;
             border-radius: 6px;
             margin: -1.5rem auto 0;
             position: relative;
@@ -2727,15 +2727,20 @@
         // Try to start immediately (works on desktop)
         startBoth();
 
-        // Toggle handler - JUST swap visibility, nothing else
+        // Toggle handler - sync then swap
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            const outgoing = showFilm ? videoRec : videoFilm;
+            const incoming = showFilm ? videoFilm : videoRec;
 
-            // Ensure both videos are playing (first interaction might be the toggle)
+            // Sync incoming to outgoing position before swap
+            incoming.currentTime = outgoing.currentTime;
+
+            // Ensure both videos are playing
             videoFilm.play().catch(() => {});
             videoRec.play().catch(() => {});
 
-            // Swap visibility - instant, no seeking
+            // Swap visibility
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
