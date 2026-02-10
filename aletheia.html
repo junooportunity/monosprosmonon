@@ -2709,15 +2709,22 @@
         const infoRec = document.getElementById('toggle-info-rec709');
 
         let videosStarted = false;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-        // Start both videos playing
+        // Start videos - mobile only plays active, desktop plays both
         async function startVideos() {
             if (videosStarted) return;
             try {
-                await Promise.all([
-                    videoFilm.play(),
-                    videoRec.play()
-                ]);
+                if (isMobile) {
+                    // Mobile: only play the visible video (Film is active by default)
+                    await videoFilm.play();
+                } else {
+                    // Desktop: play both for instant switching
+                    await Promise.all([
+                        videoFilm.play(),
+                        videoRec.play()
+                    ]);
+                }
                 videosStarted = true;
             } catch (e) {
                 // Autoplay blocked - will retry on user interaction
@@ -2727,8 +2734,12 @@
         // Handle user interaction (required for mobile)
         function onInteraction() {
             if (!videosStarted) {
-                videoFilm.play().catch(() => {});
-                videoRec.play().catch(() => {});
+                if (isMobile) {
+                    videoFilm.play().catch(() => {});
+                } else {
+                    videoFilm.play().catch(() => {});
+                    videoRec.play().catch(() => {});
+                }
                 videosStarted = true;
             }
             document.removeEventListener('touchstart', onInteraction);
@@ -2752,25 +2763,39 @@
         setupSeamlessLoop(videoFilm);
         setupSeamlessLoop(videoRec);
 
-        // Keep videos synced continuously (so toggle is instant)
-        videoFilm.addEventListener('timeupdate', () => {
-            if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
-        });
+        // Desktop: keep both videos synced continuously
+        // Mobile: only play the active video to save resources
+        if (!isMobile) {
+            videoFilm.addEventListener('timeupdate', () => {
+                if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
+                    videoRec.currentTime = videoFilm.currentTime;
+                }
+            });
+        }
 
-        // Toggle handler - just swap visibility (no seeking needed)
+        // Toggle handler
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
 
             // Ensure videos are playing (in case toggle is first interaction)
             if (!videosStarted) {
-                videoFilm.play().catch(() => {});
-                videoRec.play().catch(() => {});
                 videosStarted = true;
             }
 
-            // Swap active states instantly
+            if (isMobile) {
+                // Mobile: only play the visible video
+                if (showFilm) {
+                    videoFilm.currentTime = videoRec.currentTime;
+                    videoFilm.play().catch(() => {});
+                    videoRec.pause();
+                } else {
+                    videoRec.currentTime = videoFilm.currentTime;
+                    videoRec.play().catch(() => {});
+                    videoFilm.pause();
+                }
+            }
+
+            // Swap active states
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
@@ -2778,6 +2803,11 @@
             infoFilm.classList.toggle('hidden', !showFilm);
             infoRec.classList.toggle('hidden', showFilm);
         });
+
+        // Mobile: start with only the active video playing
+        if (isMobile) {
+            videoRec.pause();
+        }
     })();
     </script>
 
