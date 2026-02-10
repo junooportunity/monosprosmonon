@@ -1147,15 +1147,7 @@
             pointer-events: auto;
         }
 
-        /* Mobile: quick fade to hide seeking delay */
-        @media (max-width: 768px) {
-            .demo-video {
-                transition: opacity 0.15s ease;
-            }
-            .demo-video.switching {
-                opacity: 0 !important;
-            }
-        }
+        /* Same transition on all devices */
 
         .video-toggle {
             display: flex;
@@ -2706,20 +2698,18 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        // Only ONE video plays at a time (saves resources)
-        // On toggle: sync incoming video to current position, then swap
+        // SIMPLE: Both videos always playing, toggle just swaps visibility
+        // No seeking, no pausing - that's what causes lag
 
-        let showingFilm = true; // Start showing film (Omega)
-
-        // Start the active video
-        function startActiveVideo() {
-            const activeVideo = showingFilm ? videoFilm : videoRec;
-            activeVideo.play().catch(() => {});
+        // Start both videos together
+        function startBoth() {
+            videoFilm.play().catch(() => {});
+            videoRec.play().catch(() => {});
         }
 
         // Handle user interaction (required for mobile autoplay)
         function onInteraction() {
-            startActiveVideo();
+            startBoth();
             document.removeEventListener('touchstart', onInteraction);
             document.removeEventListener('click', onInteraction);
         }
@@ -2727,60 +2717,19 @@
         document.addEventListener('click', onInteraction);
 
         // Try to start immediately (works on desktop)
-        startActiveVideo();
+        startBoth();
 
-        // Toggle handler - sync and swap (with mobile seek handling)
+        // Toggle handler - JUST swap visibility, nothing else
         toggle.addEventListener('change', () => {
-            showingFilm = toggle.checked;
+            const showFilm = toggle.checked;
 
-            const outgoing = showingFilm ? videoRec : videoFilm;
-            const incoming = showingFilm ? videoFilm : videoRec;
-
-            // Mobile: hide both during seek to avoid glitchy frame
-            const isMobile = window.innerWidth <= 768;
-            if (isMobile) {
-                outgoing.classList.add('switching');
-                incoming.classList.add('switching');
-            }
-
-            // Sync incoming to outgoing position
-            incoming.currentTime = outgoing.currentTime;
-
-            // Wait for seek to complete before showing
-            let revealed = false;
-            function reveal() {
-                if (revealed) return;
-                revealed = true;
-                incoming.removeEventListener('seeked', reveal);
-                incoming.classList.remove('switching');
-                outgoing.classList.remove('switching');
-
-                // Now swap visibility
-                videoFilm.classList.toggle('active', showingFilm);
-                videoRec.classList.toggle('active', !showingFilm);
-
-                incoming.play().catch(() => {});
-                outgoing.pause();
-            }
-
-            if (isMobile) {
-                // Mobile: always use reveal with timeout to ensure switching class is removed
-                incoming.addEventListener('seeked', reveal, { once: true });
-                // Timeout fallback - ensures video shows even if seeked never fires
-                setTimeout(reveal, 300);
-            } else {
-                // Desktop: immediate swap
-                videoFilm.classList.toggle('active', showingFilm);
-                videoRec.classList.toggle('active', !showingFilm);
-                incoming.play().catch(() => {});
-                outgoing.pause();
-            }
-
-            // Update labels immediately
-            labelOn.classList.toggle('active', showingFilm);
-            labelOff.classList.toggle('active', !showingFilm);
-            infoFilm.classList.toggle('hidden', !showingFilm);
-            infoRec.classList.toggle('hidden', showingFilm);
+            // Swap visibility - instant, no seeking
+            videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
+            labelOn.classList.toggle('active', showFilm);
+            labelOff.classList.toggle('active', !showFilm);
+            infoFilm.classList.toggle('hidden', !showFilm);
+            infoRec.classList.toggle('hidden', showFilm);
         });
     })();
     </script>
