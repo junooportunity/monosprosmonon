@@ -2747,7 +2747,10 @@
             incoming.currentTime = outgoing.currentTime;
 
             // Wait for seek to complete before showing
+            let revealed = false;
             function reveal() {
+                if (revealed) return;
+                revealed = true;
                 incoming.removeEventListener('seeked', reveal);
                 incoming.classList.remove('switching');
                 outgoing.classList.remove('switching');
@@ -2760,12 +2763,13 @@
                 outgoing.pause();
             }
 
-            if (isMobile && incoming.readyState < 3) {
+            if (isMobile) {
+                // Mobile: always use reveal with timeout to ensure switching class is removed
                 incoming.addEventListener('seeked', reveal, { once: true });
-                // Timeout fallback in case seeked never fires
+                // Timeout fallback - ensures video shows even if seeked never fires
                 setTimeout(reveal, 300);
             } else {
-                // Desktop or video ready: immediate swap
+                // Desktop: immediate swap
                 videoFilm.classList.toggle('active', showingFilm);
                 videoRec.classList.toggle('active', !showingFilm);
                 incoming.play().catch(() => {});
