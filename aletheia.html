@@ -1155,6 +1155,17 @@
             .demo-video {
                 transition: none;
             }
+            .video-toggle {
+                padding: 0.35rem 0.5rem;
+                gap: 0.25rem;
+                background: rgba(0, 0, 0, 0.4);
+            }
+            .video-toggle-row {
+                gap: 0.4rem;
+            }
+            .video-toggle-label {
+                font-size: 0.75rem;
+            }
         }
 
         .video-toggle {
@@ -2727,18 +2738,20 @@
         // Try to start immediately (works on desktop)
         startBoth();
 
-        // Background sync: keep hidden video aligned to visible one
-        // Sync happens on HIDDEN video only, so no visible lag
-        setInterval(() => {
-            const showingFilm = videoFilm.classList.contains('active');
-            const visible = showingFilm ? videoFilm : videoRec;
-            const hidden = showingFilm ? videoRec : videoFilm;
+        // Background sync: keep hidden video aligned (desktop only)
+        // Mobile: disabled because even hidden seeking causes lag
+        const isMobile = window.innerWidth <= 768;
+        if (!isMobile) {
+            setInterval(() => {
+                const showingFilm = videoFilm.classList.contains('active');
+                const visible = showingFilm ? videoFilm : videoRec;
+                const hidden = showingFilm ? videoRec : videoFilm;
 
-            // Only sync if hidden video isn't already seeking and drift > 0.1s
-            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
-                hidden.currentTime = visible.currentTime;
-            }
-        }, 250);
+                if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
+                    hidden.currentTime = visible.currentTime;
+                }
+            }, 250);
+        }
 
         // Toggle handler - INSTANT swap, no seeking
         toggle.addEventListener('change', () => {
