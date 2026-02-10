@@ -2787,7 +2787,14 @@
         setupSeamlessLoop(videoFilm);
         setupSeamlessLoop(videoRec);
 
-        // Toggle handler
+        // Keep videos synced continuously (so toggle is instant)
+        videoFilm.addEventListener('timeupdate', () => {
+            if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
+                videoRec.currentTime = videoFilm.currentTime;
+            }
+        });
+
+        // Toggle handler - just swap visibility (no seeking needed)
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
 
@@ -2798,14 +2805,7 @@
                 videosStarted = true;
             }
 
-            // Sync times - incoming video matches outgoing video's position
-            if (showFilm) {
-                videoFilm.currentTime = videoRec.currentTime;
-            } else {
-                videoRec.currentTime = videoFilm.currentTime;
-            }
-
-            // Swap active states
+            // Swap active states instantly
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
