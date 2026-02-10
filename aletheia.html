@@ -2723,6 +2723,10 @@
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
 
+            // Ensure both videos are playing (first interaction might be the toggle)
+            videoFilm.play().catch(() => {});
+            videoRec.play().catch(() => {});
+
             // Swap visibility - instant, no seeking
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
