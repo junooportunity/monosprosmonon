@@ -1150,21 +1150,10 @@
             }
         }
 
-        /* Mobile: instant switch, no filter, no transition */
+        /* Mobile: hide video demo entirely */
         @media (max-width: 768px) {
-            .demo-video {
-                transition: none;
-            }
-            .video-toggle {
-                padding: 0.35rem 0.5rem;
-                gap: 0.25rem;
-                background: rgba(0, 0, 0, 0.4);
-            }
-            .video-toggle-row {
-                gap: 0.4rem;
-            }
-            .video-toggle-label {
-                font-size: 0.75rem;
+            .video-demo-container {
+                display: none;
             }
         }
 
@@ -2739,17 +2728,15 @@
         startBoth();
 
         // Background sync: keep hidden video aligned to visible one
-        // Syncs every 500ms, only if not already seeking
         setInterval(() => {
             const showingFilm = videoFilm.classList.contains('active');
             const visible = showingFilm ? videoFilm : videoRec;
             const hidden = showingFilm ? videoRec : videoFilm;
 
-            // Only sync if drift > 0.15s and hidden video isn't seeking
-            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.15) {
+            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
                 hidden.currentTime = visible.currentTime;
             }
-        }, 500);
+        }, 250);
 
         // Toggle handler - sync incoming to outgoing, then swap
         toggle.addEventListener('change', () => {
