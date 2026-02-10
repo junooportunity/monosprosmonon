@@ -1147,10 +1147,13 @@
             pointer-events: auto;
         }
 
-        /* Mobile: instant switch, no transition */
+        /* Mobile: quick fade to hide seeking delay */
         @media (max-width: 768px) {
             .demo-video {
-                transition: none;
+                transition: opacity 0.15s ease;
+            }
+            .demo-video.switching {
+                opacity: 0 !important;
             }
         }
 
@@ -2726,23 +2729,50 @@
         // Try to start immediately (works on desktop)
         startActiveVideo();
 
-        // Toggle handler - sync and swap
+        // Toggle handler - sync and swap (with mobile seek handling)
         toggle.addEventListener('change', () => {
             showingFilm = toggle.checked;
 
             const outgoing = showingFilm ? videoRec : videoFilm;
             const incoming = showingFilm ? videoFilm : videoRec;
 
+            // Mobile: hide both during seek to avoid glitchy frame
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                outgoing.classList.add('switching');
+                incoming.classList.add('switching');
+            }
+
             // Sync incoming to outgoing position
             incoming.currentTime = outgoing.currentTime;
 
-            // Start incoming, pause outgoing
-            incoming.play().catch(() => {});
-            outgoing.pause();
+            // Wait for seek to complete before showing
+            function reveal() {
+                incoming.removeEventListener('seeked', reveal);
+                incoming.classList.remove('switching');
+                outgoing.classList.remove('switching');
 
-            // Swap visibility
-            videoFilm.classList.toggle('active', showingFilm);
-            videoRec.classList.toggle('active', !showingFilm);
+                // Now swap visibility
+                videoFilm.classList.toggle('active', showingFilm);
+                videoRec.classList.toggle('active', !showingFilm);
+
+                incoming.play().catch(() => {});
+                outgoing.pause();
+            }
+
+            if (isMobile && incoming.readyState < 3) {
+                incoming.addEventListener('seeked', reveal, { once: true });
+                // Timeout fallback in case seeked never fires
+                setTimeout(reveal, 300);
+            } else {
+                // Desktop or video ready: immediate swap
+                videoFilm.classList.toggle('active', showingFilm);
+                videoRec.classList.toggle('active', !showingFilm);
+                incoming.play().catch(() => {});
+                outgoing.pause();
+            }
+
+            // Update labels immediately
             labelOn.classList.toggle('active', showingFilm);
             labelOff.classList.toggle('active', !showingFilm);
             infoFilm.classList.toggle('hidden', !showingFilm);
