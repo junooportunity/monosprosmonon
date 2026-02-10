@@ -1137,11 +1137,21 @@
             pointer-events: none;
             transition: opacity 0.35s ease;
             filter: brightness(0.93);
+            will-change: opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
 
         .demo-video.active {
             opacity: 1;
             pointer-events: auto;
+        }
+
+        /* Mobile: instant switch, no transition */
+        @media (max-width: 768px) {
+            .demo-video {
+                transition: none;
+            }
         }
 
         .video-toggle {
@@ -2783,13 +2793,11 @@
             }
 
             if (isMobile) {
-                // Mobile: only play the visible video
+                // Mobile: switch videos without seeking (instant)
                 if (showFilm) {
-                    videoFilm.currentTime = videoRec.currentTime;
                     videoFilm.play().catch(() => {});
                     videoRec.pause();
                 } else {
-                    videoRec.currentTime = videoFilm.currentTime;
                     videoRec.play().catch(() => {});
                     videoFilm.pause();
                 }
