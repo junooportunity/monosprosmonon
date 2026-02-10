@@ -2719,20 +2719,6 @@
         // Try to start immediately (works on desktop)
         startBoth();
 
-        // Continuous sync - keep hidden video aligned to visible one
-        function syncLoop() {
-            const showingFilm = videoFilm.classList.contains('active');
-            const visible = showingFilm ? videoFilm : videoRec;
-            const hidden = showingFilm ? videoRec : videoFilm;
-
-            // Sync hidden to visible (hidden seeking doesn't cause visible lag)
-            if (Math.abs(visible.currentTime - hidden.currentTime) > 0.05) {
-                hidden.currentTime = visible.currentTime;
-            }
-            requestAnimationFrame(syncLoop);
-        }
-        requestAnimationFrame(syncLoop);
-
         // Toggle handler - JUST swap visibility, nothing else
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
