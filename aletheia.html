@@ -2727,20 +2727,28 @@
         // Try to start immediately (works on desktop)
         startBoth();
 
-        // Toggle handler - sync then swap
+        // Background sync: keep hidden video aligned to visible one
+        // Sync happens on HIDDEN video only, so no visible lag
+        setInterval(() => {
+            const showingFilm = videoFilm.classList.contains('active');
+            const visible = showingFilm ? videoFilm : videoRec;
+            const hidden = showingFilm ? videoRec : videoFilm;
+
+            // Only sync if hidden video isn't already seeking and drift > 0.1s
+            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
+                hidden.currentTime = visible.currentTime;
+            }
+        }, 250);
+
+        // Toggle handler - INSTANT swap, no seeking
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
-            const outgoing = showFilm ? videoRec : videoFilm;
-            const incoming = showFilm ? videoFilm : videoRec;
-
-            // Sync incoming to outgoing position before swap
-            incoming.currentTime = outgoing.currentTime;
 
             // Ensure both videos are playing
             videoFilm.play().catch(() => {});
             videoRec.play().catch(() => {});
 
-            // Swap visibility
+            // Instant visibility swap - NO SEEKING HERE
             videoFilm.classList.toggle('active', showFilm);
             videoRec.classList.toggle('active', !showFilm);
             labelOn.classList.toggle('active', showFilm);
