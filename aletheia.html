@@ -2718,78 +2718,50 @@
         const infoFilm = document.getElementById('toggle-info-film');
         const infoRec = document.getElementById('toggle-info-rec709');
 
-        let videosStarted = false;
+        // Only ONE video plays at a time (saves resources)
+        // On toggle: sync incoming video to current position, then swap
 
-        // Start both videos playing together
-        async function startVideos() {
-            if (videosStarted) return;
-            try {
-                // Sync to same time before playing
-                videoRec.currentTime = videoFilm.currentTime;
-                await Promise.all([
-                    videoFilm.play(),
-                    videoRec.play()
-                ]);
-                videosStarted = true;
-            } catch (e) {
-                // Autoplay blocked - will retry on user interaction
-            }
+        let showingFilm = true; // Start showing film (Omega)
+
+        // Start the active video
+        function startActiveVideo() {
+            const activeVideo = showingFilm ? videoFilm : videoRec;
+            activeVideo.play().catch(() => {});
         }
 
-        // Handle user interaction (required for mobile)
+        // Handle user interaction (required for mobile autoplay)
         function onInteraction() {
-            if (!videosStarted) {
-                videoRec.currentTime = videoFilm.currentTime;
-                videoFilm.play().catch(() => {});
-                videoRec.play().catch(() => {});
-                videosStarted = true;
-            }
+            startActiveVideo();
             document.removeEventListener('touchstart', onInteraction);
             document.removeEventListener('click', onInteraction);
         }
-
         document.addEventListener('touchstart', onInteraction, { passive: true });
         document.addEventListener('click', onInteraction);
 
         // Try to start immediately (works on desktop)
-        startVideos();
+        startActiveVideo();
 
-        // Master sync loop - film video is master, rec follows
-        // Use requestAnimationFrame for tight sync
-        function syncVideos() {
-            if (videosStarted && videoFilm.duration) {
-                // Seamless loop - reset both together before native loop delay
-                if (videoFilm.duration - videoFilm.currentTime < 0.3) {
-                    videoFilm.currentTime = 0;
-                    videoRec.currentTime = 0;
-                }
-                // Keep rec synced to film (tighter threshold)
-                else if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.05) {
-                    videoRec.currentTime = videoFilm.currentTime;
-                }
-            }
-            requestAnimationFrame(syncVideos);
-        }
-        requestAnimationFrame(syncVideos);
-
-        // Toggle handler - just swap visibility, videos keep playing
+        // Toggle handler - sync and swap
         toggle.addEventListener('change', () => {
-            const showFilm = toggle.checked;
+            showingFilm = toggle.checked;
 
-            // Ensure videos are playing (in case toggle is first interaction)
-            if (!videosStarted) {
-                videoFilm.play().catch(() => {});
-                videoRec.play().catch(() => {});
-                videosStarted = true;
-            }
+            const outgoing = showingFilm ? videoRec : videoFilm;
+            const incoming = showingFilm ? videoFilm : videoRec;
 
-            // Swap active states
-            videoFilm.classList.toggle('active', showFilm);
-            videoRec.classList.toggle('active', !showFilm);
-            labelOn.classList.toggle('active', showFilm);
-            labelOff.classList.toggle('active', !showFilm);
-            infoFilm.classList.toggle('hidden', !showFilm);
-            infoRec.classList.toggle('hidden', showFilm);
+            // Sync incoming to outgoing position
+            incoming.currentTime = outgoing.currentTime;
+
+            // Start incoming, pause outgoing
+            incoming.play().catch(() => {});
+            outgoing.pause();
+
+            // Swap visibility
+            videoFilm.classList.toggle('active', showingFilm);
+            videoRec.classList.toggle('active', !showingFilm);
+            labelOn.classList.toggle('active', showingFilm);
+            labelOff.classList.toggle('active', !showingFilm);
+            infoFilm.classList.toggle('hidden', !showingFilm);
+            infoRec.classList.toggle('hidden', showingFilm);
         });
     })();
     </script>
