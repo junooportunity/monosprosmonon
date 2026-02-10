@@ -2738,24 +2738,27 @@
         // Try to start immediately (works on desktop)
         startBoth();
 
-        // Background sync: keep hidden video aligned (desktop only)
-        // Mobile: disabled because even hidden seeking causes lag
-        const isMobile = window.innerWidth <= 768;
-        if (!isMobile) {
-            setInterval(() => {
-                const showingFilm = videoFilm.classList.contains('active');
-                const visible = showingFilm ? videoFilm : videoRec;
-                const hidden = showingFilm ? videoRec : videoFilm;
+        // Background sync: keep hidden video aligned to visible one
+        // Syncs every 500ms, only if not already seeking
+        setInterval(() => {
+            const showingFilm = videoFilm.classList.contains('active');
+            const visible = showingFilm ? videoFilm : videoRec;
+            const hidden = showingFilm ? videoRec : videoFilm;
 
-                if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
-                    hidden.currentTime = visible.currentTime;
-                }
-            }, 250);
-        }
+            // Only sync if drift > 0.15s and hidden video isn't seeking
+            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.15) {
+                hidden.currentTime = visible.currentTime;
+            }
+        }, 500);
 
-        // Toggle handler - INSTANT swap, no seeking
+        // Toggle handler - sync incoming to outgoing, then swap
         toggle.addEventListener('change', () => {
             const showFilm = toggle.checked;
+            const outgoing = showFilm ? videoRec : videoFilm;
+            const incoming = showFilm ? videoFilm : videoRec;
+
+            // Sync incoming to outgoing position
+            incoming.currentTime = outgoing.currentTime;
 
             // Ensure both videos are playing
             videoFilm.play().catch(() => {});
