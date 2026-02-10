@@ -2724,6 +2724,8 @@
         async function startVideos() {
             if (videosStarted) return;
             try {
+                // Sync to same time before playing
+                videoRec.currentTime = videoFilm.currentTime;
                 await Promise.all([
                     videoFilm.play(),
                     videoRec.play()
@@ -2737,6 +2739,7 @@
         // Handle user interaction (required for mobile)
         function onInteraction() {
             if (!videosStarted) {
+                videoRec.currentTime = videoFilm.currentTime;
                 videoFilm.play().catch(() => {});
                 videoRec.play().catch(() => {});
                 videosStarted = true;
@@ -2751,23 +2754,23 @@
         // Try to start immediately (works on desktop)
         startVideos();
 
-        // Seamless loop - reset before native loop delay kicks in
-        function setupSeamlessLoop(video) {
-            video.addEventListener('timeupdate', () => {
-                if (video.duration && video.duration - video.currentTime < 0.3) {
-                    video.currentTime = 0;
+        // Master sync loop - film video is master, rec follows
+        // Use requestAnimationFrame for tight sync
+        function syncVideos() {
+            if (videosStarted && videoFilm.duration) {
+                // Seamless loop - reset both together before native loop delay
+                if (videoFilm.duration - videoFilm.currentTime < 0.3) {
+                    videoFilm.currentTime = 0;
+                    videoRec.currentTime = 0;
                 }
-            });
-        }
-        setupSeamlessLoop(videoFilm);
-        setupSeamlessLoop(videoRec);
-
-        // Keep both videos synced continuously
-        videoFilm.addEventListener('timeupdate', () => {
-            if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.1) {
-                videoRec.currentTime = videoFilm.currentTime;
+                // Keep rec synced to film (tighter threshold)
+                else if (Math.abs(videoFilm.currentTime - videoRec.currentTime) > 0.05) {
+                    videoRec.currentTime = videoFilm.currentTime;
+                }
             }
-        });
+            requestAnimationFrame(syncVideos);
+        }
+        requestAnimationFrame(syncVideos);
 
         // Toggle handler - just swap visibility, videos keep playing
         toggle.addEventListener('change', () => {
