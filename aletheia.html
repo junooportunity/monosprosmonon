@@ -2085,6 +2085,10 @@
                 margin-top: 1rem;
             }
         }
+        /* ========== SCROLL FADE ========== */
+        .scroll-fade-el {
+            transition: opacity 1.2s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -2092,7 +2096,7 @@
     <!-- ========== BACKGROUND ========== -->
 
     <!-- UnicornStudio animated pulse (exact Aura build) -->
-    <div data-alpha-mask="80" style="position: fixed; top: -20vh; left: 0; width: 100%; height: 120vh; z-index: -10; filter: saturate(0); mix-blend-mode: screen; mask-image: linear-gradient(black 0%, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(black 0%, black 70%, transparent 100%);"><div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -10;">
+    <div data-alpha-mask="100" style="position: fixed; top: -20vh; left: 0; width: 100%; height: 120vh; z-index: -10; filter: saturate(0); mask-image: linear-gradient(black 0%, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(black 0%, black 70%, transparent 100%);"><div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -10;">
         <div data-us-project="FixNvEwvWwbu3QX9qC3F" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0; z-index: -10;"></div>
         <script type="text/javascript">
             !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
@@ -2760,6 +2764,71 @@
                 });
             }
         });
+    })();
+    </script>
+
+    <!-- Vertical scroll fade (matches alecwisdom.com) -->
+    <script>
+    (function() {
+        'use strict';
+        let lastScroll = 0;
+        let ticking = false;
+
+        const SELECTORS = `
+            .hero h1, .hero p, .hero img, .hero hr,
+            .pipeline-label, .pipeline-item, .intro-compat,
+            .demo-modal-section, .video-stock-caption,
+            .plugin-section, .plugin-header, .plugin-description,
+            .interface-panel, .before-after-container,
+            .stat-item, .pricing-card,
+            .requirements-title, .requirement-item,
+            .closing, .footer,
+            hr.divider, hr.divider-full
+        `;
+
+        function applyFade() {
+            const els = document.querySelectorAll(SELECTORS);
+            const vh = window.innerHeight;
+            const fadeZone = vh * 0.35;
+
+            els.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const elCenter = rect.top + rect.height / 2;
+
+                if (rect.height === 0) return;
+
+                let opacity = 1;
+
+                // Fade near top edge
+                if (elCenter < fadeZone) {
+                    opacity = Math.max(0, elCenter / fadeZone);
+                }
+                // Fade near bottom edge
+                else if (elCenter > vh - fadeZone) {
+                    opacity = Math.max(0, (vh - elCenter) / fadeZone);
+                }
+
+                el.style.opacity = opacity;
+                if (!el.classList.contains('scroll-fade-el')) {
+                    el.classList.add('scroll-fade-el');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    applyFade();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Initial pass
+        applyFade();
+        // Re-apply after load (images, fonts shift layout)
+        window.addEventListener('load', applyFade);
     })();
     </script>
 
