@@ -298,45 +298,14 @@
             text-align: center;
             border-radius: 16px;
             position: relative;
-            isolation: isolate;
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
         }
 
-        /* Liquid glass tint layer */
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            border-radius: 16px;
-            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
-            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
-            border: var(--lg-border-width) solid var(--lg-border-color);
-            pointer-events: none;
-        }
-
-        /* Liquid glass distortion layer */
-        .pricing-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
         .pricing-card:hover {
             box-shadow: 0px 10px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
-        }
-
-        .pricing-card:hover::before {
-            box-shadow: inset 0 0 calc(var(--lg-shadow-blur) + 2px) var(--lg-shadow-spread) var(--lg-shadow-color);
-        }
-
-        .pricing-card.featured::before {
-            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
         }
 
         .pricing-tier {
@@ -592,38 +561,15 @@
             margin-top: 2rem;
             border-radius: 16px;
             position: relative;
-            isolation: isolate;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.25);
             overflow: hidden;
-        }
-
-        .interface-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            border-radius: 16px;
-            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
-            background-color: rgba(var(--lg-tint-color), 0.03);
-            border: var(--lg-border-width) solid var(--lg-border-color);
-            pointer-events: none;
-        }
-
-        .interface-panel::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         .interface-panel-inner {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            position: relative;
-            z-index: 1;
         }
 
         .interface-explainer {
