@@ -72,35 +72,6 @@
             -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
-        .pulse-bg {
-            mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);
-            -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);
-        }
-
-        .side-fade {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .side-fade {
-                display: block;
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                width: 50px;
-                z-index: 1;
-                pointer-events: none;
-            }
-            .side-fade-left {
-                left: 0;
-                background: linear-gradient(to right, #050505, transparent);
-            }
-            .side-fade-right {
-                right: 0;
-                background: linear-gradient(to left, #050505, transparent);
-            }
-        }
-
         /* ========== END BACKGROUND ========== */
 
         .container {
@@ -2121,7 +2092,7 @@
     <!-- ========== BACKGROUND ========== -->
 
     <!-- UnicornStudio animated pulse (white) -->
-    <div class="pulse-bg" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -10; filter: saturate(0);">
+    <div aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -10; filter: saturate(0); mask-image: linear-gradient(transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);">
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
             <div data-us-project="FixNvEwvWwbu3QX9qC3F" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></div>
             <script type="text/javascript">
@@ -2132,10 +2103,6 @@
 
     <!-- Aura-style grid overlay -->
     <div class="grid-bg" aria-hidden="true"></div>
-
-    <!-- Side fades for mobile -->
-    <div class="side-fade side-fade-left" aria-hidden="true"></div>
-    <div class="side-fade side-fade-right" aria-hidden="true"></div>
 
     <!-- ========== END BACKGROUND ========== -->
 
