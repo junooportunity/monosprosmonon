@@ -2085,9 +2085,10 @@
                 margin-top: 1rem;
             }
         }
-        /* ========== SCROLL FADE ========== */
-        .scroll-fade-el {
-            transition: opacity 1.2s ease-out;
+        /* ========== SCROLL FADE (pure CSS, no JS) ========== */
+        body {
+            mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
         }
     </style>
 </head>
@@ -2764,71 +2765,6 @@
                 });
             }
         });
-    })();
-    </script>
-
-    <!-- Vertical scroll fade (matches alecwisdom.com) -->
-    <script>
-    (function() {
-        'use strict';
-        let lastScroll = 0;
-        let ticking = false;
-
-        const SELECTORS = `
-            .hero h1, .hero p, .hero img, .hero hr,
-            .pipeline-label, .pipeline-item, .intro-compat,
-            .demo-modal-section, .video-stock-caption,
-            .plugin-section, .plugin-header, .plugin-description,
-            .interface-panel, .before-after-container,
-            .stat-item, .pricing-card,
-            .requirements-title, .requirement-item,
-            .closing, .footer,
-            hr.divider, hr.divider-full
-        `;
-
-        function applyFade() {
-            const els = document.querySelectorAll(SELECTORS);
-            const vh = window.innerHeight;
-            const fadeZone = vh * 0.35;
-
-            els.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                const elCenter = rect.top + rect.height / 2;
-
-                if (rect.height === 0) return;
-
-                let opacity = 1;
-
-                // Fade near top edge
-                if (elCenter < fadeZone) {
-                    opacity = Math.max(0, elCenter / fadeZone);
-                }
-                // Fade near bottom edge
-                else if (elCenter > vh - fadeZone) {
-                    opacity = Math.max(0, (vh - elCenter) / fadeZone);
-                }
-
-                el.style.opacity = opacity;
-                if (!el.classList.contains('scroll-fade-el')) {
-                    el.classList.add('scroll-fade-el');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    applyFade();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-
-        // Initial pass
-        applyFade();
-        // Re-apply after load (images, fonts shift layout)
-        window.addEventListener('load', applyFade);
     })();
     </script>
 
