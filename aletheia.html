@@ -49,11 +49,39 @@
 
         body {
             font-family: 'Times New Roman', Times, serif;
-            background-color: #0a0a0a;
+            background-color: #050505;
             color: #cccccc;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
+
+        /* ========== BACKGROUND ========== */
+
+        /* Aura-style grid overlay */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-size: 100px 200px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        .blur-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ========== END BACKGROUND ========== */
 
         .container {
             max-width: 1000px;
@@ -2069,6 +2097,23 @@
     </style>
 </head>
 <body>
+
+    <!-- ========== BACKGROUND ========== -->
+
+    <!-- UnicornStudio animated pulse (white) -->
+    <div aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -10; filter: saturate(0); mask-image: linear-gradient(transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            <div data-us-project="FixNvEwvWwbu3QX9qC3F" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></div>
+            <script type="text/javascript">
+                !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+            </script>
+        </div>
+    </div>
+
+    <!-- Aura-style grid overlay -->
+    <div class="grid-bg" aria-hidden="true"></div>
+
+    <!-- ========== END BACKGROUND ========== -->
 
     <!-- Hero -->
     <section class="hero">
