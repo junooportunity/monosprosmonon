@@ -2329,19 +2329,19 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Negative Stock</h4>
-                                <p class="explainer-text">42 motion picture and still negative stocks with per-stock H&D curves derived from Kodak and Fuji datasheets. Each stock has unique gamma, density range, dye spectral response, and color separation behavior.</p>
+                                <p class="explainer-text">42 stocks from Kodak and Fuji with per-stock H&D curves, spectral dye response, and color separation.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Print Stock</h4>
-                                <p class="explainer-text">19 print stocks from Kodak Vision, ECP, Fuji Eterna-RDI, and Crystal Archive families. Each has its own gamma, color timing response, and density range that shapes the final look.</p>
+                                <p class="explainer-text">19 print stocks from Kodak Vision, ECP, Fuji Eterna-RDI, and Crystal Archive families.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Physical Halation</h4>
-                                <p class="explainer-text">Light passes through emulsion, bounces off the film base, and re-exposes from behind. Creates the organic red glow around bright sources. Film gauge controls scatter size—16mm spreads wider, 65mm stays tighter.</p>
+                                <p class="explainer-text">Red glow from light bouncing off the film base. Film gauge controls scatter size.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Film Grain</h4>
-                                <p class="explainer-text">Density-dependent grain that responds to exposure like real silver halide crystals. Coarser in shadows, finer in highlights. Film gauge scales particle size—16mm is grittier, 65mm is smoother.</p>
+                                <p class="explainer-text">Density-dependent grain — coarser in shadows, finer in highlights. Film gauge scales particle size.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2362,10 +2362,7 @@
                     </div>
                 </div>
                 <p class="plugin-description">
-                    Helix is a look-development solution focused on texture, structure, and surface character.
-                </p>
-                <p class="plugin-description">
-                    It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. The result is depth and tactility that reads naturally across formats and delivery specs.
+                    Shapes micro-contrast and perceived detail. Depth and tactility that reads naturally across formats.
                 </p>
 
                 <div class="interface-panel">
@@ -2373,15 +2370,15 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Clarity</h4>
-                                <p class="explainer-text">Local contrast via adaptive unsharp mask. A large-radius kernel isolates tonal structure from texture. The difference is scaled and added back, weighted by a luminance mask that attenuates in highlights and shadows to prevent clipping.</p>
+                                <p class="explainer-text">Local contrast that preserves highlights and shadows. Adds depth without clipping.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Acutance</h4>
-                                <p class="explainer-text">Edge slope enhancement. Computed as the first derivative of luminance, amplified at tonal boundaries. Unlike resolution-based sharpening, acutance affects perceived crispness without adding high-frequency content or halo artifacts.</p>
+                                <p class="explainer-text">Edge crispness without sharpening artifacts or halos.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Spatial Equalizer</h4>
-                                <p class="explainer-text">Laplacian pyramid decomposition into discrete frequency bands. Each octave is gain-adjusted independently—attenuate high frequencies to reduce skin texture, boost mid frequencies to define form. Reconstruction preserves DC and avoids phase shift.</p>
+                                <p class="explainer-text">Per-frequency detail control. Soften skin texture, define form — independently by octave.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2433,10 +2430,7 @@
                     </div>
                 </div>
                 <p class="plugin-description">
-                    Phi is a shot-level solution designed for colorists who want speed without compromise.
-                </p>
-                <p class="plugin-description">
-                    It consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions—one pass, one intent, one result—Phi lets you shape an image holistically.
+                    Exposure, contrast, color, density, and skin — one pass, one intent, one result.
                 </p>
 
                 <div class="interface-panel">
@@ -2444,51 +2438,51 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Printer Lights</h4>
-                                <p class="explainer-text">RGB offset controls that emulate timing light adjustments on an optical printer. Balances the image before any other processing occurs.</p>
+                                <p class="explainer-text">RGB balance before any processing. Emulates optical printer timing.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Exposure</h4>
-                                <p class="explainer-text">Stop-based gain applied in linear light. Converts to linear, multiplies by 2^exposure, then back to log—preserving highlight and shadow detail through the transform.</p>
+                                <p class="explainer-text">Stop-based gain in linear light. Preserves highlight and shadow detail.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Contrast</h4>
-                                <p class="explainer-text">Piecewise-power sigmoid centered on ACEScct mid-gray (0.414). Anchors black and white endpoints while expanding or compressing everything in between.</p>
+                                <p class="explainer-text">Sigmoid centered on mid-gray. Anchors endpoints, shapes everything between.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Shadows / Midtones / Highlights</h4>
-                                <p class="explainer-text">Zone-weighted offsets in log space. Shadows use smoothstep falloff below 0.25, midtones use a Gaussian bell at mid-gray, highlights ramp above 0.55.</p>
+                                <p class="explainer-text">Zone-weighted offsets with smooth falloff between regions.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Black Point / White Point</h4>
-                                <p class="explainer-text">Toe and shoulder curves with flat plateaus. Black point lifts shadows to a new floor with power-curve blending. White point compresses highlights down with the same math mirrored.</p>
+                                <p class="explainer-text">Toe and shoulder curves. Sets the floor and ceiling of your image.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Toe & Shoulder</h4>
-                                <p class="explainer-text">Explicit curve shaping below toe pivot and above shoulder pivot. Strength and length parameters give independent control of roll-off steepness and range.</p>
+                                <p class="explainer-text">Independent roll-off control for shadow and highlight transitions.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Saturation</h4>
-                                <p class="explainer-text">OKLab-based chroma scaling. Converts to perceptually uniform space, scales the a/b chromatic channels, converts back. Uniform perceived intensity change across all hues.</p>
+                                <p class="explainer-text">Perceptually uniform chroma scaling in OKLab. Even intensity across all hues.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Vibrance</h4>
-                                <p class="explainer-text">Selective saturation that protects skin tones and already-saturated colors. Detects skin by positive OKLab 'a' values, weights boost inversely to existing chroma.</p>
+                                <p class="explainer-text">Selective saturation that protects skin tones and already-saturated colors.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin: Melanin & Hemoglobin</h4>
-                                <p class="explainer-text">Signed-quadratic response curves. Melanin shifts toward yellow-brown (more) or away (less). Hemoglobin controls the red-green axis—more for ruddier skin, less for golden tones.</p>
+                                <p class="explainer-text">Melanin shifts warm/cool. Hemoglobin controls ruddy vs. golden.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin: Richness & Density</h4>
-                                <p class="explainer-text">Richness is skin-isolated saturation with a soft S-curve. Density is luminance shift localized to warm pixels. Both auto-mask based on r > g > b warmth detection.</p>
+                                <p class="explainer-text">Skin-isolated saturation and luminance with automatic warm-pixel masking.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin Texture</h4>
-                                <p class="explainer-text">Clarity-style local contrast applied only to skin tones. 16-sample blur at two radii extracts detail, then midtone-weighted gain enhances or softens texture without affecting the rest of the image.</p>
+                                <p class="explainer-text">Local contrast applied only to skin. Enhance or soften without affecting the image.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Tetrahedral Secondaries</h4>
-                                <p class="explainer-text">Per-hue HSV adjustment for red, green, blue, cyan, magenta, and yellow. Tetrahedral interpolation blends smoothly between adjacent vertices—no banding at hue boundaries.</p>
+                                <p class="explainer-text">Per-hue adjustment for six axes. Smooth interpolation, no banding.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2517,27 +2511,27 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Direction</h4>
-                                <p class="explainer-text">Two modes: Digital → Negative converts camera footage into film-negative density space. Negative → Digital inverts the transform for output. Chain two instances to work entirely in negative domain.</p>
+                                <p class="explainer-text">Digital → Negative or Negative → Digital. Chain two for full negative-domain grading.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Source Color Space</h4>
-                                <p class="explainer-text">Declares camera input gamut—ARRI AWG4/AWG3, Sony SGamut3, Panasonic VGamut, RED RWG, DaVinci Wide Gamut, ACES AP0/AP1, Canon Cinema, Blackmagic Wide Gamut, Rec.709, or Rec.2020. All conversions route through AP1 as a clean interchange space.</p>
+                                <p class="explainer-text">All major camera gamuts — ARRI, Sony, RED, Canon, Panasonic, Blackmagic, ACES, Rec.709/2020.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Source Gamma</h4>
-                                <p class="explainer-text">Specifies camera log curve—LogC4, LogC3, S-Log3, V-Log, Log3G10, Canon Log 2/3, BMD Film Gen5, N-Log, F-Log, F-Log2, ACEScct, DaVinci Intermediate, or Rec.709. Linearization happens before any gamut math.</p>
+                                <p class="explainer-text">All major log curves — LogC4/3, S-Log3, V-Log, Log3G10, Canon Log, BMD Film, ACEScct.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Digital Color Space</h4>
-                                <p class="explainer-text">The working gamut for grading. Typically matches timeline color science. Same options as Source—pick once, keep consistent across the session.</p>
+                                <p class="explainer-text">Working gamut for grading. Match to your timeline color science.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Digital Gamma</h4>
-                                <p class="explainer-text">Working transfer function. ACEScct and DaVinci Intermediate provide grading-friendly midtone density. Linear for compositing. Rec.709 for legacy workflows.</p>
+                                <p class="explainer-text">Working transfer function — ACEScct, DaVinci Intermediate, Linear, or Rec.709.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Negative Gamma</h4>
-                                <p class="explainer-text">Film stock density curves—Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, Contrast for punchier shadows, or ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
+                                <p class="explainer-text">Film density curves — Cineon, Kodak Aim, Carlos Aim, Extended, Soft, Contrast, ADX.</p>
                             </div>
                         </div>
                         <div class="interface-preview alpha-interface-stacked">
