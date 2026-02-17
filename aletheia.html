@@ -1720,8 +1720,8 @@
             background: rgba(10, 10, 12, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 440px;
+            padding: 3rem 2.5rem;
+            max-width: 400px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -1759,6 +1759,29 @@
             font-style: italic;
             color: #777;
             margin-bottom: 1.5rem;
+        }
+
+        .trial-features {
+            list-style: none;
+            margin: 1.5rem 0 2rem;
+            padding: 0;
+        }
+
+        .trial-features li {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.8rem;
+            color: #bbbbbb;
+            padding: 0.35rem 0;
+        }
+
+        .trial-features li::before {
+            content: '\2713';
+            color: #666;
+            margin-right: 0.5rem;
+        }
+
+        .trial-cta {
+            margin-top: 0.5rem;
         }
 
         .trial-form {
@@ -2697,13 +2720,23 @@
         <div class="trial-modal">
             <button class="trial-close" id="trial-close">&times;</button>
 
-            <!-- Step 1: Email gate -->
-            <div class="trial-step" id="trial-step-email">
-                <h3 class="trial-title">Try Aletheia Free</h3>
-                <p class="trial-subtitle">Watermarked trial — full functionality, no time limit.</p>
+            <!-- Step 1: Trial info -->
+            <div class="trial-step" id="trial-step-info">
+                <h3 class="trial-title">Free Trial</h3>
+                <ul class="trial-features">
+                    <li>Unlimited time</li>
+                    <li>Watermark on output</li>
+                    <li>All four plugins</li>
+                </ul>
+                <button class="btn btn-primary trial-cta" id="trial-cta">Try Aletheia</button>
+            </div>
+
+            <!-- Step 2: Email gate -->
+            <div class="trial-step" id="trial-step-email" style="display: none;">
+                <h3 class="trial-title">Get Aletheia Trial</h3>
                 <form class="trial-form" id="trial-form">
                     <input type="email" class="trial-input" id="trial-email" placeholder="Email address" required>
-                    <button type="submit" class="btn btn-primary trial-submit">Continue</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
                 </form>
             </div>
 
@@ -2835,18 +2868,25 @@
         const overlay = document.getElementById('trial-overlay');
         const btn = document.getElementById('trial-btn');
         const closeBtn = document.getElementById('trial-close');
+        const cta = document.getElementById('trial-cta');
         const form = document.getElementById('trial-form');
         const emailInput = document.getElementById('trial-email');
+        const stepInfo = document.getElementById('trial-step-info');
         const stepEmail = document.getElementById('trial-step-email');
         const stepDownload = document.getElementById('trial-step-download');
 
+        function showStep(step) {
+            stepInfo.style.display = 'none';
+            stepEmail.style.display = 'none';
+            stepDownload.style.display = 'none';
+            step.style.display = 'block';
+        }
+
         function openModal() {
             if (localStorage.getItem('aletheia-trial-email')) {
-                stepEmail.style.display = 'none';
-                stepDownload.style.display = 'block';
+                showStep(stepDownload);
             } else {
-                stepEmail.style.display = 'block';
-                stepDownload.style.display = 'none';
+                showStep(stepInfo);
             }
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -2862,6 +2902,10 @@
             openModal();
         });
 
+        cta.addEventListener('click', function() {
+            showStep(stepEmail);
+        });
+
         closeBtn.addEventListener('click', closeModal);
 
         overlay.addEventListener('click', function(e) {
@@ -2870,11 +2914,10 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = emailInput.value.trim();
+            var email = emailInput.value.trim();
             if (!email) return;
             localStorage.setItem('aletheia-trial-email', email);
-            stepEmail.style.display = 'none';
-            stepDownload.style.display = 'block';
+            showStep(stepDownload);
         });
 
         document.addEventListener('keydown', function(e) {
