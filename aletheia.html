@@ -309,7 +309,7 @@
             top: 0;
             width: 0.5px;
             height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent 100%);
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.06) 10%, rgba(255,255,255,0.06) 90%, transparent 100%);
             pointer-events: none;
             z-index: 2;
         }
@@ -317,7 +317,7 @@
         .pricing-card::after { right: 0; }
 
         .pricing-card:hover {
-            box-shadow: 0px 10px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
+            box-shadow: none;
         }
 
         .pricing-tier {
@@ -585,7 +585,7 @@
             top: 0;
             width: 0.5px;
             height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent 100%);
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.06) 10%, rgba(255,255,255,0.06) 90%, transparent 100%);
             pointer-events: none;
             z-index: 2;
         }
@@ -627,7 +627,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.2);
+            background: none;
         }
 
         .interface-preview img {
@@ -696,35 +696,25 @@
             text-align: center;
             margin: 2rem auto;
             max-width: 700px;
-            border-radius: 20px;
+            border-radius: 0;
             position: relative;
-            isolation: isolate;
-            box-shadow: 0px 8px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            background: none;
+            border: none;
+            box-shadow: none;
         }
-
-        /* Liquid glass tint layer */
-        .aletheia::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            border-radius: 20px;
-            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
-            background-color: rgba(var(--lg-tint-color), 0.03);
-            border: var(--lg-border-width) solid var(--lg-border-color);
-            pointer-events: none;
-        }
-
-        /* Liquid glass distortion layer */
+        .aletheia::before,
         .aletheia::after {
             content: '';
             position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            top: 0;
+            width: 0.5px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.06) 10%, rgba(255,255,255,0.06) 90%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
         }
+        .aletheia::before { left: 0; }
+        .aletheia::after { right: 0; }
 
         .aletheia-name {
             font-size: 2rem;
@@ -1018,13 +1008,7 @@
         }
 
         .feature-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 0.5px solid rgba(255, 255, 255, 0.08);
-            pointer-events: none;
+            content: none;
         }
 
         .feature-name {
@@ -1087,8 +1071,8 @@
             color: #888888;
             padding: 0.5rem 1rem;
             border-radius: 20px;
-            border: 0.5px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
+            border: none;
+            background: none;
         }
 
         @media (max-width: 600px) {
@@ -1302,9 +1286,9 @@
         }
 
         .marketing-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
+            background: none;
+            border: none;
+            border-radius: 0;
             padding: 1.5rem;
             text-align: center;
         }
@@ -1555,16 +1539,15 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: #444;
-            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border: none;
             border-radius: 16px;
             transition: all 0.2s ease;
         }
 
-        .demo-toggle-pill:hover { color: #666; border-color: rgba(255, 255, 255, 0.12); }
+        .demo-toggle-pill:hover { color: #666; }
         .demo-toggle-label input:checked + .demo-toggle-pill {
             color: #bbb;
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.18);
+            background: none;
         }
 
         .demo-section-title {
