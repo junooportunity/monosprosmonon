@@ -4,4 +4,4 @@ compatibility_date = "2024-12-01"
 
 [[kv_namespaces]]
 binding = "TRIAL_EMAILS"
-id = "" # Fill after: npx wrangler kv namespace create TRIAL_EMAILS
+id = "568b3a7fd7b34ad0bce3f52f49e63837"

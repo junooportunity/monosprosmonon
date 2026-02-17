@@ -2918,7 +2918,7 @@
             if (!email) return;
 
             // Send to worker, proceed regardless of response
-            fetch('https://trial-api.monosprosmonon.com', {
+            fetch('https://aletheia-trial-signup.alecwisdom.workers.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email }),
