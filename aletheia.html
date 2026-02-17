@@ -296,25 +296,13 @@
         .pricing-card {
             padding: 2.5rem 2rem;
             text-align: center;
-            border-radius: 0;
+            border-radius: 16px;
             position: relative;
-            background: none;
-            border: none;
-            box-shadow: none;
+            background: rgba(255, 255, 255, 0.04);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
         }
-        .pricing-card::before,
-        .pricing-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 0.5px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent 100%);
-            pointer-events: none;
-            z-index: 2;
-        }
-        .pricing-card::before { left: 0; }
-        .pricing-card::after { right: 0; }
 
         .pricing-card:hover {
             box-shadow: 0px 10px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
@@ -571,26 +559,13 @@
         /* Interface Explainer Panel */
         .interface-panel {
             margin-top: 2rem;
-            border-radius: 0;
+            border-radius: 16px;
             position: relative;
-            background: none;
-            border: none;
-            box-shadow: none;
-            overflow: visible;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.25);
+            overflow: hidden;
         }
-        .interface-panel::before,
-        .interface-panel::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 0.5px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent 100%);
-            pointer-events: none;
-            z-index: 2;
-        }
-        .interface-panel::before { left: 0; }
-        .interface-panel::after { right: 0; }
 
         .interface-panel-inner {
             display: grid;
@@ -1928,6 +1903,28 @@
 
             .interface-panel {
                 margin-top: 1.25rem;
+                border-top: none;
+                border-bottom: none;
+            }
+
+            .pricing-card {
+                border-top: none;
+                border-bottom: none;
+            }
+
+            .demo-modal {
+                border-top: none;
+                border-bottom: none;
+            }
+
+            .marketing-card {
+                border-top: none;
+                border-bottom: none;
+            }
+
+            .feature-item::before {
+                border-top: none;
+                border-bottom: none;
             }
 
             .interface-panel-inner {
