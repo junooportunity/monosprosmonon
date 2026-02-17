@@ -1820,10 +1820,19 @@
             .pricing-card {
                 padding: 0.75rem 0.5rem;
                 border: none;
-                border-left: 0.5px solid transparent;
-                border-right: 0.5px solid transparent;
-                border-image: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 15%, rgba(255,255,255,0.1) 85%, transparent 100%) 1;
             }
+            .pricing-card::before,
+            .pricing-card::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 0.5px;
+                height: 100%;
+                background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 15%, rgba(255,255,255,0.1) 85%, transparent 100%);
+                pointer-events: none;
+            }
+            .pricing-card::before { left: 0; }
+            .pricing-card::after { right: 0; }
 
             .pricing-tier {
                 font-size: 0.45rem;
@@ -1908,10 +1917,20 @@
             .interface-panel {
                 margin-top: 1.25rem;
                 border: none;
-                border-left: 0.5px solid transparent;
-                border-right: 0.5px solid transparent;
-                border-image: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 15%, rgba(255,255,255,0.1) 85%, transparent 100%) 1;
+                overflow: visible;
             }
+            .interface-panel::before,
+            .interface-panel::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 0.5px;
+                height: 100%;
+                background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 15%, rgba(255,255,255,0.1) 85%, transparent 100%);
+                pointer-events: none;
+            }
+            .interface-panel::before { left: 0; }
+            .interface-panel::after { right: 0; }
 
             .interface-panel-inner {
                 display: flex;
