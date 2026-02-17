@@ -20,9 +20,6 @@
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 
-    <!-- Preload default demo image -->
-    <link rel="preload" as="image" href="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/neg_03_print_01_dye_00_none.webp" crossorigin="anonymous">
-
     <style>
         * {
             margin: 0;
@@ -2102,42 +2099,6 @@
     </section>
 
 
-    <!-- Demo Modal -->
-    <section class="demo-modal-section">
-        <div class="container">
-            <div class="demo-modal">
-                <!-- Video Demo -->
-                <div class="video-demo-container">
-                    <div class="video-wrapper">
-                        <video id="video-rec709" class="demo-video" autoplay muted loop playsinline preload="none">
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/709%20-%20Aletheia.mp4?v=4" type="video/mp4">
-                        </video>
-                        <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="none">
-                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Graded%20-%20Aletheia.mp4?v=4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="video-toggle">
-                        <div class="video-toggle-row">
-                            <span class="video-toggle-label" id="label-off">Rec.709</span>
-                            <label class="video-switch">
-                                <input type="checkbox" id="video-toggle-switch" checked>
-                                <span class="video-slider"></span>
-                            </label>
-                            <span class="video-toggle-label active" id="label-on">Omega</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <div class="video-stock-caption">
-        <p class="video-stock-line" id="toggle-info-film"><span class="stock-label">Negative Stock:</span> Kodak EXR 5293 200T (1992) &nbsp;&mdash;&nbsp; <span class="stock-label">Print Stock:</span> Kodak Vision 2383 (1998)</p>
-        <p class="video-stock-line hidden" id="toggle-info-rec709">Rec. 709 — Standard video transform</p>
-    </div>
-
-    <hr class="divider">
 
     <!-- Plugin Details -->
     <section class="plugins">
@@ -2605,79 +2566,6 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
-    <!-- Video Demo Toggle (desktop only — section is display:none on mobile) -->
-    <script>
-    (function() {
-        // Skip all video logic on mobile where the section is hidden
-        if (window.innerWidth <= 768) return;
-
-        const videoFilm = document.getElementById('video-film');
-        const videoRec = document.getElementById('video-rec709');
-        const toggle = document.getElementById('video-toggle-switch');
-        const labelOff = document.getElementById('label-off');
-        const labelOn = document.getElementById('label-on');
-        const infoFilm = document.getElementById('toggle-info-film');
-        const infoRec = document.getElementById('toggle-info-rec709');
-
-        // Load videos on desktop
-        videoFilm.preload = 'auto';
-        videoRec.preload = 'auto';
-
-        // SIMPLE: Both videos always playing, toggle just swaps visibility
-        // No seeking, no pausing - that's what causes lag
-
-        // Start both videos together
-        function startBoth() {
-            videoFilm.play().catch(() => {});
-            videoRec.play().catch(() => {});
-        }
-
-        // Handle user interaction (required for mobile autoplay)
-        function onInteraction() {
-            startBoth();
-            document.removeEventListener('touchstart', onInteraction);
-            document.removeEventListener('click', onInteraction);
-        }
-        document.addEventListener('touchstart', onInteraction, { passive: true });
-        document.addEventListener('click', onInteraction);
-
-        // Try to start immediately (works on desktop)
-        startBoth();
-
-        // Background sync: keep hidden video aligned to visible one
-        setInterval(() => {
-            const showingFilm = videoFilm.classList.contains('active');
-            const visible = showingFilm ? videoFilm : videoRec;
-            const hidden = showingFilm ? videoRec : videoFilm;
-
-            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
-                hidden.currentTime = visible.currentTime;
-            }
-        }, 250);
-
-        // Toggle handler - sync incoming to outgoing, then swap
-        toggle.addEventListener('change', () => {
-            const showFilm = toggle.checked;
-            const outgoing = showFilm ? videoRec : videoFilm;
-            const incoming = showFilm ? videoFilm : videoRec;
-
-            // Sync incoming to outgoing position
-            incoming.currentTime = outgoing.currentTime;
-
-            // Ensure both videos are playing
-            videoFilm.play().catch(() => {});
-            videoRec.play().catch(() => {});
-
-            // Instant visibility swap - NO SEEKING HERE
-            videoFilm.classList.toggle('active', showFilm);
-            videoRec.classList.toggle('active', !showFilm);
-            labelOn.classList.toggle('active', showFilm);
-            labelOff.classList.toggle('active', !showFilm);
-            infoFilm.classList.toggle('hidden', !showFilm);
-            infoRec.classList.toggle('hidden', showFilm);
-        });
-    })();
-    </script>
 
     <!-- Omega Demo -->
     <script src="js/omega-demo.js"></script>
