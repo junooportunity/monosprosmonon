@@ -1,0 +1,7 @@
+name = "aletheia-trial-signup"
+main = "index.js"
+compatibility_date = "2024-12-01"
+
+[[kv_namespaces]]
+binding = "TRIAL_EMAILS"
+id = "" # Fill after: npx wrangler kv namespace create TRIAL_EMAILS
