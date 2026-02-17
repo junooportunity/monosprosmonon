@@ -40,7 +40,7 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Aletheia <noreply@monosprosmonon.com>',
+            from: 'Aletheia <delivery@alecwisdom.com>',
             to: 'support@monosprosmonon.com',
             subject: 'New Aletheia Trial Signup',
             text: `New trial signup: ${email}\nTime: ${new Date().toISOString()}`,
