@@ -2038,6 +2038,40 @@
                 padding: 1.5rem 1rem;
                 margin-top: 1rem;
             }
+
+            /* Nuclear mobile edge kill — DuckDuckGo / Instagram WebView */
+            .interface-panel,
+            .pricing-card,
+            .demo-modal,
+            .marketing-card,
+            .feature-item,
+            .capability,
+            .aletheia,
+            .demo-toggle-pill,
+            .interface-preview {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                outline: none !important;
+            }
+
+            .feature-item::before,
+            .marketing-card::before,
+            .marketing-card::after,
+            .aletheia::before,
+            .aletheia::after,
+            .pricing-card::before,
+            .pricing-card::after,
+            .interface-panel::before,
+            .interface-panel::after {
+                display: none !important;
+            }
+
+            .demo-toggle-label input:checked + .demo-toggle-pill {
+                background: none !important;
+                border: none !important;
+            }
         }
     </style>
 </head>
