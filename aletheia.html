@@ -2039,7 +2039,10 @@
                 margin-top: 1rem;
             }
 
-            /* Nuclear mobile edge kill — DuckDuckGo / Instagram WebView */
+        }
+
+        /* ===== NUCLEAR MOBILE EDGE KILL — must be LAST rule ===== */
+        @media (max-width: 768px) {
             .interface-panel,
             .pricing-card,
             .demo-modal,
@@ -2048,15 +2051,24 @@
             .capability,
             .aletheia,
             .demo-toggle-pill,
-            .interface-preview {
+            .interface-preview,
+            .plugin-section,
+            .omega-demo-embedded,
+            .demo-controls,
+            .video-demo-container,
+            .feature-highlights,
+            .comparison-table tbody tr:hover {
                 background: none !important;
                 border: none !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 outline: none !important;
+                -webkit-backdrop-filter: none !important;
+                backdrop-filter: none !important;
             }
 
             .feature-item::before,
+            .feature-item::after,
             .marketing-card::before,
             .marketing-card::after,
             .aletheia::before,
