@@ -2043,46 +2043,14 @@
 
         /* ===== NUCLEAR MOBILE EDGE KILL — must be LAST rule ===== */
         @media (max-width: 768px) {
-            .interface-panel,
-            .pricing-card,
-            .demo-modal,
-            .marketing-card,
-            .feature-item,
-            .capability,
-            .aletheia,
-            .demo-toggle-pill,
-            .interface-preview,
-            .plugin-section,
-            .omega-demo-embedded,
-            .demo-controls,
-            .video-demo-container,
-            .feature-highlights,
-            .comparison-table tbody tr:hover {
-                background: none !important;
-                border: none !important;
+            *,
+            *::before,
+            *::after {
+                border-color: transparent !important;
                 box-shadow: none !important;
-                border-radius: 0 !important;
-                outline: none !important;
                 -webkit-backdrop-filter: none !important;
                 backdrop-filter: none !important;
-            }
-
-            .feature-item::before,
-            .feature-item::after,
-            .marketing-card::before,
-            .marketing-card::after,
-            .aletheia::before,
-            .aletheia::after,
-            .pricing-card::before,
-            .pricing-card::after,
-            .interface-panel::before,
-            .interface-panel::after {
-                display: none !important;
-            }
-
-            .demo-toggle-label input:checked + .demo-toggle-pill {
-                background: none !important;
-                border: none !important;
+                outline: none !important;
             }
         }
     </style>
