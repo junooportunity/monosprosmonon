@@ -15,7 +15,7 @@ export default {
     }
 
     try {
-      const { email } = await request.json();
+      const { name, email } = await request.json();
 
       if (!email || !email.includes('@')) {
         return new Response(JSON.stringify({ error: 'Invalid email' }), {
@@ -26,6 +26,7 @@ export default {
 
       // Store in KV — key is email, value is signup metadata
       await env.TRIAL_EMAILS.put(email, JSON.stringify({
+        name: name || '',
         signed_up: new Date().toISOString(),
         ip: request.headers.get('CF-Connecting-IP'),
         country: request.headers.get('CF-IPCountry'),
@@ -43,7 +44,7 @@ export default {
             from: 'Aletheia <delivery@alecwisdom.com>',
             to: 'support@monosprosmonon.com',
             subject: 'New Aletheia Trial Signup',
-            text: `New trial signup: ${email}\nTime: ${new Date().toISOString()}`,
+            text: `New trial signup: ${name || 'No name'} (${email})\nTime: ${new Date().toISOString()}`,
           }),
         });
       }

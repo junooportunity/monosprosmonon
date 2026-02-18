@@ -2907,6 +2907,7 @@
             <div class="trial-step" id="trial-step-email" style="display: none;">
                 <h3 class="trial-title">Get Aletheia Trial</h3>
                 <form class="trial-form" id="trial-form">
+                    <input type="text" class="trial-input" id="trial-name" placeholder="Name" required>
                     <input type="email" class="trial-input" id="trial-email" placeholder="Email address" required>
                     <button type="submit" class="btn btn-primary">Continue</button>
                 </form>
@@ -3042,6 +3043,7 @@
         const closeBtn = document.getElementById('trial-close');
         const cta = document.getElementById('trial-cta');
         const form = document.getElementById('trial-form');
+        const nameInput = document.getElementById('trial-name');
         const emailInput = document.getElementById('trial-email');
         const stepInfo = document.getElementById('trial-step-info');
         const stepEmail = document.getElementById('trial-step-email');
@@ -3086,14 +3088,15 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            var name = nameInput.value.trim();
             var email = emailInput.value.trim();
-            if (!email) return;
+            if (!name || !email) return;
 
             // Send to worker, proceed regardless of response
             fetch('https://aletheia-trial-signup.alecwisdom.workers.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ name: name, email: email }),
             }).catch(function() {});
 
             localStorage.setItem('aletheia-trial-email', email);
