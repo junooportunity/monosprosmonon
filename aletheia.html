@@ -1620,6 +1620,65 @@
             color: #999999;
         }
 
+        /* FAQ Section */
+        .faq-section {
+            padding: 3rem 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item summary {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.8rem;
+            color: #999999;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '+';
+            font-size: 0.9rem;
+            color: #555555;
+            transition: transform 0.2s ease;
+        }
+
+        .faq-item[open] summary::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            font-size: 0.75rem;
+            font-style: italic;
+            color: #777777;
+            padding-top: 0.75rem;
+            line-height: 1.5;
+        }
+
         /* Closing Section */
         .closing {
             padding: 3rem 2rem;
@@ -2718,6 +2777,51 @@
                 <p class="requirement-value">CUDA-compatible</p>
             </div>
         </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">FAQ</h2>
+
+        <details class="faq-item">
+            <summary>What is Aletheia?</summary>
+            <p class="faq-answer">Four OFX plugins for DaVinci Resolve that simulate photochemical film processing from spectral data.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Is it a subscription?</summary>
+            <p class="faq-answer">No. One-time purchase, free updates.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>What's included in the trial?</summary>
+            <p class="faq-answer">All four plugins, unlimited time. Output is watermarked.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>How many machines can I activate?</summary>
+            <p class="faq-answer">Up to 3 machines per license.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>What cameras are supported?</summary>
+            <p class="faq-answer">Any camera DaVinci Resolve supports. Alpha handles the color space conversion.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Do I need all four plugins?</summary>
+            <p class="faq-answer">They're designed as a suite but each works independently.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Does it work with Resolve Free?</summary>
+            <p class="faq-answer">Yes, both Free and Studio.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>How do I install it?</summary>
+            <p class="faq-answer">Download, place in your OFX plugins folder, restart Resolve.</p>
+        </details>
     </section>
 
     <!-- Closing -->
