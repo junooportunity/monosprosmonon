@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aletheia — Film Emulation for DaVinci Resolve</title>
+    <title>Aletheia — Playground</title>
     <meta name="description" content="A complete film emulation pipeline for DaVinci Resolve. 42 negative stocks, 19 print stocks, 10 dye processes. OpenFX plugins with full parameter control.">
 
     <meta property="og:title" content="Aletheia — Film Emulation for DaVinci Resolve">
@@ -19,6 +19,9 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+
+    <!-- Preload default demo image -->
+    <link rel="preload" as="image" href="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/neg_03_print_01_dye_00_none.webp" crossorigin="anonymous">
 
     <style>
         * {
@@ -46,7 +49,7 @@
 
         body {
             font-family: 'Times New Roman', Times, serif;
-            background-color: #000000;
+            background-color: #050505;
             color: #cccccc;
             min-height: 100vh;
             line-height: 1.6;
@@ -63,8 +66,8 @@
             pointer-events: none;
             background-size: 100px 200px;
             background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
             -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
@@ -176,16 +179,6 @@
             color: #555555;
             text-align: center;
             margin-bottom: 2rem;
-        }
-
-        .pipeline-note {
-            font-size: 0.75rem;
-            font-style: italic;
-            color: #666666;
-            text-align: center;
-            max-width: 500px;
-            margin: 1.5rem auto 0;
-            line-height: 1.6;
         }
 
         .pipeline-grid {
@@ -305,14 +298,45 @@
             text-align: center;
             border-radius: 16px;
             position: relative;
-            background: rgba(255, 255, 255, 0.04);
-            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            isolation: isolate;
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
         }
 
+        /* Liquid glass tint layer */
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 16px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        /* Liquid glass distortion layer */
+        .pricing-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
         .pricing-card:hover {
             box-shadow: 0px 10px calc(var(--lg-outer-shadow-blur) + 4px) rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card:hover::before {
+            box-shadow: inset 0 0 calc(var(--lg-shadow-blur) + 2px) var(--lg-shadow-spread) var(--lg-shadow-color);
+        }
+
+        .pricing-card.featured::before {
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
         }
 
         .pricing-tier {
@@ -363,14 +387,6 @@
         .pricing-price span {
             font-size: 0.9rem;
             color: #666666;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         /* Comparison Table */
@@ -576,15 +592,38 @@
             margin-top: 2rem;
             border-radius: 16px;
             position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            isolation: isolate;
             box-shadow: 0px 6px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.25);
             overflow: hidden;
+        }
+
+        .interface-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 16px;
+            box-shadow: inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), 0.03);
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        .interface-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .interface-panel-inner {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            position: relative;
+            z-index: 1;
         }
 
         .interface-explainer {
@@ -1620,105 +1659,6 @@
             color: #999999;
         }
 
-        /* FAQ Section */
-        .faq-section {
-            padding: 3rem 2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .faq-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #666666;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 1rem 0;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-        .faq-item summary {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.8rem;
-            color: #999999;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-item summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .faq-item summary::after {
-            content: '+';
-            font-size: 0.9rem;
-            color: #555555;
-            transition: transform 0.2s ease;
-        }
-
-        .faq-item[open] summary::after {
-            content: '−';
-        }
-
-        .faq-answer {
-            font-size: 0.75rem;
-            font-style: italic;
-            color: #777777;
-            padding-top: 0.75rem;
-            line-height: 1.5;
-        }
-
-        /* Node Order Section */
-        .node-order-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .node-order-item {
-            text-align: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .node-order-item:last-child {
-            border-bottom: none;
-        }
-
-        .node-order-location {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #666666;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .node-order-plugins {
-            font-size: 1rem;
-            color: #999999;
-            display: block;
-        }
-
-        .node-order-note {
-            font-size: 0.85rem;
-            font-style: italic;
-            color: #555555;
-            display: block;
-            margin-top: 0.25rem;
-        }
-
         /* Closing Section */
         .closing {
             padding: 3rem 2rem;
@@ -1809,164 +1749,6 @@
             margin-top: 1.5rem;
             letter-spacing: 0.1em;
         }
-
-        /* ========== TRIAL MODAL ========== */
-        .trial-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .trial-overlay.active {
-            display: flex;
-        }
-
-        .trial-modal {
-            background: rgba(10, 10, 12, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .trial-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.25rem;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 1.4rem;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s ease;
-        }
-
-        .trial-close:hover {
-            color: #999;
-        }
-
-        .trial-title {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 0.5rem;
-        }
-
-        .trial-subtitle {
-            font-size: 0.75rem;
-            font-style: italic;
-            color: #777;
-            margin-bottom: 1.5rem;
-        }
-
-        .trial-features {
-            list-style: none;
-            margin: 1.5rem 0 2rem;
-            padding: 0;
-        }
-
-        .trial-features li {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.8rem;
-            color: #bbbbbb;
-            padding: 0.35rem 0;
-        }
-
-        .trial-features li::before {
-            content: '\2713';
-            color: #666;
-            margin-right: 0.5rem;
-        }
-
-        .trial-cta {
-            margin-top: 0.5rem;
-        }
-
-        .trial-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .trial-input {
-            width: 100%;
-            padding: 10px 14px;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.8rem;
-            color: #cccccc;
-            background: rgba(255, 255, 255, 0.03);
-            border: 0.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .trial-input::placeholder {
-            color: #555;
-        }
-
-        .trial-input:focus {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .trial-download-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .trial-select {
-            width: 100%;
-            padding: 10px 14px;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 0.8rem;
-            color: #cccccc;
-            background: rgba(255, 255, 255, 0.03);
-            border: 0.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
-
-        .trial-select:focus {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .trial-select option {
-            background: #111;
-            color: #ccc;
-        }
-
-        .trial-download-btn {
-            text-align: center;
-            pointer-events: none;
-            opacity: 0.4;
-            transition: opacity 0.2s ease;
-        }
-
-        .trial-download-btn.active {
-            pointer-events: auto;
-            opacity: 1;
-        }
-
-        /* ========== END TRIAL MODAL ========== */
 
         /* Responsive */
         @media (max-width: 900px) {
@@ -2109,11 +1891,6 @@
                 line-height: 1.4;
             }
 
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 300px;
-            }
-
             .pricing-price {
                 font-size: 1rem;
                 margin-bottom: 0.5rem;
@@ -2190,10 +1967,6 @@
             .interface-explainer {
                 padding: 1rem;
                 gap: 1rem;
-            }
-
-            .explainer-section {
-                text-align: center;
             }
 
             .explainer-title {
@@ -2311,31 +2084,25 @@
                 padding: 1.5rem 1rem;
                 margin-top: 1rem;
             }
-
-            .trial-modal {
-                padding: 2rem 1.5rem;
-            }
-
-
         }
-
     </style>
 </head>
 <body>
 
     <!-- ========== BACKGROUND ========== -->
 
-    <!-- UnicornStudio animated pulse (desktop only — WebGL too heavy for mobile) -->
-    <div data-alpha-mask="100" style="position: fixed; top: -20vh; left: 0; width: 100%; height: 140vh; z-index: -10; filter: saturate(0); mask-image: linear-gradient(black 0%, black 60%, transparent 86%); -webkit-mask-image: linear-gradient(black 0%, black 60%, transparent 86%);"><div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -10;">
-        <div data-us-project="FixNvEwvWwbu3QX9qC3F" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0; z-index: -10;"></div>
-        <script type="text/javascript">
-            !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
-        </script>
-    </div></div>
+    <!-- UnicornStudio animated pulse (desaturated to gray) -->
+    <div aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -10; filter: saturate(0) brightness(0.15); mask-image: linear-gradient(transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            <div data-us-project="FixNvEwvWwbu3QX9qC3F" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></div>
+            <script type="text/javascript">
+                !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+            </script>
+        </div>
+    </div>
 
     <!-- Aura-style grid overlay -->
     <div class="grid-bg" aria-hidden="true"></div>
-
     <!-- ========== END BACKGROUND ========== -->
 
     <!-- Hero -->
@@ -2348,7 +2115,7 @@
         <h1 class="hero-name">Aletheia</h1>
         <p class="hero-greek">ἀλήθεια — truth, unconcealment</p>
         <p class="hero-subtitle">Color Grading Suite</p>
-        <p class="hero-blurb">Film emulation built on spectral simulation.<br>7,980 film looks. One-time price.</p>
+        <p class="hero-blurb">Film emulation built on spectral simulation. 7,980 film looks. One-time price.</p>
     </section>
 
     <!-- The System -->
@@ -2377,28 +2144,53 @@
                     <p class="pipeline-role">Look Development</p>
                 </div>
             </div>
-            <div class="node-order-list" style="margin-top: 2rem;">
-                <div class="node-order-item">
-                    <div class="node-order-location">Group Pre-Clip</div>
-                    <div class="node-order-plugins">Alpha</div>
-                    <div class="node-order-note">Digital → Negative. Match Source to your camera.</div>
-                </div>
-                <div class="node-order-item">
-                    <div class="node-order-location">Clip</div>
-                    <div class="node-order-plugins">Phi</div>
-                    <div class="node-order-note">Per-shot grading. Exposure, contrast, color, skin.</div>
-                </div>
-                <div class="node-order-item">
-                    <div class="node-order-location">Group Post-Clip</div>
-                    <div class="node-order-plugins">Alpha → Helix → Omega</div>
-                    <div class="node-order-note">Alpha → digital, Helix → texture, Omega → film stock.</div>
+            <div class="intro-compat">
+                <p class="intro-compat-label">Compatible With</p>
+                <div class="intro-compat-logos">
+                    <img src="images/davinci-logo.png" alt="DaVinci Resolve" class="intro-compat-logo">
+                    <img src="images/aces-logo.png" alt="ACES" class="intro-compat-logo">
                 </div>
             </div>
-
         </div>
     </section>
 
 
+    <!-- Demo Modal -->
+    <section class="demo-modal-section">
+        <div class="container">
+            <div class="demo-modal">
+                <!-- Video Demo -->
+                <div class="video-demo-container">
+                    <div class="video-wrapper">
+                        <video id="video-rec709" class="demo-video" autoplay muted loop playsinline preload="auto">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/709%20-%20Aletheia.mp4?v=4" type="video/mp4">
+                        </video>
+                        <video id="video-film" class="demo-video active" autoplay muted loop playsinline preload="auto">
+                            <source src="https://pub-adc2c26304504e67aa77e3dedd9dc84e.r2.dev/Graded%20-%20Aletheia.mp4?v=4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-toggle">
+                        <div class="video-toggle-row">
+                            <span class="video-toggle-label" id="label-off">Rec.709</span>
+                            <label class="video-switch">
+                                <input type="checkbox" id="video-toggle-switch" checked>
+                                <span class="video-slider"></span>
+                            </label>
+                            <span class="video-toggle-label active" id="label-on">Omega</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="video-stock-caption">
+        <p class="video-stock-line" id="toggle-info-film"><span class="stock-label">Negative Stock:</span> Kodak EXR 5293 200T (1992) &nbsp;&mdash;&nbsp; <span class="stock-label">Print Stock:</span> Kodak Vision 2383 (1998)</p>
+        <p class="video-stock-line hidden" id="toggle-info-rec709">Rec. 709 — Standard video transform</p>
+    </div>
+
+    <hr class="divider">
 
     <!-- Plugin Details -->
     <section class="plugins">
@@ -2415,7 +2207,7 @@
                 </div>
 
                 <p class="plugin-description-large">
-                    42 negative stocks, 19 print stocks, 10 dye processes.
+                    42 negative stocks, 19 print stocks, 10 dye processes from manufacturer data.
                 </p>
 
                 <!-- Omega Demo -->
@@ -2538,19 +2330,19 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Negative Stock</h4>
-                                <p class="explainer-text">42 stocks from Kodak, Fuji, and Agfa. Per-stock H&D curves.</p>
+                                <p class="explainer-text">42 motion picture and still negative stocks with per-stock H&D curves derived from Kodak and Fuji datasheets. Each stock has unique gamma, density range, dye spectral response, and color separation behavior.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Print Stock</h4>
-                                <p class="explainer-text">19 stocks from Kodak and Fuji print families.</p>
+                                <p class="explainer-text">19 print stocks from Kodak Vision, ECP, Fuji Eterna-RDI, and Crystal Archive families. Each has its own gamma, color timing response, and density range that shapes the final look.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Physical Halation</h4>
-                                <p class="explainer-text">Organic red glow around bright sources. Gauge-aware.</p>
+                                <p class="explainer-text">Light passes through emulsion, bounces off the film base, and re-exposes from behind. Creates the organic red glow around bright sources. Film gauge controls scatter size—16mm spreads wider, 65mm stays tighter.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Film Grain</h4>
-                                <p class="explainer-text">Coarser in shadows, finer in highlights. Gauge-aware.</p>
+                                <p class="explainer-text">Density-dependent grain that responds to exposure like real silver halide crystals. Coarser in shadows, finer in highlights. Film gauge scales particle size—16mm is grittier, 65mm is smoother.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2571,7 +2363,10 @@
                     </div>
                 </div>
                 <p class="plugin-description">
-                    Shapes micro-contrast and perceived detail.
+                    Helix is a look-development solution focused on texture, structure, and surface character.
+                </p>
+                <p class="plugin-description">
+                    It is designed to refine how an image feels. Helix shapes micro-contrast and perceived detail in a controlled manner. The result is depth and tactility that reads naturally across formats and delivery specs.
                 </p>
 
                 <div class="interface-panel">
@@ -2579,15 +2374,15 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Clarity</h4>
-                                <p class="explainer-text">Local contrast. Adds depth without clipping.</p>
+                                <p class="explainer-text">Local contrast via adaptive unsharp mask. A large-radius kernel isolates tonal structure from texture. The difference is scaled and added back, weighted by a luminance mask that attenuates in highlights and shadows to prevent clipping.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Acutance</h4>
-                                <p class="explainer-text">Edge crispness without sharpening artifacts or halos.</p>
+                                <p class="explainer-text">Edge slope enhancement. Computed as the first derivative of luminance, amplified at tonal boundaries. Unlike resolution-based sharpening, acutance affects perceived crispness without adding high-frequency content or halo artifacts.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Spatial Equalizer</h4>
-                                <p class="explainer-text">Per-frequency detail control by octave.</p>
+                                <p class="explainer-text">Laplacian pyramid decomposition into discrete frequency bands. Each octave is gain-adjusted independently—attenuate high frequencies to reduce skin texture, boost mid frequencies to define form. Reconstruction preserves DC and avoids phase shift.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2639,7 +2434,10 @@
                     </div>
                 </div>
                 <p class="plugin-description">
-                    Exposure, contrast, color, density, and skin in one pass.
+                    Phi is a shot-level solution designed for colorists who want speed without compromise.
+                </p>
+                <p class="plugin-description">
+                    It consolidates exposure, contrast shaping, color separation, density, and perceptual balance into a single, coherent toolset. Instead of stacking nodes and fighting interactions—one pass, one intent, one result—Phi lets you shape an image holistically.
                 </p>
 
                 <div class="interface-panel">
@@ -2647,51 +2445,51 @@
                         <div class="interface-explainer">
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Printer Lights</h4>
-                                <p class="explainer-text">RGB balance. Optical printer timing.</p>
+                                <p class="explainer-text">RGB offset controls that emulate timing light adjustments on an optical printer. Balances the image before any other processing occurs.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Exposure</h4>
-                                <p class="explainer-text">Stop-based gain in linear light.</p>
+                                <p class="explainer-text">Stop-based gain applied in linear light. Converts to linear, multiplies by 2^exposure, then back to log—preserving highlight and shadow detail through the transform.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Contrast</h4>
-                                <p class="explainer-text">Sigmoid centered on mid-gray.</p>
+                                <p class="explainer-text">Piecewise-power sigmoid centered on ACEScct mid-gray (0.414). Anchors black and white endpoints while expanding or compressing everything in between.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Shadows / Midtones / Highlights</h4>
-                                <p class="explainer-text">Zone-weighted offsets with smooth falloff.</p>
+                                <p class="explainer-text">Zone-weighted offsets in log space. Shadows use smoothstep falloff below 0.25, midtones use a Gaussian bell at mid-gray, highlights ramp above 0.55.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Black Point / White Point</h4>
-                                <p class="explainer-text">Sets the floor and ceiling of your image.</p>
+                                <p class="explainer-text">Toe and shoulder curves with flat plateaus. Black point lifts shadows to a new floor with power-curve blending. White point compresses highlights down with the same math mirrored.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Toe & Shoulder</h4>
-                                <p class="explainer-text">Roll-off control for shadows and highlights.</p>
+                                <p class="explainer-text">Explicit curve shaping below toe pivot and above shoulder pivot. Strength and length parameters give independent control of roll-off steepness and range.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Saturation</h4>
-                                <p class="explainer-text">Perceptually uniform chroma scaling in OKLab.</p>
+                                <p class="explainer-text">OKLab-based chroma scaling. Converts to perceptually uniform space, scales the a/b chromatic channels, converts back. Uniform perceived intensity change across all hues.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Vibrance</h4>
-                                <p class="explainer-text">Selective saturation. Protects skin and saturated colors.</p>
+                                <p class="explainer-text">Selective saturation that protects skin tones and already-saturated colors. Detects skin by positive OKLab 'a' values, weights boost inversely to existing chroma.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin: Melanin & Hemoglobin</h4>
-                                <p class="explainer-text">Melanin shifts warm/cool. Hemoglobin controls ruddy vs. golden.</p>
+                                <p class="explainer-text">Signed-quadratic response curves. Melanin shifts toward yellow-brown (more) or away (less). Hemoglobin controls the red-green axis—more for ruddier skin, less for golden tones.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin: Richness & Density</h4>
-                                <p class="explainer-text">Skin-isolated saturation and luminance.</p>
+                                <p class="explainer-text">Richness is skin-isolated saturation with a soft S-curve. Density is luminance shift localized to warm pixels. Both auto-mask based on r > g > b warmth detection.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Skin Texture</h4>
-                                <p class="explainer-text">Local contrast applied only to skin.</p>
+                                <p class="explainer-text">Clarity-style local contrast applied only to skin tones. 16-sample blur at two radii extracts detail, then midtone-weighted gain enhances or softens texture without affecting the rest of the image.</p>
                             </div>
                             <div class="explainer-section">
                                 <h4 class="explainer-title">Tetrahedral Secondaries</h4>
-                                <p class="explainer-text">Per-hue adjustment for six axes. No banding.</p>
+                                <p class="explainer-text">Per-hue HSV adjustment for red, green, blue, cyan, magenta, and yellow. Tetrahedral interpolation blends smoothly between adjacent vertices—no banding at hue boundaries.</p>
                             </div>
                         </div>
                         <div class="interface-preview">
@@ -2711,7 +2509,7 @@
                     </div>
                 </div>
                 <p class="plugin-description">
-                    Moves images into and out of film-negative domains.
+                    Alpha defines the working space. It moves images into and out of film-negative domains, enabling printer-light style balancing and exposure-driven shot control.
                 </p>
 
                 <!-- Alpha Interface Panel -->
@@ -2719,16 +2517,28 @@
                     <div class="interface-panel-inner">
                         <div class="interface-explainer">
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Source</h4>
-                                <p class="explainer-text">Matches your camera's log and gamut to Alpha's working space.</p>
+                                <h4 class="explainer-title">Direction</h4>
+                                <p class="explainer-text">Two modes: Digital → Negative converts camera footage into film-negative density space. Negative → Digital inverts the transform for output. Chain two instances to work entirely in negative domain.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Digital</h4>
-                                <p class="explainer-text">Intermediate grading domain between camera and negative encoding.</p>
+                                <h4 class="explainer-title">Source Color Space</h4>
+                                <p class="explainer-text">Declares camera input gamut—ARRI AWG4/AWG3, Sony SGamut3, Panasonic VGamut, RED RWG, DaVinci Wide Gamut, ACES AP0/AP1, Canon Cinema, Blackmagic Wide Gamut, Rec.709, or Rec.2020. All conversions route through AP1 as a clean interchange space.</p>
                             </div>
                             <div class="explainer-section">
-                                <h4 class="explainer-title">Negative</h4>
-                                <p class="explainer-text">Film negative gamma curves that shape Omega's density response.</p>
+                                <h4 class="explainer-title">Source Gamma</h4>
+                                <p class="explainer-text">Specifies camera log curve—LogC4, LogC3, S-Log3, V-Log, Log3G10, Canon Log 2/3, BMD Film Gen5, N-Log, F-Log, F-Log2, ACEScct, DaVinci Intermediate, or Rec.709. Linearization happens before any gamut math.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Color Space</h4>
+                                <p class="explainer-text">The working gamut for grading. Typically matches timeline color science. Same options as Source—pick once, keep consistent across the session.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Digital Gamma</h4>
+                                <p class="explainer-text">Working transfer function. ACEScct and DaVinci Intermediate provide grading-friendly midtone density. Linear for compositing. Rec.709 for legacy workflows.</p>
+                            </div>
+                            <div class="explainer-section">
+                                <h4 class="explainer-title">Negative Gamma</h4>
+                                <p class="explainer-text">Film stock density curves—Cineon standard, Kodak Aim, Carlos Aim, Extended range, Soft highlight roll, Contrast for punchier shadows, or ADX for Academy workflows. Each models how a specific stock encodes exposure into density.</p>
                             </div>
                         </div>
                         <div class="interface-preview alpha-interface-stacked">
@@ -2752,29 +2562,12 @@
     <!-- Pricing -->
     <section class="pricing">
         <div class="container">
-            <div class="pricing-grid">
-                <div class="pricing-card featured">
-                    <h3 class="pricing-name">ALETHEIA</h3>
-                    <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
-                    <p class="pricing-price">$299</p>
-                    <a href="https://buy.stripe.com/eVq4gy0YdfZpgESbrZ1Fe01" class="btn btn-primary">Buy</a>
-                </div>
-                <div class="pricing-card">
-                    <h3 class="pricing-name">TRIAL</h3>
-                    <p class="pricing-includes">Full suite — watermarked</p>
-                    <p class="pricing-price">$0</p>
-                    <a href="#" class="btn" id="trial-btn">Download</a>
-                </div>
+            <div class="pricing-card featured" style="max-width: 400px; margin: 0 auto;">
+                <h3 class="pricing-name">ALETHEIA</h3>
+                <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
+                <p class="pricing-price">$299</p>
+                <a href="#" class="btn btn-primary">Buy</a>
             </div>
-        </div>
-    </section>
-
-    <!-- Compatibility -->
-    <section class="compatibility">
-        <p class="compatibility-label">Compatible With</p>
-        <div class="compatibility-logos">
-            <img src="images/davinci-logo.png" alt="DaVinci Resolve" class="compatibility-logo">
-            <img src="images/aces-logo.png" alt="ACES" class="compatibility-logo">
         </div>
     </section>
 
@@ -2791,72 +2584,14 @@
                 <p class="requirement-value">12.0 Monterey or later</p>
             </div>
             <div class="requirement-item">
-                <p class="requirement-label">macOS GPU</p>
+                <p class="requirement-label">GPU</p>
                 <p class="requirement-value">Metal-compatible</p>
             </div>
             <div class="requirement-item">
                 <p class="requirement-label">Windows</p>
-                <p class="requirement-value">10 or later</p>
-            </div>
-            <div class="requirement-item">
-                <p class="requirement-label">Linux</p>
-                <p class="requirement-value">CentOS 7.3+ / Ubuntu 18.04+</p>
-            </div>
-            <div class="requirement-item">
-                <p class="requirement-label">Windows / Linux GPU</p>
-                <p class="requirement-value">CUDA-compatible</p>
+                <p class="requirement-value">Coming soon</p>
             </div>
         </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="faq-section">
-        <h2 class="faq-title">FAQ</h2>
-
-        <details class="faq-item">
-            <summary>What is Aletheia?</summary>
-            <p class="faq-answer">Four OFX plugins for DaVinci Resolve that simulate photochemical film processing from spectral data.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>Is it a subscription?</summary>
-            <p class="faq-answer">No. One-time purchase, free updates.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>What's included in the trial?</summary>
-            <p class="faq-answer">All four plugins, unlimited time. Output is watermarked.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>How many machines can I activate?</summary>
-            <p class="faq-answer">Two machines per license.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>What cameras are supported?</summary>
-            <p class="faq-answer">Any camera DaVinci Resolve supports.<br>Alpha handles the color space conversion.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>Do I need all four plugins?</summary>
-            <p class="faq-answer">They're designed as a suite but each works independently.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>Does it work with Resolve Free?</summary>
-            <p class="faq-answer">Yes, both Free and Studio.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>How do I install it?</summary>
-            <p class="faq-answer">Download the installer, run it, restart Resolve.<br>See Node Order above for placement.</p>
-        </details>
-
-        <details class="faq-item">
-            <summary>Do you offer refunds?</summary>
-            <p class="faq-answer">No. All sales are final.<br>Use the free trial to evaluate before purchasing.</p>
-        </details>
     </section>
 
     <!-- Closing -->
@@ -2864,52 +2599,9 @@
         <p class="closing-cta">Questions? <a href="mailto:support@monosprosmonon.com">support@monosprosmonon.com</a></p>
     </section>
 
-    <!-- Trial Modal -->
-    <div class="trial-overlay" id="trial-overlay">
-        <div class="trial-modal">
-            <button class="trial-close" id="trial-close">&times;</button>
-
-            <!-- Step 1: Trial info -->
-            <div class="trial-step" id="trial-step-info">
-                <h3 class="trial-title">Free Trial</h3>
-                <ul class="trial-features">
-                    <li>Unlimited time</li>
-                    <li>Watermark on output</li>
-                    <li>All four plugins</li>
-                </ul>
-                <button class="btn btn-primary trial-cta" id="trial-cta">Try Aletheia</button>
-            </div>
-
-            <!-- Step 2: Email gate -->
-            <div class="trial-step" id="trial-step-email" style="display: none;">
-                <h3 class="trial-title">Get Aletheia Trial</h3>
-                <form class="trial-form" id="trial-form">
-                    <input type="text" class="trial-input" id="trial-name" placeholder="Name" required>
-                    <input type="email" class="trial-input" id="trial-email" placeholder="Email address" required>
-                    <button type="submit" class="btn btn-primary">Continue</button>
-                </form>
-            </div>
-
-            <!-- Step 3: OS selection + download -->
-            <div class="trial-step" id="trial-step-download" style="display: none;">
-                <h3 class="trial-title">Download Trial</h3>
-                <div class="trial-download-form">
-                    <select class="trial-select" id="trial-os-select">
-                        <option value="" disabled selected>Select your platform</option>
-                        <option value="mac">macOS (Metal)</option>
-                        <option value="windows">Windows (CUDA)</option>
-                        <option value="linux">Linux (CUDA)</option>
-                    </select>
-                    <a href="#" class="btn btn-primary trial-download-btn" id="trial-download-btn">Download</a>
-                </div>
-                <a href="https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia_User_Guide.pdf" target="_blank" style="display: block; text-align: center; margin-top: 12px; color: #888; font-size: 13px; text-decoration: none;">Download User Guide (PDF)</a>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer">
-        <p class="footer-copyright">&copy; 2026 Monos Pros Monon &nbsp;&middot;&nbsp; <a href="terms.html" style="color: #555; text-decoration: none;">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color: #555; text-decoration: none;">Privacy</a></p>
+        <p class="footer-copyright">&copy; 2026 Monos Pros Monon</p>
     </footer>
 
     <script>
@@ -2972,6 +2664,72 @@
         document.querySelectorAll(".ba").forEach(initBeforeAfter);
     </script>
 
+    <!-- Video Demo Toggle -->
+    <script>
+    (function() {
+        const videoFilm = document.getElementById('video-film');
+        const videoRec = document.getElementById('video-rec709');
+        const toggle = document.getElementById('video-toggle-switch');
+        const labelOff = document.getElementById('label-off');
+        const labelOn = document.getElementById('label-on');
+        const infoFilm = document.getElementById('toggle-info-film');
+        const infoRec = document.getElementById('toggle-info-rec709');
+
+        // SIMPLE: Both videos always playing, toggle just swaps visibility
+        // No seeking, no pausing - that's what causes lag
+
+        // Start both videos together
+        function startBoth() {
+            videoFilm.play().catch(() => {});
+            videoRec.play().catch(() => {});
+        }
+
+        // Handle user interaction (required for mobile autoplay)
+        function onInteraction() {
+            startBoth();
+            document.removeEventListener('touchstart', onInteraction);
+            document.removeEventListener('click', onInteraction);
+        }
+        document.addEventListener('touchstart', onInteraction, { passive: true });
+        document.addEventListener('click', onInteraction);
+
+        // Try to start immediately (works on desktop)
+        startBoth();
+
+        // Background sync: keep hidden video aligned to visible one
+        setInterval(() => {
+            const showingFilm = videoFilm.classList.contains('active');
+            const visible = showingFilm ? videoFilm : videoRec;
+            const hidden = showingFilm ? videoRec : videoFilm;
+
+            if (!hidden.seeking && Math.abs(visible.currentTime - hidden.currentTime) > 0.1) {
+                hidden.currentTime = visible.currentTime;
+            }
+        }, 250);
+
+        // Toggle handler - sync incoming to outgoing, then swap
+        toggle.addEventListener('change', () => {
+            const showFilm = toggle.checked;
+            const outgoing = showFilm ? videoRec : videoFilm;
+            const incoming = showFilm ? videoFilm : videoRec;
+
+            // Sync incoming to outgoing position
+            incoming.currentTime = outgoing.currentTime;
+
+            // Ensure both videos are playing
+            videoFilm.play().catch(() => {});
+            videoRec.play().catch(() => {});
+
+            // Instant visibility swap - NO SEEKING HERE
+            videoFilm.classList.toggle('active', showFilm);
+            videoRec.classList.toggle('active', !showFilm);
+            labelOn.classList.toggle('active', showFilm);
+            labelOff.classList.toggle('active', !showFilm);
+            infoFilm.classList.toggle('hidden', !showFilm);
+            infoRec.classList.toggle('hidden', showFilm);
+        });
+    })();
+    </script>
 
     <!-- Omega Demo -->
     <script src="js/omega-demo.js"></script>
@@ -3001,115 +2759,6 @@
                     const decimals = step.includes('.') ? step.split('.')[1].length : 0;
                     valueSpan.textContent = parseFloat(slider.value).toFixed(decimals);
                 });
-            }
-        });
-    })();
-    </script>
-
-    <!-- Trial Modal -->
-    <script>
-    (function() {
-        'use strict';
-
-        // Trial download URLs
-        var TRIAL_URLS = {
-            mac: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia-Installer.pkg',
-            windows: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia_Installer_v1.0.0.exe',
-            linux: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia-Installer-Linux.run'
-        };
-
-        const overlay = document.getElementById('trial-overlay');
-        const btn = document.getElementById('trial-btn');
-        const closeBtn = document.getElementById('trial-close');
-        const cta = document.getElementById('trial-cta');
-        const form = document.getElementById('trial-form');
-        const nameInput = document.getElementById('trial-name');
-        const emailInput = document.getElementById('trial-email');
-        const stepInfo = document.getElementById('trial-step-info');
-        const stepEmail = document.getElementById('trial-step-email');
-        const stepDownload = document.getElementById('trial-step-download');
-        const osSelect = document.getElementById('trial-os-select');
-        const downloadBtn = document.getElementById('trial-download-btn');
-
-        function showStep(step) {
-            stepInfo.style.display = 'none';
-            stepEmail.style.display = 'none';
-            stepDownload.style.display = 'none';
-            step.style.display = 'block';
-        }
-
-        function openModal() {
-            if (localStorage.getItem('aletheia-trial-email')) {
-                showStep(stepDownload);
-            } else {
-                showStep(stepInfo);
-            }
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // OS dropdown → enable download button + set href
-        osSelect.addEventListener('change', function() {
-            var os = osSelect.value;
-            if (os && TRIAL_URLS[os]) {
-                downloadBtn.href = TRIAL_URLS[os];
-                downloadBtn.classList.add('active');
-            }
-        });
-
-        // Track OS download
-        downloadBtn.addEventListener('click', function() {
-            var os = osSelect.value;
-            var email = localStorage.getItem('aletheia-trial-email') || '';
-            if (os) {
-                fetch('https://aletheia-trial-signup.alecwisdom.workers.dev/download', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, os: os })
-                }).catch(function() {});
-            }
-        });
-
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            openModal();
-        });
-
-        cta.addEventListener('click', function() {
-            showStep(stepEmail);
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) closeModal();
-        });
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            var name = nameInput.value.trim();
-            var email = emailInput.value.trim();
-            if (!name || !email) return;
-
-            // Send to worker, proceed regardless of response
-            fetch('https://aletheia-trial-signup.alecwisdom.workers.dev', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, email: email }),
-            }).catch(function() {});
-
-            localStorage.setItem('aletheia-trial-email', email);
-            showStep(stepDownload);
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && overlay.classList.contains('active')) {
-                closeModal();
             }
         });
     })();
