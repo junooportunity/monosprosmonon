@@ -1,7 +1,12 @@
 name = "aletheia-trial-signup"
 main = "index.js"
 compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
 
 [[kv_namespaces]]
 binding = "TRIAL_EMAILS"
 id = "568b3a7fd7b34ad0bce3f52f49e63837"
+
+# Secrets (set via `wrangler secret put`):
+# - RESEND_API_KEY: Resend API key for notification emails
+# - GOOGLE_SERVICE_ACCOUNT_KEY: Google service account JSON for Sheets logging
