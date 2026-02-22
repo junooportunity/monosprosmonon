@@ -2792,19 +2792,23 @@
             </div>
             <div class="requirement-item">
                 <p class="requirement-label">macOS GPU</p>
-                <p class="requirement-value">Metal-compatible</p>
+                <p class="requirement-value">Metal & OpenCL</p>
             </div>
             <div class="requirement-item">
                 <p class="requirement-label">Windows</p>
                 <p class="requirement-value">10 or later</p>
             </div>
             <div class="requirement-item">
+                <p class="requirement-label">Windows GPU</p>
+                <p class="requirement-value">CUDA (NVIDIA) & OpenCL (AMD)</p>
+            </div>
+            <div class="requirement-item">
                 <p class="requirement-label">Linux</p>
                 <p class="requirement-value">CentOS 7.3+ / Ubuntu 18.04+</p>
             </div>
             <div class="requirement-item">
-                <p class="requirement-label">Windows / Linux GPU</p>
-                <p class="requirement-value">CUDA-compatible</p>
+                <p class="requirement-label">Linux GPU</p>
+                <p class="requirement-value">CUDA (NVIDIA)</p>
             </div>
         </div>
     </section>
@@ -2897,8 +2901,8 @@
                 <div class="trial-download-form">
                     <select class="trial-select" id="trial-os-select">
                         <option value="" disabled selected>Select your platform</option>
-                        <option value="mac">macOS (Metal)</option>
-                        <option value="windows">Windows (CUDA)</option>
+                        <option value="mac">macOS (Metal / OpenCL)</option>
+                        <option value="windows">Windows (CUDA / OpenCL)</option>
                         <option value="linux">Linux (CUDA)</option>
                     </select>
                     <a href="#" class="btn btn-primary trial-download-btn" id="trial-download-btn">Download</a>
