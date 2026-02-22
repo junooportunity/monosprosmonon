@@ -226,7 +226,7 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Aletheia <delivery@alecwisdom.com>',
+            from: 'Aletheia <delivery@monosprosmonon.com>',
             to: 'support@monosprosmonon.com',
             subject: 'New Aletheia Trial Signup',
             text: `New trial signup: ${name || 'No name'} (${email})\nCountry: ${country}\nTime: ${new Date().toISOString()}`,
