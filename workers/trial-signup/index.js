@@ -145,7 +145,7 @@ async function logDownload(token, email, os) {
 
 // Main handler
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const corsHeaders = {
       'Access-Control-Allow-Origin': 'https://monosprosmonon.com',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -199,22 +199,26 @@ export default {
         }
       }
 
-      // Send download notification email
+      // Send download notification email (use waitUntil so it completes after response)
       if (env.RESEND_API_KEY && os !== 'guide') {
         const signupData = JSON.parse(signup);
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${env.RESEND_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: 'Aletheia <delivery@monosprosmonon.com>',
-            to: 'support@monosprosmonon.com',
-            subject: `Aletheia Trial Downloaded — ${os}`,
-            text: `${signupData.name || 'Unknown'} (${email}) downloaded ${file.filename}\nPlatform: ${os}\nTime: ${new Date().toISOString()}`,
-          }),
-        }).catch(() => {});
+        ctx.waitUntil(
+          fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${env.RESEND_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'Aletheia <delivery@monosprosmonon.com>',
+              to: 'support@monosprosmonon.com',
+              subject: `Aletheia Trial Downloaded — ${os}`,
+              text: `${signupData.name || 'Unknown'} (${email}) downloaded ${file.filename}\nPlatform: ${os}\nTime: ${new Date().toISOString()}`,
+            }),
+          }).then(res => {
+            if (!res.ok) console.error('Resend download notification failed:', res.status);
+          }).catch(err => console.error('Resend download notification error:', err))
+        );
       }
 
       // Serve from R2
