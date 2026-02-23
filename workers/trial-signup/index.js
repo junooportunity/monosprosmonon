@@ -199,6 +199,24 @@ export default {
         }
       }
 
+      // Send download notification email
+      if (env.RESEND_API_KEY && os !== 'guide') {
+        const signupData = JSON.parse(signup);
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Aletheia <delivery@monosprosmonon.com>',
+            to: 'support@monosprosmonon.com',
+            subject: `Aletheia Trial Downloaded — ${os}`,
+            text: `${signupData.name || 'Unknown'} (${email}) downloaded ${file.filename}\nPlatform: ${os}\nTime: ${new Date().toISOString()}`,
+          }),
+        }).catch(() => {});
+      }
+
       // Serve from R2
       const object = await env.DOWNLOADS.get(file.key);
       if (!object) {
