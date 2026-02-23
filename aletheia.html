@@ -991,6 +991,26 @@
             letter-spacing: 0.1em;
         }
 
+        .footer-legal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-legal a {
+            font-size: 0.65rem;
+            color: #555555;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #888888;
+        }
+
         /* Feature Grid */
         .feature-grid {
             display: grid;
@@ -1583,7 +1603,7 @@
 
         /* System Requirements */
         .requirements-section {
-            padding: 3rem 2rem;
+            padding: 1.5rem 2rem 3rem;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -1723,7 +1743,7 @@
         .closing {
             padding: 3rem 2rem;
             text-align: center;
-            margin: 1rem auto 2rem;
+            margin: 1rem auto 4rem;
             max-width: 600px;
         }
 
@@ -2294,7 +2314,7 @@
             }
 
             .requirements-section {
-                padding: 2rem 1rem;
+                padding: 1rem 1rem 2rem;
             }
 
             .requirements-grid {
@@ -2304,11 +2324,11 @@
 
             .closing {
                 padding: 1.5rem 1rem;
-                margin: 0.5rem auto 1rem;
+                margin: 0.5rem auto 3rem;
             }
 
             .footer {
-                padding: 1.5rem 1rem;
+                padding: 2rem 1rem;
                 margin-top: 1rem;
             }
 
@@ -2914,7 +2934,11 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p class="footer-copyright">&copy; 2026 Monos Pros Monon &nbsp;&middot;&nbsp; <a href="terms.html" style="color: #555; text-decoration: none;">Terms</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color: #555; text-decoration: none;">Privacy</a></p>
+        <p class="footer-copyright">&copy; 2026 Monos Pros Monon</p>
+        <div class="footer-legal">
+            <a href="terms.html">Terms</a>
+            <a href="privacy.html">Privacy</a>
+        </div>
     </footer>
 
     <script>
