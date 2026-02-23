@@ -2,6 +2,11 @@
 const SPREADSHEET_ID = '1Y5p0OuTlBmMJuu3olQERYDtMiiV_MiKP1aUlJryw48k';
 const SHEET_NAME = 'Trial Signups';
 
+function countryName(code) {
+  try { return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code; }
+  catch { return code || ''; }
+}
+
 const FILE_MAP = {
   mac: { key: 'v1.0.0/Aletheia-Installer.pkg', filename: 'Aletheia-Installer.pkg' },
   windows: { key: 'v1.0.0/Aletheia_Installer_v1.0.0.exe', filename: 'Aletheia_Installer_v1.0.0.exe' },
@@ -286,7 +291,8 @@ export default {
         });
       }
 
-      const country = request.headers.get('CF-IPCountry') || '';
+      const countryCode = request.headers.get('CF-IPCountry') || '';
+      const country = countryName(countryCode);
 
       // Store in KV (lowercase for consistent lookup)
       await env.TRIAL_EMAILS.put(email.toLowerCase().trim(), JSON.stringify({
