@@ -2915,7 +2915,17 @@
                 </form>
             </div>
 
-            <!-- Step 3: OS selection + download -->
+            <!-- Step 3: Check your email -->
+            <div class="trial-step" id="trial-step-verify" style="display: none;">
+                <h3 class="trial-title">Check Your Email</h3>
+                <p style="color: #ccc; font-size: 14px; margin: 0 0 8px 0; line-height: 1.5; text-align: center;">We sent a verification link to:</p>
+                <p id="trial-verify-email" style="color: #fff; font-size: 14px; margin: 0 0 20px 0; text-align: center; font-weight: 500;"></p>
+                <p style="color: #888; font-size: 13px; margin: 0 0 20px 0; line-height: 1.4; text-align: center;">Click the link in the email to unlock your download. Check spam if you don't see it.</p>
+                <button class="btn btn-primary" id="trial-resend-btn" style="width: 100%; opacity: 0.6; pointer-events: none;">Resend Email</button>
+                <p id="trial-resend-msg" style="color: #888; font-size: 12px; text-align: center; margin: 8px 0 0 0;"></p>
+            </div>
+
+            <!-- Step 4: OS selection + download -->
             <div class="trial-step" id="trial-step-download" style="display: none;">
                 <h3 class="trial-title">Download Trial</h3>
                 <div class="trial-download-form">
@@ -3057,7 +3067,11 @@
         const emailInput = document.getElementById('trial-email');
         const stepInfo = document.getElementById('trial-step-info');
         const stepEmail = document.getElementById('trial-step-email');
+        const stepVerify = document.getElementById('trial-step-verify');
         const stepDownload = document.getElementById('trial-step-download');
+        const verifyEmailEl = document.getElementById('trial-verify-email');
+        const resendBtn = document.getElementById('trial-resend-btn');
+        const resendMsg = document.getElementById('trial-resend-msg');
         const osSelect = document.getElementById('trial-os-select');
         const downloadBtn = document.getElementById('trial-download-btn');
         const guideLink = document.getElementById('trial-guide-link');
@@ -3072,19 +3086,83 @@
         function showStep(step) {
             stepInfo.style.display = 'none';
             stepEmail.style.display = 'none';
+            stepVerify.style.display = 'none';
             stepDownload.style.display = 'none';
             step.style.display = 'block';
         }
 
+        // Check if user just verified (redirected back from worker)
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('verified') === 'true') {
+            localStorage.setItem('aletheia-trial-verified', 'true');
+            // Clean up URL
+            history.replaceState(null, '', window.location.pathname);
+        }
+
         function openModal() {
-            if (localStorage.getItem('aletheia-trial-email')) {
+            var email = localStorage.getItem('aletheia-trial-email');
+            var verified = localStorage.getItem('aletheia-trial-verified');
+            if (email && verified === 'true') {
                 showStep(stepDownload);
+            } else if (email) {
+                // Has email but not verified — show verification step
+                verifyEmailEl.textContent = email;
+                showStep(stepVerify);
             } else {
                 showStep(stepInfo);
             }
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
+        // Auto-open modal if user just verified
+        if (localStorage.getItem('aletheia-trial-verified') === 'true' && urlParams.get('verified') === null && localStorage.getItem('aletheia-trial-email')) {
+            // Don't auto-open, user can click the button
+        }
+        if (new URLSearchParams(window.location.search).get('verified') === 'true' || urlParams.get('verified') === 'true') {
+            setTimeout(function() { openModal(); }, 300);
+        }
+
+        // Resend verification email (with 30s cooldown)
+        var resendCooldown = false;
+        setTimeout(function() {
+            resendBtn.style.opacity = '1';
+            resendBtn.style.pointerEvents = 'auto';
+        }, 5000); // Enable after 5s initial delay
+
+        resendBtn.addEventListener('click', function() {
+            if (resendCooldown) return;
+            var email = localStorage.getItem('aletheia-trial-email');
+            if (!email) return;
+            resendCooldown = true;
+            resendBtn.style.opacity = '0.6';
+            resendBtn.style.pointerEvents = 'none';
+            resendMsg.textContent = 'Sending...';
+
+            fetch(WORKER_BASE + '/resend-verification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email }),
+            }).then(function(res) { return res.json(); }).then(function(data) {
+                if (data.already_verified) {
+                    localStorage.setItem('aletheia-trial-verified', 'true');
+                    showStep(stepDownload);
+                    return;
+                }
+                resendMsg.textContent = 'Verification email sent! Check your inbox.';
+                setTimeout(function() {
+                    resendCooldown = false;
+                    resendBtn.style.opacity = '1';
+                    resendBtn.style.pointerEvents = 'auto';
+                    resendMsg.textContent = '';
+                }, 30000);
+            }).catch(function() {
+                resendMsg.textContent = 'Failed to send. Try again.';
+                resendCooldown = false;
+                resendBtn.style.opacity = '1';
+                resendBtn.style.pointerEvents = 'auto';
+            });
+        });
 
         function closeModal() {
             overlay.classList.remove('active');
@@ -3122,16 +3200,29 @@
             var email = emailInput.value.trim();
             if (!name || !email) return;
 
-            // Send to worker, proceed regardless of response
+            var submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
             fetch(WORKER_BASE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, email: email.toLowerCase() }),
-            }).catch(function() {});
-
-            localStorage.setItem('aletheia-trial-email', email.toLowerCase());
-            updateGuideLink();
-            showStep(stepDownload);
+            }).then(function() {
+                localStorage.setItem('aletheia-trial-email', email.toLowerCase());
+                updateGuideLink();
+                verifyEmailEl.textContent = email.toLowerCase();
+                showStep(stepVerify);
+            }).catch(function() {
+                // Still proceed to verification step even on network error
+                localStorage.setItem('aletheia-trial-email', email.toLowerCase());
+                updateGuideLink();
+                verifyEmailEl.textContent = email.toLowerCase();
+                showStep(stepVerify);
+            }).finally(function() {
+                submitBtn.textContent = 'Continue';
+                submitBtn.disabled = false;
+            });
         });
 
         document.addEventListener('keydown', function(e) {
