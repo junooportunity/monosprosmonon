@@ -210,13 +210,16 @@ export default {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              from: 'Aletheia <delivery@monosprosmonon.com>',
-              to: 'support@monosprosmonon.com',
+              from: 'Aletheia <onboarding@resend.dev>',
+              to: 'alecwisdom@gmail.com',
               subject: `Aletheia Trial Downloaded — ${os}`,
               text: `${signupData.name || 'Unknown'} (${email}) downloaded ${file.filename}\nPlatform: ${os}\nTime: ${new Date().toISOString()}`,
             }),
-          }).then(res => {
-            if (!res.ok) console.error('Resend download notification failed:', res.status);
+          }).then(async res => {
+            if (!res.ok) {
+              const body = await res.text();
+              console.error('Resend download notification failed:', res.status, body);
+            }
           }).catch(err => console.error('Resend download notification error:', err))
         );
       }
@@ -305,19 +308,22 @@ export default {
 
       // Send notification email via Resend
       if (env.RESEND_API_KEY) {
-        await fetch('https://api.resend.com/emails', {
+        const emailRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${env.RESEND_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Aletheia <delivery@monosprosmonon.com>',
-            to: 'support@monosprosmonon.com',
+            from: 'Aletheia <onboarding@resend.dev>',
+            to: 'alecwisdom@gmail.com',
             subject: 'New Aletheia Trial Signup',
             text: `New trial signup: ${name || 'No name'} (${email})\nCountry: ${country}\nTime: ${new Date().toISOString()}`,
           }),
         });
+        if (!emailRes.ok) {
+          console.error('Resend signup notification failed:', emailRes.status, await emailRes.text());
+        }
       }
 
       return new Response(JSON.stringify({ ok: true }), {
