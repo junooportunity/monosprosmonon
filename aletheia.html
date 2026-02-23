@@ -1603,7 +1603,7 @@
 
         /* System Requirements */
         .requirements-section {
-            padding: 1.5rem 2rem 3rem;
+            padding: 1.5rem 2rem 1rem;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -1671,9 +1671,8 @@
             color: #999999;
             cursor: pointer;
             list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .faq-item summary::-webkit-details-marker {
@@ -1681,14 +1680,14 @@
         }
 
         .faq-item summary::after {
-            content: '+';
+            content: ' +';
             font-size: 0.9rem;
             color: #555555;
             transition: transform 0.2s ease;
         }
 
         .faq-item[open] summary::after {
-            content: '−';
+            content: ' −';
         }
 
         .faq-answer {
@@ -1697,6 +1696,7 @@
             color: #777777;
             padding-top: 0.75rem;
             line-height: 1.5;
+            text-align: center;
         }
 
         /* Node Order Section */
@@ -2314,7 +2314,7 @@
             }
 
             .requirements-section {
-                padding: 1rem 1rem 2rem;
+                padding: 1rem 1rem 0.5rem;
             }
 
             .requirements-grid {
