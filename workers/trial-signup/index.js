@@ -2,6 +2,13 @@
 const SPREADSHEET_ID = '1Y5p0OuTlBmMJuu3olQERYDtMiiV_MiKP1aUlJryw48k';
 const SHEET_NAME = 'Trial Signups';
 
+const FILE_MAP = {
+  mac: { key: 'v1.0.0/Aletheia-Installer.pkg', filename: 'Aletheia-Installer.pkg' },
+  windows: { key: 'v1.0.0/Aletheia_Installer_v1.0.0.exe', filename: 'Aletheia_Installer_v1.0.0.exe' },
+  linux: { key: 'v1.0.0/Aletheia-Installer-Linux.run', filename: 'Aletheia-Installer-Linux.run' },
+  guide: { key: 'v1.0.0/Aletheia_User_Guide.pdf', filename: 'Aletheia_User_Guide.pdf' },
+};
+
 async function getAccessToken(serviceAccountKey) {
   const key = JSON.parse(serviceAccountKey);
   const now = Math.floor(Date.now() / 1000);
@@ -141,7 +148,7 @@ export default {
   async fetch(request, env) {
     const corsHeaders = {
       'Access-Control-Allow-Origin': 'https://monosprosmonon.com',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
 
@@ -149,21 +156,79 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    const url = new URL(request.url);
+    const path = url.pathname;
+
+    // ──────────────────────────────────────────────
+    // GET /download/:os?email=...  — serve file from R2
+    // ──────────────────────────────────────────────
+    const downloadMatch = path.match(/^\/download\/(mac|windows|linux|guide)$/);
+    if (request.method === 'GET' && downloadMatch) {
+      const os = downloadMatch[1];
+      const email = url.searchParams.get('email') || '';
+      const file = FILE_MAP[os];
+
+      if (!file) {
+        return new Response('Invalid platform', { status: 400, headers: corsHeaders });
+      }
+
+      // Validate email exists in KV (must have signed up)
+      if (!email) {
+        return new Response('Email required', { status: 403, headers: corsHeaders });
+      }
+
+      const signup = await env.TRIAL_EMAILS.get(email.toLowerCase().trim());
+      if (!signup) {
+        return new Response('Trial signup required', { status: 403, headers: corsHeaders });
+      }
+
+      // Log download to KV
+      await env.TRIAL_EMAILS.put(`download:${email}:${Date.now()}`, JSON.stringify({
+        email, os,
+        downloaded: new Date().toISOString(),
+        ip: request.headers.get('CF-Connecting-IP'),
+      }));
+
+      // Log to Google Sheets (non-blocking)
+      if (env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+        try {
+          const token = await getAccessToken(env.GOOGLE_SERVICE_ACCOUNT_KEY);
+          await logDownload(token, email, os);
+        } catch (err) {
+          console.error('Sheets download log error:', err);
+        }
+      }
+
+      // Serve from R2
+      const object = await env.DOWNLOADS.get(file.key);
+      if (!object) {
+        return new Response('File not found', { status: 404, headers: corsHeaders });
+      }
+
+      return new Response(object.body, {
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          'Content-Disposition': `attachment; filename="${file.filename}"`,
+          'Content-Length': object.size,
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+
+    // ──────────────────────────────────────────────
+    // POST routes (signup + legacy download tracking)
+    // ──────────────────────────────────────────────
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405, headers: corsHeaders });
     }
 
-    const url = new URL(request.url);
-    const path = url.pathname;
-
     try {
       const body = await request.json();
 
-      // Route: /download — track download events
+      // Route: POST /download — legacy download tracking (kept for compatibility)
       if (path === '/download') {
         const { email, os } = body;
 
-        // Store download event in KV
         if (email) {
           await env.TRIAL_EMAILS.put(`download:${email}:${Date.now()}`, JSON.stringify({
             email, os: os || 'unknown',
@@ -172,7 +237,6 @@ export default {
           }));
         }
 
-        // Log to Google Sheets
         if (env.GOOGLE_SERVICE_ACCOUNT_KEY) {
           try {
             const token = await getAccessToken(env.GOOGLE_SERVICE_ACCOUNT_KEY);
@@ -199,8 +263,8 @@ export default {
 
       const country = request.headers.get('CF-IPCountry') || '';
 
-      // Store in KV
-      await env.TRIAL_EMAILS.put(email, JSON.stringify({
+      // Store in KV (lowercase for consistent lookup)
+      await env.TRIAL_EMAILS.put(email.toLowerCase().trim(), JSON.stringify({
         name: name || '',
         signed_up: new Date().toISOString(),
         ip: request.headers.get('CF-Connecting-IP'),

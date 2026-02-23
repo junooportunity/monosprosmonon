@@ -7,6 +7,10 @@ compatibility_flags = ["nodejs_compat"]
 binding = "TRIAL_EMAILS"
 id = "568b3a7fd7b34ad0bce3f52f49e63837"
 
+[[r2_buckets]]
+binding = "DOWNLOADS"
+bucket_name = "aletheia-downloads"
+
 # Secrets (set via `wrangler secret put`):
 # - RESEND_API_KEY: Resend API key for notification emails
 # - GOOGLE_SERVICE_ACCOUNT_KEY: Google service account JSON for Sheets logging

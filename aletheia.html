@@ -2927,7 +2927,7 @@
                     </select>
                     <a href="#" class="btn btn-primary trial-download-btn" id="trial-download-btn">Download</a>
                 </div>
-                <a href="https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia_User_Guide.pdf" target="_blank" style="display: block; text-align: center; margin-top: 12px; color: #888; font-size: 13px; text-decoration: none;">Download User Guide (PDF)</a>
+                <a id="trial-guide-link" href="#" target="_blank" style="display: block; text-align: center; margin-top: 12px; color: #888; font-size: 13px; text-decoration: none;">Download User Guide (PDF)</a>
             </div>
         </div>
     </div>
@@ -3040,11 +3040,12 @@
     (function() {
         'use strict';
 
-        // Trial download URLs
+        // Trial download URLs (routed through worker for tracking + auth)
+        var WORKER_BASE = 'https://aletheia-trial-signup.alecwisdom.workers.dev';
         var TRIAL_URLS = {
-            mac: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia-Installer.pkg',
-            windows: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia_Installer_v1.0.0.exe',
-            linux: 'https://pub-4dc33a44af7f46a893a8ed507f349db3.r2.dev/v1.0.0/Aletheia-Installer-Linux.run'
+            mac: WORKER_BASE + '/download/mac',
+            windows: WORKER_BASE + '/download/windows',
+            linux: WORKER_BASE + '/download/linux'
         };
 
         const overlay = document.getElementById('trial-overlay');
@@ -3059,6 +3060,14 @@
         const stepDownload = document.getElementById('trial-step-download');
         const osSelect = document.getElementById('trial-os-select');
         const downloadBtn = document.getElementById('trial-download-btn');
+        const guideLink = document.getElementById('trial-guide-link');
+
+        // Set guide link with email
+        function updateGuideLink() {
+            var email = localStorage.getItem('aletheia-trial-email') || '';
+            guideLink.href = WORKER_BASE + '/download/guide?email=' + encodeURIComponent(email);
+        }
+        updateGuideLink();
 
         function showStep(step) {
             stepInfo.style.display = 'none';
@@ -3082,25 +3091,13 @@
             document.body.style.overflow = '';
         }
 
-        // OS dropdown → enable download button + set href
+        // OS dropdown → enable download button + set href with email
         osSelect.addEventListener('change', function() {
             var os = osSelect.value;
-            if (os && TRIAL_URLS[os]) {
-                downloadBtn.href = TRIAL_URLS[os];
-                downloadBtn.classList.add('active');
-            }
-        });
-
-        // Track OS download
-        downloadBtn.addEventListener('click', function() {
-            var os = osSelect.value;
             var email = localStorage.getItem('aletheia-trial-email') || '';
-            if (os) {
-                fetch('https://aletheia-trial-signup.alecwisdom.workers.dev/download', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, os: os })
-                }).catch(function() {});
+            if (os && TRIAL_URLS[os]) {
+                downloadBtn.href = TRIAL_URLS[os] + '?email=' + encodeURIComponent(email);
+                downloadBtn.classList.add('active');
             }
         });
 
@@ -3126,13 +3123,14 @@
             if (!name || !email) return;
 
             // Send to worker, proceed regardless of response
-            fetch('https://aletheia-trial-signup.alecwisdom.workers.dev', {
+            fetch(WORKER_BASE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, email: email }),
+                body: JSON.stringify({ name: name, email: email.toLowerCase() }),
             }).catch(function() {});
 
-            localStorage.setItem('aletheia-trial-email', email);
+            localStorage.setItem('aletheia-trial-email', email.toLowerCase());
+            updateGuideLink();
             showStep(stepDownload);
         });
 
