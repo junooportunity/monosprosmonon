@@ -375,23 +375,65 @@
         }
 
         .trial-pill {
-            display: inline-block;
-            margin-top: 1.25rem;
-            padding: 0.4rem 1.25rem;
-            font-size: 0.75rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.65rem;
             font-weight: 400;
-            letter-spacing: 0.08em;
-            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 1.25rem auto 0 auto;
+            text-align: center;
+            padding: 5px 16px;
+            display: inline-block;
+            position: relative;
+            border-radius: 50px;
+            isolation: isolate;
+            box-shadow: 0px 4px var(--lg-outer-shadow-blur) rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
-            border: 0.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 999px;
-            background: transparent;
-            transition: color 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .trial-pill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 50px;
+            box-shadow:
+                inset 0 0 var(--lg-shadow-blur) var(--lg-shadow-spread) var(--lg-shadow-color);
+            background-color: rgba(var(--lg-tint-color), var(--lg-tint-opacity));
+            border: var(--lg-border-width) solid var(--lg-border-color);
+            pointer-events: none;
+        }
+
+        .trial-pill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 50px;
+            backdrop-filter: blur(var(--lg-frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--lg-frost-blur));
+            -webkit-filter: url("#glass-distortion");
         }
 
         .trial-pill:hover {
-            color: #ccc;
-            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0px 6px calc(var(--lg-outer-shadow-blur) + 2px) rgba(0, 0, 0, 0.3);
+        }
+
+        .trial-pill:hover::before {
+            background-color: rgba(var(--lg-tint-color), calc(var(--lg-tint-opacity) + 0.05));
+            box-shadow:
+                inset 0 0 calc(var(--lg-shadow-blur) + 2px) var(--lg-shadow-spread) var(--lg-shadow-color);
+        }
+
+        .trial-pill:active {
+            transform: translateY(0) scale(0.98);
+            transition: all 0.1s ease;
         }
 
         /* Comparison Table */
@@ -2162,8 +2204,8 @@
 
             .trial-pill {
                 margin-top: 0.75rem;
-                padding: 0.3rem 1rem;
-                font-size: 0.6rem;
+                padding: 4px 12px;
+                font-size: 0.5rem;
             }
 
             .btn {
@@ -3254,6 +3296,17 @@
         });
     })();
     </script>
+
+    <!-- SVG Filter for Liquid Glass Distortion -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+        <defs>
+            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+                <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
 </body>
 </html>
