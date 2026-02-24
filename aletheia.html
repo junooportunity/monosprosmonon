@@ -292,6 +292,7 @@
         /* Pricing Section */
         .pricing {
             padding: 2rem 0;
+            text-align: center;
         }
 
         .pricing-grid {
@@ -371,6 +372,26 @@
             gap: 1.5rem;
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        .trial-pill {
+            display: inline-block;
+            margin-top: 1.25rem;
+            padding: 0.4rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: #888;
+            text-decoration: none;
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .trial-pill:hover {
+            color: #ccc;
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         /* Comparison Table */
@@ -2139,6 +2160,12 @@
                 margin-bottom: 0.5rem;
             }
 
+            .trial-pill {
+                margin-top: 0.75rem;
+                padding: 0.3rem 1rem;
+                font-size: 0.6rem;
+            }
+
             .btn {
                 padding: 3px 10px;
                 font-size: 0.5rem;
@@ -2772,20 +2799,15 @@
     <!-- Pricing -->
     <section class="pricing">
         <div class="container">
-            <div class="pricing-grid">
+            <div class="pricing-grid" style="grid-template-columns: 1fr; max-width: 360px;">
                 <div class="pricing-card featured">
                     <h3 class="pricing-name">ALETHEIA</h3>
                     <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
                     <p class="pricing-price">$299</p>
                     <a href="https://buy.stripe.com/eVq4gy0YdfZpgESbrZ1Fe01" class="btn btn-primary">Buy</a>
                 </div>
-                <div class="pricing-card">
-                    <h3 class="pricing-name">TRIAL</h3>
-                    <p class="pricing-includes">Full suite — watermarked</p>
-                    <p class="pricing-price">$0</p>
-                    <a href="#" class="btn" id="trial-btn">Download</a>
-                </div>
             </div>
+            <a href="#" class="trial-pill" id="trial-btn">Download free trial</a>
         </div>
     </section>
 
