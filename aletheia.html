@@ -348,32 +348,41 @@
             line-height: 1.6;
         }
 
-        .pricing-symbols {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+        .pricing-pipeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            align-items: start;
+            margin-bottom: 1.25rem;
         }
 
-        .pricing-symbol-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.35rem;
+        .pricing-pipeline .pipeline-item {
+            padding: 0.75rem 0.5rem;
         }
 
-        .pricing-symbol-item img {
-            width: 32px;
-            height: 32px;
-            opacity: 0.75;
+        .pricing-pipeline .pipeline-item::after {
+            font-size: 0.9rem;
+            right: -0.5rem;
         }
 
-        .pricing-symbol-label {
+        .pricing-pipeline .pipeline-icon {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 0.5rem;
+        }
+
+        .pricing-pipeline .pipeline-icon.alpha-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .pricing-pipeline .pipeline-name {
+            font-size: 0.65rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-pipeline .pipeline-role {
             font-size: 0.55rem;
-            letter-spacing: 0.1em;
-            color: #666;
-            text-transform: uppercase;
         }
 
         .pricing-stats {
@@ -2249,18 +2258,34 @@
                 line-height: 1.4;
             }
 
-            .pricing-symbols {
-                gap: 1rem;
+            .pricing-pipeline {
+                gap: 0.25rem;
                 margin-bottom: 0.75rem;
             }
 
-            .pricing-symbol-item img {
-                width: 22px;
-                height: 22px;
+            .pricing-pipeline .pipeline-item {
+                padding: 0.5rem 0.25rem;
             }
 
-            .pricing-symbol-label {
-                font-size: 0.45rem;
+            .pricing-pipeline .pipeline-icon,
+            .pricing-pipeline .pipeline-icon.alpha-icon {
+                width: 22px;
+                height: 22px;
+                margin-bottom: 0.3rem;
+            }
+
+            .pricing-pipeline .pipeline-name {
+                font-size: 0.5rem;
+                margin-bottom: 0.15rem;
+            }
+
+            .pricing-pipeline .pipeline-role {
+                font-size: 0.4rem;
+            }
+
+            .pricing-pipeline .pipeline-item::after {
+                font-size: 0.6rem;
+                right: -0.3rem;
             }
 
             .pricing-grid {
@@ -2933,22 +2958,26 @@
             <div class="pricing-grid" style="grid-template-columns: 1fr; max-width: 360px;">
                 <div class="pricing-card featured">
                     <h3 class="pricing-name">ALETHEIA</h3>
-                    <div class="pricing-symbols">
-                        <div class="pricing-symbol-item">
-                            <img src="images/alpha-icon.png" alt="Alpha">
-                            <span class="pricing-symbol-label">Alpha</span>
+                    <div class="pricing-pipeline">
+                        <div class="pipeline-item">
+                            <img src="images/alpha-icon.png" alt="Alpha" class="pipeline-icon alpha-icon">
+                            <h3 class="pipeline-name">Alpha</h3>
+                            <p class="pipeline-role">Film-Negative Transform</p>
                         </div>
-                        <div class="pricing-symbol-item">
-                            <img src="images/phi-icon.webp" alt="Phi">
-                            <span class="pricing-symbol-label">Phi</span>
+                        <div class="pipeline-item">
+                            <img src="images/phi-icon.webp" alt="Phi" class="pipeline-icon">
+                            <h3 class="pipeline-name">Phi</h3>
+                            <p class="pipeline-role">Core Grading Engine</p>
                         </div>
-                        <div class="pricing-symbol-item">
-                            <img src="images/helix-icon.webp" alt="Helix">
-                            <span class="pricing-symbol-label">Helix</span>
+                        <div class="pipeline-item">
+                            <img src="images/helix-icon.webp" alt="Helix" class="pipeline-icon">
+                            <h3 class="pipeline-name">Helix</h3>
+                            <p class="pipeline-role">Texture & Detail</p>
                         </div>
-                        <div class="pricing-symbol-item">
-                            <img src="images/omega-icon.png" alt="Omega">
-                            <span class="pricing-symbol-label">Omega</span>
+                        <div class="pipeline-item">
+                            <img src="images/omega-icon.png" alt="Omega" class="pipeline-icon">
+                            <h3 class="pipeline-name">Omega</h3>
+                            <p class="pipeline-role">Look Development</p>
                         </div>
                     </div>
                     <p class="pricing-launch-label">Special Launch Price</p>
