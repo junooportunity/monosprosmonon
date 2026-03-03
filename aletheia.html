@@ -31,7 +31,7 @@
         "name": "Aletheia",
         "description": "Color grading plugin suite for DaVinci Resolve. Film emulation built on spectral simulation with 42 negative stocks, 19 print stocks, and 7,980 film looks.",
         "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "macOS, Windows, Linux",
+        "operatingSystem": "macOS, Windows",
         "url": "https://monosprosmonon.com/aletheia",
         "offers": {
             "@type": "Offer",
@@ -2834,7 +2834,7 @@
                             </div>
                         </div>
                         <div class="interface-preview">
-                            <img src="images/Omega-Interface.png?v=3" alt="Omega Interface">
+                            <img src="images/Omega-Interface.png?v=4" alt="Omega Interface">
                         </div>
                     </div>
                 </div>
@@ -3102,14 +3102,6 @@
                 <p class="requirement-label">Windows GPU</p>
                 <p class="requirement-value">CUDA (NVIDIA) & OpenCL (AMD)</p>
             </div>
-            <div class="requirement-item">
-                <p class="requirement-label">Linux</p>
-                <p class="requirement-value">CentOS 7.3+ / Ubuntu 18.04+</p>
-            </div>
-            <div class="requirement-item">
-                <p class="requirement-label">Linux GPU</p>
-                <p class="requirement-value">CUDA (NVIDIA)</p>
-            </div>
         </div>
     </section>
 
@@ -3213,7 +3205,6 @@
                         <option value="" disabled selected>Select your platform</option>
                         <option value="mac">macOS (Metal / OpenCL)</option>
                         <option value="windows">Windows (CUDA / OpenCL)</option>
-                        <option value="linux">Linux (CUDA)</option>
                     </select>
                     <a href="#" class="btn btn-primary trial-download-btn" id="trial-download-btn">Download</a>
                 </div>
@@ -3334,8 +3325,7 @@
         var WORKER_BASE = 'https://aletheia-trial-signup.alecwisdom.workers.dev';
         var TRIAL_URLS = {
             mac: WORKER_BASE + '/download/mac',
-            windows: WORKER_BASE + '/download/windows',
-            linux: WORKER_BASE + '/download/linux'
+            windows: WORKER_BASE + '/download/windows'
         };
 
         const overlay = document.getElementById('trial-overlay');
