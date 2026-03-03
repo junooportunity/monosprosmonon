@@ -326,11 +326,10 @@
         }
 
         .pricing-name {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: #e0e0e0;
             margin-bottom: 0.5rem;
         }
 
@@ -359,7 +358,12 @@
             font-size: 2rem;
             font-weight: 300;
             color: #ffffff;
-            margin-bottom: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 0.9rem;
+            color: #666666;
         }
 
         .pricing-price.pricing-original {
@@ -368,17 +372,27 @@
             margin-bottom: 0;
         }
 
-        .pricing-price span {
-            font-size: 0.9rem;
-            color: #666666;
-        }
-
         .pricing-launch-label {
             font-size: 0.7rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.4);
             margin-bottom: 1.5rem;
+        }
+
+        .pricing-card .pricing-name {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .pricing-card .btn-primary {
+            opacity: 1;
+            padding: 10px 40px;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
         }
 
         .pricing-grid {
@@ -555,16 +569,11 @@
         }
 
         .btn-primary {
-            opacity: 1;
-            padding: 10px 40px;
-            font-size: 0.8rem;
-            letter-spacing: 0.25em;
-            color: #ffffff;
+            opacity: 0.9;
         }
 
         .btn-primary::before {
-            background-color: rgba(var(--lg-tint-color), 0.06);
-            border: var(--lg-border-width) solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(var(--lg-tint-color), 0.04);
         }
 
         /* Plugin Details */
@@ -2202,7 +2211,7 @@
             }
 
             .pricing-name {
-                font-size: 1.4rem;
+                font-size: 0.6rem;
                 margin-bottom: 0.25rem;
             }
 
@@ -2231,6 +2240,15 @@
                 margin-bottom: 0.5rem;
             }
 
+            .pricing-card .pricing-name {
+                font-size: 1.4rem;
+            }
+
+            .pricing-card .btn-primary {
+                padding: 7px 28px;
+                font-size: 0.6rem;
+            }
+
             .trial-pill {
                 margin-top: 0.75rem;
                 padding: 4px 12px;
@@ -2241,11 +2259,6 @@
                 padding: 3px 10px;
                 font-size: 0.5rem;
                 letter-spacing: 0.15em;
-            }
-
-            .btn-primary {
-                padding: 7px 28px;
-                font-size: 0.6rem;
             }
 
             .plugins {
@@ -2677,7 +2690,7 @@
                             </div>
                         </div>
                         <div class="interface-preview">
-                            <img loading="lazy" src="images/Omega-Interface.png?v=3" alt="Omega Interface">
+                            <img src="images/Omega-Interface.png?v=3" alt="Omega Interface">
                         </div>
                     </div>
                 </div>
@@ -2714,7 +2727,7 @@
                             </div>
                         </div>
                         <div class="interface-preview">
-                            <img loading="lazy" src="images/Helix UI-Interface.png?v=2" alt="Helix Interface">
+                            <img src="images/Helix UI-Interface.png?v=2" alt="Helix Interface">
                         </div>
                     </div>
                 </div>
@@ -2723,27 +2736,27 @@
                     <p class="interface-label" style="margin-top: 3rem;">Before & After</p>
                     <div class="comparison-grid">
                         <div class="ba" data-start="50">
-                            <img class="ba__img" loading="lazy" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false">
+                            <img class="ba__img" src="images/before-after/helix-1-before.webp" alt="Before" draggable="false">
                             <div class="ba__after">
-                                <img class="ba__img" loading="lazy" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false">
+                                <img class="ba__img" src="images/before-after/helix-1-1-after.webp" alt="After" draggable="false">
                             </div>
                             <div class="ba__divider"></div>
                             <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                         </div>
 
                         <div class="ba" data-start="50">
-                            <img class="ba__img" loading="lazy" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false">
+                            <img class="ba__img" src="images/before-after/helix-6-before.webp" alt="Before" draggable="false">
                             <div class="ba__after">
-                                <img class="ba__img" loading="lazy" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false">
+                                <img class="ba__img" src="images/before-after/helix-6-1-after.webp" alt="After" draggable="false">
                             </div>
                             <div class="ba__divider"></div>
                             <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
                         </div>
 
                         <div class="ba" data-start="50">
-                            <img class="ba__img" loading="lazy" src="images/before-after/helix-9-before.webp" alt="Before" draggable="false">
+                            <img class="ba__img" src="images/before-after/helix-9-before.webp" alt="Before" draggable="false">
                             <div class="ba__after">
-                                <img class="ba__img" loading="lazy" src="images/before-after/helix-9-1-after.webp" alt="After" draggable="false">
+                                <img class="ba__img" src="images/before-after/helix-9-1-after.webp" alt="After" draggable="false">
                             </div>
                             <div class="ba__divider"></div>
                             <div class="ba__handle"><span class="ba__pill"><span class="ba__chev">‹</span><span class="ba__chev">›</span></span></div>
@@ -2818,7 +2831,7 @@
                             </div>
                         </div>
                         <div class="interface-preview">
-                            <img loading="lazy" src="images/Phi Interface.webp" alt="Phi Interface">
+                            <img src="images/Phi Interface.webp" alt="Phi Interface">
                         </div>
                     </div>
                 </div>
@@ -2856,11 +2869,11 @@
                         </div>
                         <div class="interface-preview alpha-interface-stacked">
                             <div class="alpha-interface-item">
-                                <img loading="lazy" src="images/Alpha UI-Interface D to N.png?v=3" alt="Alpha Interface - Digital to Negative">
+                                <img src="images/Alpha UI-Interface D to N.png?v=3" alt="Alpha Interface - Digital to Negative">
                                 <span class="alpha-interface-label">Digital → Negative</span>
                             </div>
                             <div class="alpha-interface-item">
-                                <img loading="lazy" src="images/Alpha UI-Interface N to D.png?v=3" alt="Alpha Interface - Negative to Digital">
+                                <img src="images/Alpha UI-Interface N to D.png?v=3" alt="Alpha Interface - Negative to Digital">
                                 <span class="alpha-interface-label">Negative → Digital</span>
                             </div>
                         </div>
