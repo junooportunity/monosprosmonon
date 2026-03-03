@@ -358,12 +358,27 @@
             font-size: 2rem;
             font-weight: 300;
             color: #ffffff;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .pricing-price .pricing-original {
+            font-size: 1.1rem;
+            color: #666666;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
         }
 
         .pricing-price span {
             font-size: 0.9rem;
             color: #666666;
+        }
+
+        .pricing-launch-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 1.5rem;
         }
 
         .pricing-grid {
@@ -2199,6 +2214,15 @@
 
             .pricing-price {
                 font-size: 1rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .pricing-price .pricing-original {
+                font-size: 0.65rem;
+            }
+
+            .pricing-launch-label {
+                font-size: 0.5rem;
                 margin-bottom: 0.5rem;
             }
 
@@ -2845,7 +2869,8 @@
                 <div class="pricing-card featured">
                     <h3 class="pricing-name">ALETHEIA</h3>
                     <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
-                    <p class="pricing-price">$299</p>
+                    <p class="pricing-price"><span class="pricing-original">$499</span>$299</p>
+                    <p class="pricing-launch-label">Special Launch Price</p>
                     <a href="https://buy.stripe.com/eVq4gy0YdfZpgESbrZ1Fe01" class="btn btn-primary">Buy</a>
                 </div>
             </div>
