@@ -394,7 +394,7 @@
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.5);
             margin: 1.25rem auto 0 auto;
             text-align: center;
             padding: 5px 16px;
@@ -554,11 +554,16 @@
         }
 
         .btn-primary {
-            opacity: 0.9;
+            opacity: 1;
+            padding: 10px 40px;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            color: #ffffff;
         }
 
         .btn-primary::before {
-            background-color: rgba(var(--lg-tint-color), 0.04);
+            background-color: rgba(var(--lg-tint-color), 0.06);
+            border: var(--lg-border-width) solid rgba(255, 255, 255, 0.3);
         }
 
         /* Plugin Details */
@@ -2235,6 +2240,11 @@
                 padding: 3px 10px;
                 font-size: 0.5rem;
                 letter-spacing: 0.15em;
+            }
+
+            .btn-primary {
+                padding: 7px 28px;
+                font-size: 0.6rem;
             }
 
             .plugins {
