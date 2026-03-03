@@ -348,6 +348,34 @@
             line-height: 1.6;
         }
 
+        .pricing-symbols {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-symbol-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .pricing-symbol-item img {
+            width: 32px;
+            height: 32px;
+            opacity: 0.75;
+        }
+
+        .pricing-symbol-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.1em;
+            color: #666;
+            text-transform: uppercase;
+        }
+
         .pricing-stats {
             font-size: 0.85rem;
             color: #aaaaaa;
@@ -2221,6 +2249,20 @@
                 line-height: 1.4;
             }
 
+            .pricing-symbols {
+                gap: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .pricing-symbol-item img {
+                width: 22px;
+                height: 22px;
+            }
+
+            .pricing-symbol-label {
+                font-size: 0.45rem;
+            }
+
             .pricing-grid {
                 grid-template-columns: 1fr;
                 max-width: 300px;
@@ -2891,7 +2933,24 @@
             <div class="pricing-grid" style="grid-template-columns: 1fr; max-width: 360px;">
                 <div class="pricing-card featured">
                     <h3 class="pricing-name">ALETHEIA</h3>
-                    <p class="pricing-includes">Alpha · Phi · Helix · Omega</p>
+                    <div class="pricing-symbols">
+                        <div class="pricing-symbol-item">
+                            <img src="images/alpha-icon.png" alt="Alpha">
+                            <span class="pricing-symbol-label">Alpha</span>
+                        </div>
+                        <div class="pricing-symbol-item">
+                            <img src="images/phi-icon.webp" alt="Phi">
+                            <span class="pricing-symbol-label">Phi</span>
+                        </div>
+                        <div class="pricing-symbol-item">
+                            <img src="images/helix-icon.webp" alt="Helix">
+                            <span class="pricing-symbol-label">Helix</span>
+                        </div>
+                        <div class="pricing-symbol-item">
+                            <img src="images/omega-icon.png" alt="Omega">
+                            <span class="pricing-symbol-label">Omega</span>
+                        </div>
+                    </div>
                     <p class="pricing-launch-label">Special Launch Price</p>
                     <p class="pricing-price pricing-original">$499</p>
                     <p class="pricing-price">$299</p>
