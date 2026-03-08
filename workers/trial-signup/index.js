@@ -7,11 +7,41 @@ function countryName(code) {
   catch { return code || ''; }
 }
 
+// Disposable email domain blocklist
+const DISPOSABLE_DOMAINS = new Set([
+  'mailinator.com','guerrillamail.com','guerrillamail.de','guerrillamail.net','guerrillamail.org',
+  'sharklasers.com','grr.la','guerrillamailblock.com','pokemail.net','spam4.me',
+  'yopmail.com','yopmail.fr','cool.fr.nf','jetable.fr.nf','nospam.ze.tc',
+  'tempmail.com','tempmail.net','tempmail.org','temp-mail.org','temp-mail.io',
+  'throwaway.email','throwaway.com','trashmail.com','trashmail.me','trashmail.net',
+  'dispostable.com','mailnesia.com','maildrop.cc','discard.email','discardmail.com',
+  'fakeinbox.com','fakemail.fr','getairmail.com','mailcatch.com','mailexpire.com',
+  'mailmoat.com','mailnull.com','mailsac.com','mailscrap.com','mailtemp.net',
+  'mintemail.com','mohmal.com','mt2015.com','mytemp.email','mytrashmail.com',
+  'nowmymail.com','nwytg.net','spamgourmet.com','tempr.email','temporarymail.com',
+  'tmail.ws','tmpmail.net','tmpmail.org','wegwerfemail.de','10minutemail.com',
+  'guerrillamail.info','harakirimail.com','mailforspam.com','safetymail.info',
+  'trashymail.com','trashymail.net','emailondeck.com','getnada.com','burnermail.io',
+  'inboxbear.com','mailpoof.com','tempail.com','tempmailaddress.com','tempmails.net',
+  // Domains seen in our signups
+  'netoiu.com','pazuric.com',
+]);
+
+// Validate email format and reject disposable domains
+function validateEmail(email) {
+  const lower = email.toLowerCase().trim();
+  // Basic format check
+  const match = lower.match(/^([a-z0-9._%+-]+)@([a-z0-9.-]+\.[a-z]{2,})$/);
+  if (!match) return { valid: false, reason: 'Invalid email format' };
+  const domain = match[2];
+  if (DISPOSABLE_DOMAINS.has(domain)) return { valid: false, reason: 'Disposable email addresses are not allowed' };
+  return { valid: true, domain };
+}
+
 const FILE_MAP = {
-  mac: { key: 'v1.0.0/Aletheia-Installer.pkg', filename: 'Aletheia-Installer.pkg' },
-  windows: { key: 'v1.0.0/Aletheia_Installer_v1.0.0.exe', filename: 'Aletheia_Installer_v1.0.0.exe' },
-  linux: { key: 'v1.0.0/Aletheia-Installer-Linux.run', filename: 'Aletheia-Installer-Linux.run' },
-  guide: { key: 'v1.0.0/Aletheia_User_Guide.pdf', filename: 'Aletheia_User_Guide.pdf' },
+  mac: { key: 'v1.1.1/Aletheia-Installer.pkg', filename: 'Aletheia-Installer.pkg' },
+  windows: { key: 'v1.1.1/Aletheia-Installer.exe', filename: 'Aletheia-Installer.exe' },
+  guide: { key: 'v1.1.1/Aletheia_User_Guide.pdf', filename: 'Aletheia_User_Guide.pdf' },
 };
 
 const WORKER_URL = 'https://aletheia-trial-signup.alecwisdom.workers.dev';
@@ -64,7 +94,7 @@ async function getAccessToken(serviceAccountKey) {
 }
 
 async function ensureSheetHeaders(token) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(SHEET_NAME)}!A1:G1`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(SHEET_NAME)}!A1:H1`;
   const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
 
   if (!res.ok) {
@@ -77,11 +107,11 @@ async function ensureSheetHeaders(token) {
     });
 
     await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(SHEET_NAME)}!A1:G1?valueInputOption=RAW`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(SHEET_NAME)}!A1:H1?valueInputOption=RAW`,
       {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ values: [['Email', 'Name', 'Date', 'Source', 'OS', 'Country', 'Downloaded At']] }),
+        body: JSON.stringify({ values: [['Email', 'Name', 'Date', 'Source', 'OS', 'Country', 'Downloaded At', 'Converted']] }),
       }
     );
   }
@@ -413,11 +443,35 @@ export default {
       // Route: / — trial signup
       const { name, email } = body;
 
-      if (!email || !email.includes('@')) {
-        return new Response(JSON.stringify({ error: 'Invalid email' }), {
+      if (!email) {
+        return new Response(JSON.stringify({ error: 'Email required' }), {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
+      }
+
+      // Validate email format + disposable domain check
+      const emailCheck = validateEmail(email);
+      if (!emailCheck.valid) {
+        return new Response(JSON.stringify({ error: emailCheck.reason }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      // IP rate limiting: max 3 signups per IP per hour
+      const ip = request.headers.get('CF-Connecting-IP') || '';
+      if (ip) {
+        const rateKey = `rate:${ip}`;
+        const rateData = await env.TRIAL_EMAILS.get(rateKey);
+        const count = rateData ? parseInt(rateData, 10) : 0;
+        if (count >= 3) {
+          return new Response(JSON.stringify({ error: 'Too many signups. Try again later.' }), {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+        await env.TRIAL_EMAILS.put(rateKey, String(count + 1), { expirationTtl: 3600 });
       }
 
       const emailLower = email.toLowerCase().trim();
