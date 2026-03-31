@@ -5,3 +5,10 @@ scripts/
 
 # OS files
 .DS_Store
+.vercel
+.vercelignore
+.wrangler/
+node_modules/
+omega-demo-staging/
+Videos/
+Aura-Finance-Files/
