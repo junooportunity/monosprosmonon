@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.pyc
-scripts/
+04_scripts/
 
 # OS files
 .DS_Store
@@ -9,6 +9,7 @@ scripts/
 .vercelignore
 .wrangler/
 node_modules/
-omega-demo-staging/
-Videos/
-Aura-Finance-Files/
+99_omega-demo-staging/
+97_Videos/
+98_Aura-Finance-Files/
+_dev_aletheia-playground.html
