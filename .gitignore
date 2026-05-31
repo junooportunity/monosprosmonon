@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.pyc
-00_site/scripts/
+00_site/04_scripts/
 
 # OS files
 .DS_Store
