@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.pyc
-04_scripts/
+00_site/scripts/
 
 # OS files
 .DS_Store
@@ -10,8 +10,5 @@ __pycache__/
 .wrangler/
 node_modules/
 
-# Archives (not for deploy)
-90_dev/
-91_Videos/
-92_Aura-Finance-Files/
-93_omega-demo-staging/
+# Local-only archives (not for deploy)
+01_archive/
