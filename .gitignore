@@ -9,7 +9,9 @@ __pycache__/
 .vercelignore
 .wrangler/
 node_modules/
-99_omega-demo-staging/
-97_Videos/
-98_Aura-Finance-Files/
-_dev_aletheia-playground.html
+
+# Archives (not for deploy)
+90_dev/
+91_Videos/
+92_Aura-Finance-Files/
+93_omega-demo-staging/
