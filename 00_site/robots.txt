@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://monosprosmonon.com/sitemap.xml
+Sitemap: https://monosprosmonon.com/00_docs/sitemap.xml
