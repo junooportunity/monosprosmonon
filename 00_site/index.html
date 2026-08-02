@@ -229,6 +229,16 @@
                 padding: 1.2rem 1rem calc(0.8rem + env(safe-area-inset-bottom, 0px)) 1rem;
             }
 
+            /* matches the personal site's mobile logo position: 74px top pad,
+               1 : 1.25 flex spacers push the logo slightly above center */
+            .main {
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: calc(74px + env(safe-area-inset-top, 0px)) 2rem 24px 2rem;
+            }
+            .main::before { content: ''; flex: 1 0 0; }
+            .main::after { content: ''; flex: 1.25 0 0; }
+
             .products {
                 gap: 0.5rem;
                 margin-top: 1.5rem;
