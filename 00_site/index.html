@@ -198,23 +198,6 @@
             letter-spacing: 0.1em;
         }
 
-        /* ========== BACKGROUND ========== */
-
-        .grid-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-size: 100px 200px;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
-
-        /* ========== END BACKGROUND ========== */
-
         /* Responsive */
         @media (max-width: 768px) {
             .logo {
@@ -235,13 +218,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ========== BACKGROUND ========== -->
-
-    <!-- Aura-style grid overlay -->
-    <div class="grid-bg" aria-hidden="true"></div>
-
-    <!-- ========== END BACKGROUND ========== -->
 
     <!-- Main Content -->
     <main class="main">
