@@ -35,28 +35,42 @@
             overflow-x: hidden;
         }
 
-        /* Main content */
+        /* Main content — logo image dead-centered in the viewport like alecwisdom.com;
+           tagline + pill hang below it without shifting the centering */
         .main {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            inset: 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
+            padding: 0 2rem;
+        }
+
+        .logo-block {
+            position: relative;
         }
 
         .logo {
             /* matches the rendered size of the MPM logo on alecwisdom.com (30% of its padded 900px scene) */
+            display: block;
             width: min(241px, calc(30vw - 48px));
-            margin-bottom: 1.5rem;
             opacity: 0.95;
         }
 
+        .below-logo {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .tagline {
+            margin-top: 1.5rem;
             font-size: 0.9rem;
             font-style: italic;
             color: #777777;
@@ -121,18 +135,21 @@
             color: #cccccc;
         }
 
-        /* Footer */
+        /* Footer — same box height as the alecwisdom.com footer (icons row omitted)
+           so the top border line sits at the identical distance from the bottom */
         .footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2rem;
+            min-height: 133px;
+            padding: 1.5rem 2rem 2rem 2rem;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            justify-content: flex-end;
+            gap: 1.1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -221,10 +238,14 @@
 
     <!-- Main Content -->
     <main class="main">
-        <img src="01_images/monos-logo.png" alt="Monos Pros Monon" class="logo">
-        <p class="tagline">a company</p>
-        <div class="products">
-            <a href="/aletheia" class="product-pill">Aletheia</a>
+        <div class="logo-block">
+            <img src="01_images/monos-logo.png" alt="Monos Pros Monon" class="logo">
+            <div class="below-logo">
+                <p class="tagline">a company</p>
+                <div class="products">
+                    <a href="/aletheia" class="product-pill">Aletheia</a>
+                </div>
+            </div>
         </div>
     </main>
 
