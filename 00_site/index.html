@@ -24,15 +24,14 @@
 
         html, body {
             height: 100%;
+            overflow: hidden;
         }
 
         body {
             font-family: 'Times New Roman', Times, serif;
             background-color: #0a0a0a;
             color: #cccccc;
-            min-height: 100vh;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         /* Main content — logo image dead-centered in the viewport like alecwisdom.com;
@@ -55,7 +54,8 @@
             /* matches the rendered size of the MPM logo on alecwisdom.com (30% of its padded 900px scene) */
             display: block;
             width: min(241px, calc(30vw - 48px));
-            opacity: 0.95;
+            /* 0.6 matches the personal site's logo — brighter reads bigger */
+            opacity: 0.6;
         }
 
         .below-logo {
