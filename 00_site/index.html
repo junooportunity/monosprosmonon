@@ -237,7 +237,9 @@
                 padding: calc(74px + env(safe-area-inset-top, 0px)) 2rem 24px 2rem;
             }
             .main::before { content: ''; flex: 1 0 0; }
-            .main::after { content: ''; flex: 1.3 0 0; }
+            .main::after { content: ''; flex: 1.25 0 0; }
+            /* personal site's .logo-wrapper carries 0.75rem bottom margin on mobile */
+            .logo-block { margin-bottom: 0.75rem; }
 
             .products {
                 gap: 0.5rem;
